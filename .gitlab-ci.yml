@@ -1,0 +1,14 @@
+image: php:7.2-cli
+
+before_script:
+  - apt-get update
+  - apt-get install zip unzip
+  # Install composer and PHP project dependencies
+  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  - php composer-setup.php
+  - php -r "unlink('composer-setup.php');"
+  - php composer.phar install
+
+lint_php:
+  script:
+    - vendor/bin/parallel-lint --exclude vendor .

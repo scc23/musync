@@ -1,9 +1,5 @@
 image: php:7.2-cli
 
-cache:
-  paths:
-  - vendor/
-
 before_script:
   - apt-get update
   - apt-get install zip unzip

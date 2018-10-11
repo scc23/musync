@@ -8,7 +8,15 @@ before_script:
   - php composer-setup.php
   - php -r "unlink('composer-setup.php');"
   - php composer.phar install
+  - php composer.phar run post-root-package-install
+  - php composer.phar run post-create-project-cmd
+  - php artisan key:generate
+
 
 lint_php:
   script:
     - vendor/bin/parallel-lint --exclude vendor .
+
+test_php:
+  script:
+    - vendor/bin/phpunit

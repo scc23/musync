@@ -26,7 +26,6 @@ class RoomController extends Controller
 
         $room = Room::create($data);
 
-        # TODO: Redirect to group session page.
-        return redirect()->route('home');
+        return redirect()->route('room_id', [ 'room_id' => $id ]);
     }
 }

@@ -19,7 +19,7 @@
                         <div class="form-group row">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Create a public room') }}
+                                    Create a public room
                                 </button>
                             </div>
                         </div>

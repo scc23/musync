@@ -2,7 +2,7 @@ image: php:7.2-cli
 
 before_script:
   - apt-get update
-  - apt-get install zip unzip
+  - apt-get install zip unzip sqlite3 libsqlite3-dev -y
   # Install composer and PHP project dependencies
   - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
   - php composer-setup.php
@@ -10,13 +10,8 @@ before_script:
   - php composer.phar install
   - php composer.phar run post-root-package-install
   - php composer.phar run post-create-project-cmd
-  - php artisan key:generate
-
-
-lint_php:
-  script:
-    - vendor/bin/parallel-lint --exclude vendor .
 
 test_php:
   script:
+    - vendor/bin/parallel-lint --exclude vendor .
     - vendor/bin/phpunit

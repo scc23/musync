@@ -28,3 +28,5 @@ Route::get('/room/{id}', function($id) {
     # TODO: Refactor with controller for user-room connections.
     return view('room', ['room_id' => $id]);
 })->name('room_id');
+
+Route::post('/tracks', 'TrackController@create')->middleware('auth');

@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<home-component></home-component>
+<home-component csrf-token="{{csrf_token()}}"></home-component>
 @endsection

@@ -16,6 +16,9 @@ window.Vue = require('vue');
  */
 
 Vue.component('home-component', require('./components/HomeComponent.vue'));
+Vue.component('search-component', require('./components/SearchComponent.vue'));
+Vue.component('playlist-component', require('./components/PlaylistComponent.vue'));
+Vue.component('user-list-component', require('./components/UserListComponent.vue'));
 
 const app = new Vue({
     el: '#app'

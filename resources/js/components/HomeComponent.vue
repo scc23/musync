@@ -33,12 +33,12 @@
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="create-room-password" class="mb-1">Password</label>
-                                        <input type="text" id="create-room-password" class="form-control" placeholder="Password">
+                                        <input type="text" id="create-room-password" class="form-control" placeholder="Password" v-model="password" :disabled="!isPrivate">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-1">
                                     <div class="col-12 col-sm-6">
-                                        <input type="checkbox" id="create-room-private" class="form-check-label mr-1">
+                                        <input type="checkbox" id="create-room-private" class="form-check-label mr-1" v-model="isPrivate" @click="clearPassword">
                                         <label for="create-room-private">Private</label>
                                     </div>
                                 </div>
@@ -97,6 +97,8 @@
                 showLanding: true,
                 showCreate: false,
                 showJoin: false,
+                password: "",
+                isPrivate: false,
                 joinId: ""
             }
         },
@@ -117,6 +119,13 @@
                 this.showCreate = false;
                 this.showJoin = false;
                 this.showLanding = true;
+            },
+            clearPassword() {
+                // Condition run when isPrivate = true because @click
+                // is processed before isPrivate is set.
+                if (this.isPrivate) {
+                    this.password = "";
+                }
             }
         },
 

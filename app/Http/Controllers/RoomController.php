@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RoomController extends Controller
 {
@@ -11,7 +12,7 @@ class RoomController extends Controller
       Creates a new Room with a randomly generated
       4 character ID.
     */
-    public function create()
+    public function create(Request $request)
     {
         $id = str_random(4);
         # Generate new ID if found.
@@ -19,12 +20,20 @@ class RoomController extends Controller
           $id = str_random(4);
         }
 
-        $data = [
-            'id' => $id,
-            'is_public' => True
-        ];
+        $name = $request->input('create-room-name');
 
-        $room = Room::create($data);
+        $password = $request->input('create-room-password');
+        if (empty($password)) {
+            $password = "";
+        } else {
+            $password = Hash::make($password);
+        }
+
+        $room = Room::create([
+            'id' => $id,
+            'name' => $name,
+            'password' => $password
+        ]);
 
         return redirect()->route('room_id', [ 'room_id' => $id ]);
     }

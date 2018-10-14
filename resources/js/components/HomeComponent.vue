@@ -26,14 +26,14 @@
                                 <input type="hidden" name="_token" :value="csrfToken">
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
-                                        <label for="room-name" class="mb-1">Room Name</label>
-                                        <input type="text" id="create-room-name" class="form-control" placeholder="Room Name">
+                                        <label for="create-room-name" class="mb-1">Room Name</label>
+                                        <input type="text" name="create-room-name" id="create-room-name" class="form-control" placeholder="Room Name">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="create-room-password" class="mb-1">Password</label>
-                                        <input type="text" id="create-room-password" class="form-control" placeholder="Password" v-model="password" :disabled="!isPrivate">
+                                        <input type="password" name="create-room-password" id="create-room-password" class="form-control" placeholder="Password" v-model="password" :disabled="!isPrivate">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-1">

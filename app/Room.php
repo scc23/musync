@@ -8,6 +8,7 @@ class Room extends Model
 {
     protected $fillable = [
         'id',
-        'is_public'
+        'name',
+        'password'
     ];
 }

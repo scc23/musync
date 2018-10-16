@@ -22,12 +22,10 @@ class RoomsTest extends TestCase
         $this->assertTrue(Room::count() == 0);
         $response = $this->post('/rooms');
         $this->assertTrue(Room::count() == 0);
-
-        # TODO - Add UI verification once views are created.
     }
 
     /**
-     * Test post to /rooms without authentication.
+     * Test post to /rooms with authentication.
      *
      * @return void
      */
@@ -36,9 +34,11 @@ class RoomsTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->assertTrue(Room::count() == 0);
-        $response = $this->actingAs($user)->post('/rooms');
+        $response = $this->actingAs($user)
+                         ->call('POST', '/rooms', [
+                            'create-room-name' => "Test Room",
+                            'create-room-password' => "Test Password"
+                          ]);
         $this->assertTrue(Room::count() == 1);
-
-        # TODO - Add UI verification once views are created.
     }
 }

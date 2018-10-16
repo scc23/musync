@@ -11,4 +11,18 @@ class Room extends Model
         'name',
         'password'
     ];
+
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
+    /**
+     * Get the room's ID.
+     *
+     * @return string
+     */
+    public function getIdAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }

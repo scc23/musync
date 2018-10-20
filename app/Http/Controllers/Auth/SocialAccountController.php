@@ -9,7 +9,7 @@ use DebugBar;
 
 class SocialAccountController extends Controller
 {
-	/**
+    /**
      * Redirect the user to provider's (i.e Spotify) authentication page.
      *
      * @return Response

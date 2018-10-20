@@ -23,8 +23,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/rooms', 'RoomController@create')->middleware('auth');
+Route::post('/rooms', 'RoomController@register')->middleware('auth');
 Route::get('/room/{id}', function($id) {
     # TODO: Refactor with controller for user-room connections.
     return view('room', ['room_id' => $id]);
-})->name('room_id');
+})->name('room.id');

@@ -16,13 +16,8 @@ class Room extends Model
 
     public $incrementing = false;
 
-    /**
-     * Get the room's ID.
-     *
-     * @return string
-     */
-    public function getIdAttribute($value)
+    public function memberships()
     {
-        return ucfirst($value);
+        return $this->hasMany('App\RoomMembership');
     }
 }

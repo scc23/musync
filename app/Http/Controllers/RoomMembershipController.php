@@ -5,23 +5,22 @@ namespace App\Http\Controllers;
 use App\Room;
 use App\RoomHelper;
 use App\RoomMembership;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class RoomMembershipController extends Controller
 {
 
     /**
-     * Create a new room membership.
+     * Handle request (POST /room/{id}/join for creating new RoomMembership for the Room
+     * with the given ID.
      *
-     * @param  array  $data
-     * @return \App\RoomMembership
+     * @param  Illuminate\Http\Request  $request
      */
-    protected function create($data) {
-        // return
-    }
-
-
     public function join(Request $request) {
         $id = $request->route("id");
         $room = Room::find($id);
@@ -30,15 +29,10 @@ class RoomMembershipController extends Controller
         }
 
         if (!RoomHelper::isMember($room)) {
-            $password = '';
-            if ($request->session()->has('password')) {
-                $password = $request->session()->get('password');
-            } else {
-                $password = $request->input('join-room-password');
-            }
+            $password = Input::get('join-room-password');
 
-            $joined = RoomHelper::joinRoom($room, $password);
-            if (!$joined) {
+            $membership = RoomHelper::createMembership($room, $password);
+            if (!$membership) {
               return response('User is not authorized to access this room, invalid password.',
                               Response::HTTP_UNAUTHORIZED);
             }

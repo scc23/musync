@@ -25,4 +25,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/rooms', 'RoomController@register')->middleware('auth');
 Route::get('/room/{id}', 'RoomController@show')->middleware('auth')->name('room.id');
-Route::get('/room/{id}/join', 'RoomMembershipController@join')->middleware('auth')->name('room.join');
+Route::post('/room/{id}/membership', 'RoomMembershipController@join')->middleware('auth');

@@ -8,6 +8,7 @@ use App\RoomMembership;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -43,7 +44,7 @@ class RoomController extends Controller
         return Room::create([
             'id' => $id,
             'name' => $data['name'],
-            'password' => (empty($data['password']) ? '' : Hash::make($data['password']))
+            'password' => empty($data['password']) ? '' : Hash::make($data['password'])
         ]);
     }
 
@@ -55,15 +56,15 @@ class RoomController extends Controller
     public function register(Request $request)
     {
         $data = [];
-        $data['name'] = $request->input('create-room-name');
-        $password = $request->input('create-room-password');
-        $data['password'] = $password ? $password : '';
+        $data['name'] = Input::get('create-room-name');
+        $password = Input::get('create-room-password');
+        $data['password'] = !empty($password) ? $password : '';
         $this->validator($data)->validate();
 
         $room = $this->create($data);
+        RoomHelper::createMembership($room, $password);
 
-        return redirect()->route('room.join', ['id' => $room->id])
-                         ->with('password', $password);
+        return redirect()->route('room.id', ['id' => $room->id]);
     }
 
     /**
@@ -79,9 +80,13 @@ class RoomController extends Controller
             return abort(Response::HTTP_NOT_FOUND);
         }
 
-        if ($room->password && !RoomHelper::isMember($room)) {
-            return response('User is not authorized to access this room',
-                            Response::HTTP_UNAUTHORIZED);
+        if (!RoomHelper::isMember($room)) {
+            if (empty($room->password)) {
+              RoomHelper::createMembership($room);
+            } else {
+              return response('User is not authorized to access this room',
+                              Response::HTTP_UNAUTHORIZED);
+            }
         }
 
         return view('room', ['room' => $room]);

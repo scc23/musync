@@ -18,15 +18,13 @@ class RoomHelper
         return ($membership != null);
     }
 
-    public static function joinRoom($room, $password) {
-        if (!empty($room->password) && !Hash::check($password, $room->password)) {
-            return false;
-        }
+    public static function createMembership($room, $password = '')
+    {
+      if (!empty($room->password) && !Hash::check($password, $room->password)) {
+          return null;
+      }
 
-        $user_id = Auth::user()->id;
-        RoomMembership::create(['room_id'=>$room->id, 'user_id'=>$user_id]);
-
-        return true;
+      $user_id = Auth::user()->id;
+      return RoomMembership::create(['room_id'=>$room->id, 'user_id'=>$user_id]);
     }
-
 }

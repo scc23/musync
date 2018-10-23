@@ -23,8 +23,14 @@ Route::get('login/spotify', 'Auth\LoginController@redirectToProvider');
 Route::get('login/spotify/callback', 'Auth\LoginController@handleProviderCallback');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')
+     ->name('home');
 
-Route::post('/rooms', 'RoomController@register')->middleware('auth');
-Route::get('/room/{id}', 'RoomController@show')->middleware('auth')->name('room.id');
-Route::post('/room/{id}/membership', 'RoomMembershipController@join')->middleware('auth');
+Route::post('/rooms', 'RoomController@register')
+     ->middleware('auth');
+Route::get('/room/{id}', 'RoomController@show')
+     ->middleware('auth', 'auth.room')
+     ->name('room.id');
+Route::post('/room/{id}/membership', 'RoomMembershipController@join')
+     ->middleware('auth', 'auth.room')
+     ->name('room.membership.create');

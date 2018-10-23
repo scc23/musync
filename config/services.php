@@ -37,9 +37,8 @@ return [
     ],
 
     'spotify' => [
-        'client_id' => env('SPOTIFY_KEY'),
-        'client_secret' => env('SPOTIFY_SECRET'),
-        'redirect' => env('SPOTIFY_REDIRECT_URI')
-    ]
-
+        'client_id' => env('SPOTIFY_CLIENT_ID'),
+        'client_secret' => env('SPOTIFY_CLIENT_SECRET'),
+        'redirect' => 'http://192.168.10.10/login/spotify/callback', //TODO need to change this to reflect server IP
+    ],
 ];

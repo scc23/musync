@@ -76,19 +76,6 @@ class RoomController extends Controller
         $room_id = $request->route('id');
         $room = Room::find($room_id);
 
-        if (!$room) {
-            return abort(Response::HTTP_NOT_FOUND);
-        }
-
-        if (!RoomHelper::isMember($room)) {
-            if (empty($room->password)) {
-              RoomHelper::createMembership($room);
-            } else {
-              return response('User is not authorized to access this room',
-                              Response::HTTP_UNAUTHORIZED);
-            }
-        }
-
         return view('room', ['room' => $room]);
     }
 }

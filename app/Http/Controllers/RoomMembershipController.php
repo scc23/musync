@@ -22,11 +22,8 @@ class RoomMembershipController extends Controller
      * @param  Illuminate\Http\Request  $request
      */
     public function join(Request $request) {
-        $id = $request->route("id");
-        $room = Room::find($id);
-        if (!$room) {
-            return abort(Response::HTTP_NOT_FOUND);
-        }
+        $room_id = $request->route('id');
+        $room = Room::find($room_id);
 
         if (!RoomHelper::isMember($room)) {
             $password = Input::get('join-room-password');

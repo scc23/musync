@@ -19,8 +19,8 @@ Route::get('/', function () {
     }
 });
 
-Route::get('login/{provider}', 'Auth\SocialAccountController@redirectToProvider');
-Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback');
+Route::get('login/spotify', 'Auth\LoginController@redirectToProvider');
+Route::get('login/spotify/callback', 'Auth\LoginController@handleProviderCallback');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

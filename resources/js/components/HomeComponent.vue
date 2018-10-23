@@ -57,11 +57,18 @@
                             </div>
                         </div>
                         <div id="home-join" v-if="showJoin">
-                            <form method="GET" :action="joinPath">
+                            <form method="POST" :action="joinPath">
+                                <input type="hidden" name="_token" :value="csrfToken">
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="join-room-id" class="mb-1">Room ID</label>
                                         <input type="text" id="join-room-id" class="form-control" placeholder="Room ID" v-model="joinId">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-2">
+                                    <div class="col-12 col-sm-6">
+                                        <label for="join-room-password" class="mb-1">Password</label>
+                                        <input type="password" name="join-room-password" id="join-room-password" class="form-control" placeholder="Password" v-model="joinPassword">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-4">
@@ -99,7 +106,8 @@
                 showJoin: false,
                 password: "",
                 isPrivate: false,
-                joinId: ""
+                joinId: "",
+                joinPassword: ""
             }
         },
 
@@ -131,7 +139,7 @@
 
         computed: {
             joinPath() {
-                return "/room/" + this.joinId;
+                return "/room/" + this.joinId + "/membership";
             }
         }
     }

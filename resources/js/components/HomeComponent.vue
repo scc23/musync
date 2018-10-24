@@ -26,19 +26,19 @@
                                 <input type="hidden" name="_token" :value="csrfToken">
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
-                                        <label for="room-name" class="mb-1">Room Name</label>
-                                        <input type="text" id="create-room-name" class="form-control" placeholder="Room Name">
+                                        <label for="create-room-name" class="mb-1">Room Name</label>
+                                        <input type="text" name="create-room-name" id="create-room-name" class="form-control" placeholder="Room Name">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="create-room-password" class="mb-1">Password</label>
-                                        <input type="text" id="create-room-password" class="form-control" placeholder="Password">
+                                        <input type="password" name="create-room-password" id="create-room-password" class="form-control" placeholder="Password" v-model="password" :disabled="!isPrivate">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-1">
                                     <div class="col-12 col-sm-6">
-                                        <input type="checkbox" id="create-room-private" class="form-check-label mr-1">
+                                        <input type="checkbox" id="create-room-private" class="form-check-label mr-1" v-model="isPrivate" @click="clearPassword">
                                         <label for="create-room-private">Private</label>
                                     </div>
                                 </div>
@@ -57,11 +57,18 @@
                             </div>
                         </div>
                         <div id="home-join" v-if="showJoin">
-                            <form method="GET" :action="joinPath">
+                            <form method="POST" :action="joinPath">
+                                <input type="hidden" name="_token" :value="csrfToken">
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="join-room-id" class="mb-1">Room ID</label>
                                         <input type="text" id="join-room-id" class="form-control" placeholder="Room ID" v-model="joinId">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-2">
+                                    <div class="col-12 col-sm-6">
+                                        <label for="join-room-password" class="mb-1">Password</label>
+                                        <input type="password" name="join-room-password" id="join-room-password" class="form-control" placeholder="Password" v-model="joinPassword">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-4">
@@ -97,7 +104,10 @@
                 showLanding: true,
                 showCreate: false,
                 showJoin: false,
-                joinId: ""
+                password: "",
+                isPrivate: false,
+                joinId: "",
+                joinPassword: ""
             }
         },
 
@@ -117,12 +127,19 @@
                 this.showCreate = false;
                 this.showJoin = false;
                 this.showLanding = true;
+            },
+            clearPassword() {
+                // Condition run when isPrivate = true because @click
+                // is processed before isPrivate is set.
+                if (this.isPrivate) {
+                    this.password = "";
+                }
             }
         },
 
         computed: {
             joinPath() {
-                return "/room/" + this.joinId;
+                return "/room/" + this.joinId + "/membership";
             }
         }
     }

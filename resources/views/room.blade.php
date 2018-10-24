@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Room Name: {{ $room_id }}</div>
+                <div class="card-header">{{ $room->name }}: {{ $room->id }}</div>
                 <div class="card-body">
                     <div class="row">
                         <search-component csrf-token="{{csrf_token()}}"></search-component>

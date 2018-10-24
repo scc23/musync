@@ -16,7 +16,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'spotify_id', 
+        'name',
+        'token',
+        'refresh_token',
     ];
 
     /**
@@ -25,10 +28,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
-    public function accounts()
-    {
-        return $this->hasMany('App\LinkedSocialAccount');
-    }
 }

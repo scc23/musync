@@ -1,50 +1,31 @@
 <template>
     <div class="col-md-4">
-        <!-- <form>
-            <input type="text">
-            <input type="submit" value="Search">
-        </form> -->
-
-        <!-- <input type="text" v-model="searchText" value="" placeholder="Search"> -->
-
-        <!-- <div id="album-results">
-            <div v-for="album in albums">
-                {{album.name}}
-            </div>
-        </div>
-        <div id="artist-results">
-            <div v-for="artist in artists">
-                {{artist.name}}
-            </div>
-        </div> -->
-
         <div id="genres">
             <h2>Genres</h2>
-            <button class="genre-type">Acoustic</button><br>
-            <button class="genre-type">Anime</button><br>
-            <button class="genre-type">Cantopop</button><br>
-            <button class="genre-type">Chill</button><br>
-            <button class="genre-type">Classical</button><br>
-            <button class="genre-type">Country</button><br>
-            <button class="genre-type">EDM</button><br>
-            <button class="genre-type">Hardstyle</button><br>
-            <button class="genre-type">Heavy-Metal</button><br>
-            <button class="genre-type">Hip-Hop</button><br>
-            <button class="genre-type">House</button><br>
-            <button class="genre-type">Indie</button><br>
-            <button class="genre-type">Indie-Pop</button><br>
-            <button class="genre-type">J-Pop</button><br>
-            <button class="genre-type">J-Rock</button><br>
-            <button class="genre-type">Jazz</button><br>
-            <button class="genre-type">K-Pop</button><br>
-            <button class="genre-type">Mandopop</button><br>
-            <button class="genre-type">Opera</button><br>
-            <button class="genre-type">R&B</button><br>
-            <button class="genre-type">Rock</button><br>
-            <button class="genre-type">Techno</button><br>
-            <button class="genre-type">New-Release</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="new-release">New-Release</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="acoustic">Acoustic</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="anime">Anime</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="cantopop">Cantopop</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="chill">Chill</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="classical">Classical</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="country">Country</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="edm">EDM</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="hardstyle">Hardstyle</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="heavy-metal">Heavy-Metal</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="hip-hop">Hip-Hop</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="house">House</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="indie">Indie</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="indie-pop">Indie-Pop</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="j-pop">J-Pop</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="j-rock">J-Rock</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="jazz">Jazz</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="k-pop">K-Pop</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="mandopop">Mandopop</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="opera">Opera</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="r-n-b">R&B</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="rock">Rock</button><br>
+            <button class="genre-type" v-on:click="getTracks($event)" value="techno">Techno</button><br>
         </div>
-
     </div>
 </template>
 
@@ -56,13 +37,12 @@
 
         data() {
             return {
-                // albums: [],
-                // artists: [],
-                // searchText: ""
+                tracks: []
             }
         },
 
         watch: {
+            // Function for search feature
             // Watch what user types in the search box
             // searchText: function() {
             //     let self = this;
@@ -82,17 +62,43 @@
             //         });
             //     }
             // }
-
-
-
-
-
         },
 
         methods: {
+            // todo: Create a playlist with generated track id's
+
+            getTracks: function(e) {
+                this.tracks = [];
+                var value = e.target.value;
+                console.log("Genre selected: " + value);
+                
+                // todo: get the access token stored in database
+                var accessToken = "BQCBm9GW_-k5lHv_1e9YcfwTfmKAIGDM8fX7O3O4YfyP4JpJieYCaF7ggGeAxjVEhoAP6F77stVFEBNj40ODHVIKgbhfXTVvYkqW0DDSXjNNSEaxaF-ZkZ0N4RJN6UjJFtLpb3BOJbP9rKPvRS2cEQVj6yVs7lYanJkqEZYPnm0UCe9ewKKbTYbWgPjcwIoP4aYyqlFmSa1e1ryVhILY_MYywe-jlVoYGYgJaFyvjr7XjSd9eVUDH0RPNDtQi3FnMsVa53BR6r0RadNNBKc";
+
+                $.ajax({
+                    url: "https://api.spotify.com/v1/recommendations",
+                    data: {
+                        seed_genres: value
+                    },
+                    headers: {
+                        "Authorization" : "Bearer " + accessToken
+                    },
+                    success: function(response) {
+                        // console.log(response.tracks);
+                        for (var i = 0; i < response.tracks.length; i++) {
+                            this.tracks.push(response.tracks[i].id);
+                        }
+                        console.log(this.tracks);
+                        // console.log(this.tracks.join());
+
+                    }.bind(this)
+                });
+            }
+
+            // Functions for search feature
             // // Search for albums in Spotify catalog, wait 500 ms before searching
             // searchAlbums: _.debounce(function(query, callback) {
-            //     var accessToken = "BQB2ClUdMN7F-LBHNdqd2G1CyXAl9ZtkK-eALqt6-fF1GAomSengZt0-f8DulnplAy_4LhD7T2V6tFQghO-bpaPJZak5SS51KZjH069-nxlBf9MHsX1vcTKrd_GNdPXBHChvZvklCIT8sxjxxGMrMNYIHeEZrGZ1WeH5DYXPR4MmZpT5upNYRG799xJOOD8yPXP_Rly2oaVMh7XnjiWRj3dED5TLkQSs3oa9-_7vkNRXm-yQR6d4IwYQNGZS6LILjlVdPdQJdDc5r2eE7qM";
+            //     var accessToken = "{access_token}";
             //     $.ajax({
             //         url: "https://api.spotify.com/v1/search",
             //         data: {
@@ -110,7 +116,7 @@
 
             // // Search for artists in Spotify catalog, wait 500 ms before searching
             // searchArtists: _.debounce(function(query, callback) {
-            //     var accessToken = "BQB2ClUdMN7F-LBHNdqd2G1CyXAl9ZtkK-eALqt6-fF1GAomSengZt0-f8DulnplAy_4LhD7T2V6tFQghO-bpaPJZak5SS51KZjH069-nxlBf9MHsX1vcTKrd_GNdPXBHChvZvklCIT8sxjxxGMrMNYIHeEZrGZ1WeH5DYXPR4MmZpT5upNYRG799xJOOD8yPXP_Rly2oaVMh7XnjiWRj3dED5TLkQSs3oa9-_7vkNRXm-yQR6d4IwYQNGZS6LILjlVdPdQJdDc5r2eE7qM";
+            //     var accessToken = "{access_token}";
             //     $.ajax({
             //         url: "https://api.spotify.com/v1/search",
             //         data: {
@@ -125,11 +131,6 @@
             //         }
             //     });
             // }, 500)
-
-
-
-
-            
         },
 
         computed: {

@@ -19,9 +19,11 @@ Route::get('/', function () {
     }
 });
 
-Route::get('login/spotify', 'Auth\LoginController@redirectToProvider');
+Route::get('login/spotify', 'Auth\LoginController@redirectToProvider')
+     ->name('login');
 Route::get('login/spotify/callback', 'Auth\LoginController@handleProviderCallback');
-Auth::routes();
+Route::post('logout', 'Auth\LoginController@logout')
+     ->name('logout');
 
 Route::get('/home', 'HomeController@index')
      ->name('home');

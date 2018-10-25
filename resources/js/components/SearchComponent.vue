@@ -65,31 +65,12 @@
         },
 
         methods: {
-            // todo: Create a playlist with generated track id's
-            // createPlaylist: function() {
-            //     var accessToken = "{access_token}";
-            //     var playlistId = "{playlist_id}";
-
-            //     $.ajax({
-            //         url: "https://api.spotify.com/v1/{playlist_id}/tracks",
-            //         data: {
-            //             name: "MuSync",
-            //             public: true,
-            //             playlist_id: playlistId
-            //         },
-            //         headers: {
-            //             "Authorization" : "Bearer " + accessToken
-            //         },
-                    
-            //     });
-            // },
-
+            // Fetch the recommended tracks of the selected genre from the Spotify
             fetchTracks: function(e) {
                 this.tracks = [];
                 var value = e.target.value;
                 console.log("Genre selected: " + value);
                 
-                // Use the user's access token from the database
                 $.ajax({
                     url: "https://api.spotify.com/v1/recommendations",
                     data: {
@@ -102,6 +83,7 @@
                 });
             },
 
+            // Save the data of the fetched tracks in an array
             saveTracks: function(response) {
                 for (var i = 0; i < response.tracks.length; i++) {
                     this.tracks.push(response.tracks[i]);
@@ -110,9 +92,8 @@
             }
 
             // Functions for search feature
-            // // Search for albums in Spotify catalog, wait 500 ms before searching
+            // Function to search for albums
             // searchAlbums: _.debounce(function(query, callback) {
-            //     var accessToken = "{access_token}";
             //     $.ajax({
             //         url: "https://api.spotify.com/v1/search",
             //         data: {
@@ -120,7 +101,7 @@
             //             type: "album"
             //         },
             //         headers: {
-            //             "Authorization" : "Bearer " + accessToken
+            //             "Authorization" : "Bearer " + this.accessToken
             //         },
             //         success: function(response) {
             //             callback(response.albums.items);
@@ -128,9 +109,8 @@
             //     });
             // }, 500),
 
-            // // Search for artists in Spotify catalog, wait 500 ms before searching
+            // Function to search for artists
             // searchArtists: _.debounce(function(query, callback) {
-            //     var accessToken = "{access_token}";
             //     $.ajax({
             //         url: "https://api.spotify.com/v1/search",
             //         data: {
@@ -138,7 +118,7 @@
             //             type: "artist"
             //         },
             //         headers: {
-            //             "Authorization" : "Bearer " + accessToken
+            //             "Authorization" : "Bearer " + this.accessToken
             //         },
             //         success: function(response) {
             //             callback(response.artists.items);

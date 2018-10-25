@@ -12,6 +12,10 @@ class Room extends Model
         'password'
     ];
 
+    protected $hidden = [
+        'password'
+    ];
+
     protected $primaryKey = 'id';
 
     public $incrementing = false;

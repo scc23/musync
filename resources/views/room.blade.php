@@ -8,7 +8,7 @@
                 <div class="card-header">{{ $room->name }}: {{ $room->id }}</div>
                 <div class="card-body">
                     <div class="row">
-                        <search-component csrf-token="{{csrf_token()}}"></search-component>
+                        <search-component access-token="{{ Auth::user()->token }}"></search-component>
                         <playlist-component csrf-token="{{csrf_token()}}"></playlist-component>
                         <user-list-component csrf-token="{{csrf_token()}}"></user-list-component>
                     </div>

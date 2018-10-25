@@ -27,13 +27,13 @@
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="create-room-name" class="mb-1">Room Name</label>
-                                        <input type="text" name="create-room-name" id="create-room-name" class="form-control" placeholder="Room Name">
+                                        <input type="text" name="create-room-name" id="create-room-name" class="form-control" placeholder="Room Name" v-model="createName">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="create-room-password" class="mb-1">Password</label>
-                                        <input type="password" name="create-room-password" id="create-room-password" class="form-control" placeholder="Password" v-model="password" :disabled="!isPrivate">
+                                        <input type="password" name="create-room-password" id="create-room-password" class="form-control" placeholder="Password" v-model="createPassword" :disabled="!isPrivate">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-1">
@@ -102,7 +102,8 @@
             return {
                 header: "Dashboard",
                 displayBlock: "landing",
-                password: "",
+                createName: "",
+                createPassword: "",
                 isPrivate: false,
                 joinId: "",
                 joinPassword: ""
@@ -121,12 +122,17 @@
             returnHome() {
                 this.header = "Dashboard";
                 this.displayBlock = "landing";
+                this.createName = "";
+                this.createPassword = "";
+                this.isPrivate = false;
+                this.joinId = "";
+                this.joinPassword = "";
             },
             clearPassword() {
                 // Condition run when isPrivate = true because @click
                 // is processed before isPrivate is set.
                 if (this.isPrivate) {
-                    this.password = "";
+                    this.createPassword = "";
                 }
             }
         },

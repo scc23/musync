@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header" v-text="header"></div>
                     <div class="card-body">
-                        <div id="home-landing" v-if="showLanding">
+                        <div v-if="displayBlock == 'landing'">
                             <div class="row justify-content-center mb-2">
                                 <div class="col-12 col-sm-6">
                                     <button class="home-btn btn btn-primary btn-block" @click="promptCreateRoom">
@@ -21,7 +21,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="home-create" v-if="showCreate">
+                        <div v-else-if="displayBlock == 'create'">
                             <form method="POST" action="/rooms">
                                 <input type="hidden" name="_token" :value="csrfToken">
                                 <div class="row justify-content-center mb-2">
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="home-join" v-if="showJoin">
+                        <div v-else-if="displayBlock == 'join'">
                             <form method="POST" :action="joinPath">
                                 <input type="hidden" name="_token" :value="csrfToken">
                                 <div class="row justify-content-center mb-2">
@@ -101,9 +101,7 @@
         data() {
             return {
                 header: "Dashboard",
-                showLanding: true,
-                showCreate: false,
-                showJoin: false,
+                displayBlock: "landing",
                 password: "",
                 isPrivate: false,
                 joinId: "",
@@ -114,19 +112,15 @@
         methods: {
             promptCreateRoom() {
                 this.header = "Create Room";
-                this.showLanding = false;
-                this.showCreate = true;
+                this.displayBlock = "create";
             },
             promptJoinRoom() {
                 this.header = "Join Room";
-                this.showLanding = false;
-                this.showJoin = true;
+                this.displayBlock = "join";
             },
             returnHome() {
                 this.header = "Dashboard";
-                this.showCreate = false;
-                this.showJoin = false;
-                this.showLanding = true;
+                this.displayBlock = "landing";
             },
             clearPassword() {
                 // Condition run when isPrivate = true because @click

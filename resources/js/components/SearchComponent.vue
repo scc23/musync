@@ -1,9 +1,134 @@
 <template>
     <div class="col-md-4">
-        TODO: Search box
+        <div id="genres">
+            <h2>Genres</h2>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="new-release">New-Release</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="acoustic">Acoustic</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="anime">Anime</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="cantopop">Cantopop</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="chill">Chill</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="classical">Classical</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="country">Country</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="edm">EDM</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="hardstyle">Hardstyle</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="heavy-metal">Heavy-Metal</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="hip-hop">Hip-Hop</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="house">House</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="indie">Indie</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="indie-pop">Indie-Pop</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="j-pop">J-Pop</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="j-rock">J-Rock</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="jazz">Jazz</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="k-pop">K-Pop</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="mandopop">Mandopop</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="opera">Opera</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="r-n-b">R&B</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="rock">Rock</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="techno">Techno</button><br>
+        </div>
     </div>
 </template>
 
 <script>
+    export default {
+        props: {
+            "accessToken": String
+        },
 
+        data() {
+            return {
+                tracks: []
+            }
+        },
+
+        watch: {
+            // Function for search feature
+            // Watch what user types in the search box
+            // searchText: function() {
+            //     let self = this;
+            //     // Clear albums and artists array once user starts typing in search box
+            //     self.albums = {};
+            //     self.artists = {};
+
+            //     // Check if albums and artists arrays are empty
+            //     if (self.searchText.length > 0) {
+            //         var query = self.searchText.toLowerCase();
+            //         query.replace(/ /gi, "-");
+            //         self.searchAlbums(query, function(response) {
+            //             self.albums = response;
+            //         });
+            //         self.searchArtists(query, function(response) {
+            //             self.artists = response;
+            //         });
+            //     }
+            // }
+        },
+
+        methods: {
+            // Fetch the recommended tracks of the selected genre from the Spotify
+            fetchTracks: function(e) {
+                this.tracks = [];
+                var value = e.target.value;
+                console.log("Genre selected: " + value);
+                
+                $.ajax({
+                    url: "https://api.spotify.com/v1/recommendations",
+                    data: {
+                        seed_genres: value
+                    },
+                    headers: {
+                        "Authorization" : "Bearer " + this.accessToken
+                    },
+                    success: this.saveTracks
+                });
+            },
+
+            // Save the data of the fetched tracks in an array
+            saveTracks: function(response) {
+                for (var i = 0; i < response.tracks.length; i++) {
+                    this.tracks.push(response.tracks[i]);
+                }
+                console.log(this.tracks);
+            }
+
+            // Functions for search feature
+            // Function to search for albums
+            // searchAlbums: _.debounce(function(query, callback) {
+            //     $.ajax({
+            //         url: "https://api.spotify.com/v1/search",
+            //         data: {
+            //             q: query,
+            //             type: "album"
+            //         },
+            //         headers: {
+            //             "Authorization" : "Bearer " + this.accessToken
+            //         },
+            //         success: function(response) {
+            //             callback(response.albums.items);
+            //         }
+            //     });
+            // }, 500),
+
+            // Function to search for artists
+            // searchArtists: _.debounce(function(query, callback) {
+            //     $.ajax({
+            //         url: "https://api.spotify.com/v1/search",
+            //         data: {
+            //             q: query,
+            //             type: "artist"
+            //         },
+            //         headers: {
+            //             "Authorization" : "Bearer " + this.accessToken
+            //         },
+            //         success: function(response) {
+            //             callback(response.artists.items);
+            //         }
+            //     });
+            // }, 500)
+        },
+
+        computed: {
+            //
+        }
+    }
 </script>

@@ -17,6 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('home-component', require('./components/HomeComponent.vue'));
 Vue.component('search-component', require('./components/SearchComponent.vue'));
+Vue.component('spotify-player-component', require('./components/SpotifyPlayerComponent.vue'));
 Vue.component('playlist-component', require('./components/PlaylistComponent.vue'));
 Vue.component('user-list-component', require('./components/UserListComponent.vue'));
 Vue.component('chat-messages-component', require('./components/ChatMessagesComponent.vue'));
@@ -24,7 +25,13 @@ Vue.component('chat-form-component', require('./components/ChatFormComponent.vue
 
 const app = new Vue({
     el: '#app',
-
+    created() {
+        Echo.channel('test-event')
+            .listen('SpotifyPlayerAction', (e) => {
+                console.log(e.user);
+                console.log(e.request);
+            });
+    },
     data: {
         messages: []
     },

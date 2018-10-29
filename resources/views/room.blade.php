@@ -10,12 +10,11 @@
                 <div class="card-header">{{ $room->name }}: {{ $room->id }}</div>
                 <div class="card-body">
                     <div class="row">
-
                         <div class="col-4">
                             <search-component access-token="{{ Auth::user()->api_token }}"></search-component>
                         </div>
-
                         <div class="col-4">
+                            <spotify-player-component csrf-token="{{csrf_token()}}" access-token="{{Auth::user()->token}}"></spotify-player-component>
                             <playlist-component csrf-token="{{csrf_token()}}"></playlist-component>
                         </div>                        
 
@@ -35,7 +34,6 @@
                             </div>
                             {{-- End Chat components --}}
                         </div>
-
                     </div>
                 </div>
             </div>

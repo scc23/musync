@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header" v-text="header"></div>
                     <div class="card-body">
-                        <div id="home-landing" v-if="showLanding">
+                        <div v-if="displayBlock == 'landing'">
                             <div class="row justify-content-center mb-2">
                                 <div class="col-12 col-sm-6">
                                     <button class="home-btn btn btn-primary btn-block" @click="promptCreateRoom">
@@ -21,19 +21,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="home-create" v-if="showCreate">
+                        <div v-else-if="displayBlock == 'create'">
                             <form method="POST" action="/rooms">
                                 <input type="hidden" name="_token" :value="csrfToken">
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="create-room-name" class="mb-1">Room Name</label>
-                                        <input type="text" name="create-room-name" id="create-room-name" class="form-control" placeholder="Room Name">
+                                        <input type="text" name="create-room-name" id="create-room-name" class="form-control" placeholder="Room Name" v-model="createName">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <label for="create-room-password" class="mb-1">Password</label>
-                                        <input type="password" name="create-room-password" id="create-room-password" class="form-control" placeholder="Password" v-model="password" :disabled="!isPrivate">
+                                        <input type="password" name="create-room-password" id="create-room-password" class="form-control" placeholder="Password" v-model="createPassword" :disabled="!isPrivate">
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-1">
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="home-join" v-if="showJoin">
+                        <div v-else-if="displayBlock == 'join'">
                             <form method="POST" :action="joinPath">
                                 <input type="hidden" name="_token" :value="csrfToken">
                                 <div class="row justify-content-center mb-2">
@@ -101,10 +101,9 @@
         data() {
             return {
                 header: "Dashboard",
-                showLanding: true,
-                showCreate: false,
-                showJoin: false,
-                password: "",
+                displayBlock: "landing",
+                createName: "",
+                createPassword: "",
                 isPrivate: false,
                 joinId: "",
                 joinPassword: ""
@@ -114,25 +113,26 @@
         methods: {
             promptCreateRoom() {
                 this.header = "Create Room";
-                this.showLanding = false;
-                this.showCreate = true;
+                this.displayBlock = "create";
             },
             promptJoinRoom() {
                 this.header = "Join Room";
-                this.showLanding = false;
-                this.showJoin = true;
+                this.displayBlock = "join";
             },
             returnHome() {
                 this.header = "Dashboard";
-                this.showCreate = false;
-                this.showJoin = false;
-                this.showLanding = true;
+                this.displayBlock = "landing";
+                this.createName = "";
+                this.createPassword = "";
+                this.isPrivate = false;
+                this.joinId = "";
+                this.joinPassword = "";
             },
             clearPassword() {
                 // Condition run when isPrivate = true because @click
                 // is processed before isPrivate is set.
                 if (this.isPrivate) {
-                    this.password = "";
+                    this.createPassword = "";
                 }
             }
         },

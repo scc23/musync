@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Socialite;
 
 class LoginController extends Controller
@@ -66,14 +68,35 @@ class LoginController extends Controller
         return redirect()->to('/home');
     }
 
+    /**
+     * Invalidate api_token after logging out.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    public function logout(Request $request) {
+        $user = Auth::user();
+
+        $this->guard()->logout();
+        $request->session()->invalidate();
+
+        $user->api_token = '';
+        $user->save();
+
+        return $this->loggedOut($request) ?: redirect('/');
+    }
+
     private function userFindOrCreate($spotifyUser)
     {
         $user = User::where('spotify_id', $spotifyUser->id)->first();
-        if (!$user) {
-            return User::create([
+        if ($user) {
+            $user->api_token = $spotifyUser->token;
+            $user->save();
+        } else {
+            $user = User::create([
                 'spotify_id' => $spotifyUser->getId(),
                 'name' => $spotifyUser->getName(),
-                'token' => $spotifyUser->token,
+                'api_token' => $spotifyUser->token,
                 'refresh_token' => $spotifyUser->refreshToken,
             ]);
         }

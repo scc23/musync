@@ -28,13 +28,19 @@ class RoomAPIController extends Controller
 
     public function createRoom(Request $request) {
         $body = $request->json()->all();
-        $name = $body['name'];
-        if (!RoomHelper::isRoomNameUnique($name)) {
-            $errors = ["A room with the name ".$name." already exists."];
-            return APIHelper::createError($errors, Response::HTTP_BAD_REQUEST);
+        $name = isset($body['name']) ? $body['name'] : '';
+
+        $error = '';
+        if (empty($name)) {
+            $error = 'A name must be provided to create a room.';
+        } else if (!RoomHelper::isRoomNameUnique($name)) {
+            $error = 'A room with the name '.$name.' already exists.';
+        }
+        if (!empty($error)) {
+            return APIHelper::createError($error, Response::HTTP_BAD_REQUEST);
         }
 
-        $password = $body['password'];
+        $password = isset($body['password']) ? $body['password'] : '';
 
         $room = Room::create([
             'id' => RoomHelper::generateNewRoomID(),

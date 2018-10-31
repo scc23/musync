@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Room;
 use App\RoomHelper;
 use App\RoomMembership;
@@ -75,7 +76,14 @@ class RoomController extends Controller
     public function show(Request $request) {
         $room_id = $request->route('id');
         $room = Room::find($room_id);
+        
+        $users = RoomMembership::where('room_id',$room_id)->get();
+        $names = array();
+        foreach ($users as $user) {
+            $name = User::select('name')->where('id', $user->user_id)->first();
+            array_push($names, $name->name);
+        }
 
-        return view('room', ['room' => $room]);
+        return view('room', ['room' => $room, 'users' => $names]);
     }
 }

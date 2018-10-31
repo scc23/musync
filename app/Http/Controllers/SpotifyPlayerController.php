@@ -15,11 +15,11 @@ class SpotifyPlayerController extends Controller
      */
     public function sendRequest(Request $request)
     {
-    	$user = Auth::user();
-    	$request = "Test string";
+        $user = Auth::user();
+        $request = "Test string";
 
-    	event(new SpotifyPlayerAction($user, $request));
+        event(new SpotifyPlayerAction($user, $request));
 
-    	return ["status" => "Message Sent!"];
+        return ["status" => "Message Sent!"];
     }
 }

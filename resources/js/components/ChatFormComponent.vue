@@ -1,14 +1,11 @@
-// ChatForm component displays an input field and a send button
+<!-- ChatForm component -->
+<!-- Displays an input field and a send button -->
 <template>
-    <div>
-        Chat stuff here
+    <div class="chat-form">
         <div class="input-group">
-            <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
-
-            <span class="input-group-btn">
-                <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">
-                    Send
-                </button>
+            <input id="btn-input" type="text" class="form-control form-control-sm" placeholder="Type a message..." v-model="newMessage" @keyup.enter="sendMessage">
+            <span class="input-group-append">
+                <button class="btn btn-secondary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
             </span>
         </div>
     </div>
@@ -16,21 +13,15 @@
 
 <script>
     export default {
-        props: ['user'],
 
         data() {
             return {
-                newMessage: ''
+                newMessage: '',        
             }
         },
 
         methods: {
-            sendMessage() {
-                this.$emit('messagesent', {
-                    user: this.user,
-                    message: this.newMessage
-                });
-
+            sendMessage:function() {
                 this.newMessage = ''
             }
         }    

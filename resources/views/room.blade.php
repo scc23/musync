@@ -15,12 +15,24 @@
                         </div>
                         <div class="col-4">
                             <playlist-component csrf-token="{{csrf_token()}}"></playlist-component>
-                        </div>
-                        <div class="col-4">
+                        </div>                        
+                        <div class="col-4"> 
+                            {{-- User list component--}}
                             <user-list-component csrf-token="{{csrf_token()}}"></user-list-component>
-                            <chat-messages csrf-token="{{csrf_token()}}"></chat-messages>
-                            <chat-form-component access-token="{{ Auth::user()->token }}"></chat-form-component>
+                            {{-- Chat components --}}
+                            <div class="card">
+                                <div class="card-header">Chat</div>
+                                <div class="card-body">  
+                                    <chat-messages-component csrf-token="{{csrf_token()}}"></chat-messages-component>                       
+                                </div>
+
+                                <div class="card-footer">
+                                    <chat-form-component access-token="{{ Auth::user()->token }}"></chat-form-component>
+                                </div>
+                            </div>
+                            {{-- End Chat components --}}
                         </div>
+                          
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                            <search-component access-token="{{ Auth::user()->token }}"></search-component>
+                            <search-component access-token="{{ Auth::user()->api_token }}"></search-component>
                         </div>
                         <div class="col-4">
                             <playlist-component csrf-token="{{csrf_token()}}"></playlist-component>

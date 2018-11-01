@@ -30,6 +30,8 @@
 </template>
 
 <script>
+    var SpotifyWebApi = require('spotify-web-api-js');
+    var spotifyApi = new SpotifyWebApi();
     export default {
         props: {
             "accessToken": String
@@ -65,30 +67,33 @@
         },
 
         methods: {
-            // Fetch the recommended tracks of the selected genre from the Spotify
-            fetchTracks: function(e) {
-                this.tracks = [];
-                var value = e.target.value;
-                console.log("Genre selected: " + value);
-                
-                $.ajax({
-                    url: "https://api.spotify.com/v1/recommendations",
-                    data: {
-                        seed_genres: value
-                    },
-                    headers: {
-                        "Authorization" : "Bearer " + this.accessToken
-                    },
-                    success: this.saveTracks
-                });
-            },
-
             // Save the data of the fetched tracks in an array
-            saveTracks: function(response) {
-                for (var i = 0; i < response.tracks.length; i++) {
-                    this.tracks.push(response.tracks[i]);
-                }
-                console.log(this.tracks);
+            // saveTracks(response) {
+            //     for (var i = 0; i < response.tracks.length; i++) {
+            //         this.tracks.push(response.tracks[i]);
+            //     }
+            //     console.log(this.tracks);
+            // },
+
+            // Fetch the recommended tracks of the selected genre from the Spotify
+            fetchTracks(e) {
+                var genre = e.target.value;
+                console.log("Genre selected: " + genre);
+                spotifyApi.setAccessToken(this.accessToken);
+                spotifyApi.getRecommendations({seed_genres: genre})
+                    .then(function(data) {
+                        return data.tracks.map(function(t) { return t.id });
+                    })
+                    .then(function(trackIds) {
+                        return spotifyApi.getTracks(trackIds);
+                    })
+                    .then(function(tracksInfo) {
+                        console.log(tracksInfo);
+                    })
+                    .catch(function(error) {
+                        console.error(error);
+                    });
+
             }
 
             // Functions for search feature

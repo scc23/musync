@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 
 class RoomHelper
 {
+    /**
+     * Generate a four character long unique ID.
+     */
     public static function generateNewRoomID() {
         $id = str_random(4);
         # Generate new ID if found.
@@ -18,12 +21,16 @@ class RoomHelper
         return $id;
     }
 
+    /**
+     * Determine if the provided Room name is unique.
+     */
     public static function isRoomNameUnique($name) {
         $room_count = Room::where('name', $name)->count();
 
         return ($room_count == 0);
     }
 
+    // TODO: Deprecate function, will no longer be used.
     public static function isMember($room)
     {
         $user_id = Auth::user()->id;
@@ -34,13 +41,25 @@ class RoomHelper
         return ($membership != null);
     }
 
+    /**
+     * Find the existing RoomMembership or create a new RoomMembership for
+     * provided Room. If the Room is private, check if the provided Password
+     * matches.
+     */
     public static function createMembership($room, $password = '')
     {
-      if (!empty($room->password) && !Hash::check($password, $room->password)) {
-          return null;
-      }
+        $user_id = Auth::user()->id;
+        $membership = RoomMembership::where('room_id', '=', $room->id)
+                                    ->where('user_id', '=', $user_id)
+                                    ->first();
+        if ($membership) {
+            return $membership;
+        }
 
-      $user_id = Auth::user()->id;
-      return RoomMembership::create(['room_id'=>$room->id, 'user_id'=>$user_id]);
+        if (!empty($room->password) && !Hash::check($password, $room->password)) {
+            return null;
+        }
+
+        return RoomMembership::create(['room_id'=>$room->id, 'user_id'=>$user_id]);
     }
 }

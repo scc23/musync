@@ -21,11 +21,18 @@ class RoomAPIController extends Controller
         $this->middleware('auth:api');
     }
 
+    /**
+     * Fetch all Rooms from the database.
+     */
     public function getAllRooms(Request $request) {
         $rooms = Room::all();
         return APIHelper::createPayload($rooms, Response::HTTP_OK);
     }
 
+    /**
+     * Create a new room with the provided name and password, contained within
+     * the request body as JSON.
+     */
     public function createRoom(Request $request) {
         $body = $request->json()->all();
         $name = isset($body['name']) ? $body['name'] : '';
@@ -41,24 +48,26 @@ class RoomAPIController extends Controller
         }
 
         $password = isset($body['password']) ? $body['password'] : '';
-
         $room = Room::create([
             'id' => RoomHelper::generateNewRoomID(),
             'name' => $name,
-            'password' => empty($password) ? '' : Hash::make($body['password'])
+            'password' => empty($password) ? '' : Hash::make($password)
         ]);
         RoomHelper::createMembership($room, $password);
 
         return APIHelper::createPayload($room, Response::HTTP_OK);
     }
 
+    /**
+     * Fetch a single room by ID.
+     */
     public function getRoomById(Request $request) {
         $room_id = $request->route('id');
         $room = Room::find($room_id);
 
         if (!$room) {
-            $errors = ["No room with the ID ".$room_id." exists."];
-            return APIHelper::createError($errors, Response::HTTP_NOT_FOUND);
+            $error = 'No room with the ID '.$room_id.' exists.';
+            return APIHelper::createError($error, Response::HTTP_NOT_FOUND);
         }
 
         return APIHelper::createPayload($room, Response::HTTP_OK);

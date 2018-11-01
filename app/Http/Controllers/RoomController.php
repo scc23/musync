@@ -69,7 +69,7 @@ class RoomController extends Controller
     }
 
     /**
-     * Handle request (GET /room/{id}} for displaying a Room.
+     * Handle request (GET /room/{id}) for displaying a Room.
      *
      * @param  Illuminate\Http\Request  $request
      */

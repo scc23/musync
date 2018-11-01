@@ -8,9 +8,17 @@
                 <div class="card-header">{{ $room->name }}: {{ $room->id }}</div>
                 <div class="card-body">
                     <div class="row">
-                        <search-component access-token="{{ Auth::user()->token }}"></search-component>
-                        <playlist-component csrf-token="{{csrf_token()}}"></playlist-component>
-                        <user-list-component csrf-token="{{csrf_token()}}"></user-list-component>
+                        <div class="col-4">
+                            <search-component access-token="{{ Auth::user()->token }}"></search-component>
+                        </div>
+                        <div class="col-4">
+                            <playlist-component csrf-token="{{csrf_token()}}"></playlist-component>
+                        </div>
+                        <div class="col-4">
+                            <user-list-component csrf-token="{{csrf_token()}}"></user-list-component>
+                            <chat-messages csrf-token="{{csrf_token()}}"></chat-messages>
+                            <chat-form-component access-token="{{ Auth::user()->token }}"></chat-form-component>
+                        </div>
                     </div>
                 </div>
             </div>

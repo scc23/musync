@@ -36,3 +36,4 @@ Route::get('/room/{id}', 'RoomController@show')
 Route::post('/room/{id}/membership', 'RoomMembershipController@join')
      ->middleware('auth', 'auth.room')
      ->name('room.membership.create');
+

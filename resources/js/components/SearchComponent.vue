@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-4">
+    <div>
         <div id="genres">
             <h2>Genres</h2>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="new-release">New-Release</button><br>

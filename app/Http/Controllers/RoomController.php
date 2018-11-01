@@ -77,13 +77,9 @@ class RoomController extends Controller
         $room_id = $request->route('id');
         $room = Room::find($room_id);
         
-        $users = RoomMembership::where('room_id',$room_id)->get();
-        $names = array();
-        foreach ($users as $user) {
-            $name = User::select('name')->where('id', $user->user_id)->first();
-            array_push($names, $name->name);
-        }
-
-        return view('room', ['room' => $room, 'users' => $names]);
+        $member_ids = RoomMembership::select('user_id')->where('room_id',$room_id)->get();
+        $users = User::findMany($member_ids);
+   
+        return view('room', ['room' => $room, 'users' => $users]);
     }
 }

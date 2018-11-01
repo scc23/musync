@@ -19,7 +19,34 @@ Vue.component('home-component', require('./components/HomeComponent.vue'));
 Vue.component('search-component', require('./components/SearchComponent.vue'));
 Vue.component('playlist-component', require('./components/PlaylistComponent.vue'));
 Vue.component('user-list-component', require('./components/UserListComponent.vue'));
+Vue.component('chat-messages', require('./components/ChatMessages.vue'));
+Vue.component('chat-form-component', require('./components/ChatFormComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
+    data: {
+        messages: []
+    },
+    /* going to fix with issue #16
+    created() {
+        this.fetchMessages();
+    },
+    
+    methods: {
+        fetchMessages() {
+            axios.get('/room/{id}').then(response => {
+                this.messages = response.data;
+            });
+        },
+
+        addMessage(message) {
+            this.messages.push(message);
+
+            axios.post('/room/{id}', message).then(response => {
+              console.log(response.data);
+            });
+        }
+    }
+    */
 });

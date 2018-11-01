@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-4">
+    <div>
         TODO: User list
     </div>
 </template>

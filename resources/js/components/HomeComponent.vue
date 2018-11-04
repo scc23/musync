@@ -22,22 +22,26 @@
                             </div>
                         </div>
                         <div v-else-if="displayBlock == 'create'">
-                            <form method="POST" action="/rooms">
+                            <form method="POST" @submit.prevent="submitCreateRoom">
                                 <input type="hidden" name="_token" :value="csrfToken">
-                                <div class="row justify-content-center mb-2">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="create-room-name" class="mb-1">Room Name</label>
-                                        <input type="text" name="create-room-name" id="create-room-name" class="form-control" placeholder="Room Name" v-model="createName">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-sm-6 form-group">
+                                        <label for="create-room-name" class="mb-1 control-label">Room Name</label>
+                                        <input type="text" name="create-room-name" id="create-room-name" class="form-control"
+                                            placeholder="Room Name" v-model="createName" @change="clearCreateRoomNameError">
+                                        <span class="help-block">{{createNameError}}</span>
                                     </div>
                                 </div>
-                                <div class="row justify-content-center mb-2">
-                                    <div class="col-12 col-sm-6">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-sm-6 form-group">
                                         <label for="create-room-password" class="mb-1">Password</label>
-                                        <input type="password" name="create-room-password" id="create-room-password" class="form-control" placeholder="Password" v-model="createPassword" :disabled="!isPrivate">
+                                        <input type="password" name="create-room-password" id="create-room-password" class="form-control"
+                                            placeholder="Password" v-model="createPassword" :disabled="!isPrivate" @change="clearCreateRoomPasswordError">
+                                        <span class="help-block">{{createPasswordError}}</span>
                                     </div>
                                 </div>
-                                <div class="row justify-content-center mb-1">
-                                    <div class="col-12 col-sm-6">
+                                <div class="row justify-content-center mb-2">
+                                    <div class="col-12 col-sm-6 form-group">
                                         <input type="checkbox" id="create-room-private" class="form-check-label mr-1" v-model="isPrivate" @click="clearPassword">
                                         <label for="create-room-private">Private</label>
                                     </div>
@@ -93,9 +97,12 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         props: {
-            "csrfToken": String
+            "csrfToken": String,
+            "accessToken": String
         },
 
         data() {
@@ -103,11 +110,17 @@
                 header: "Dashboard",
                 displayBlock: "landing",
                 createName: "",
+                createNameError: "",
                 createPassword: "",
+                createPasswordError: "",
                 isPrivate: false,
                 joinId: "",
-                joinPassword: ""
+                joinPassword: "",
             }
+        },
+
+        mounted() {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + this.accessToken;
         },
 
         methods: {
@@ -127,14 +140,60 @@
                 this.isPrivate = false;
                 this.joinId = "";
                 this.joinPassword = "";
+                this.clearCreateRoomNameError();
+                this.clearCreateRoomPasswordError();
+
             },
             clearPassword() {
                 // Condition run when isPrivate = true because @click
                 // is processed before isPrivate is set.
                 if (this.isPrivate) {
                     this.createPassword = "";
+                    this.clearCreateRoomPasswordError();
                 }
-            }
+            },
+            clearCreateRoomNameError() {
+                this.createNameError = "";
+            },
+            clearCreateRoomPasswordError() {
+                this.createPasswordError = "";
+            },
+            submitCreateRoom() {
+                if (this.validateCreateRoom()) {
+                    axios.post("/api/rooms", {
+                        name: this.createName,
+                        password: this.createPassword
+                    })
+                    .then((res) => {
+                        var roomId = res.data.id;
+                        document.location.pathname = "/room/" + roomId;
+                    })
+                    .catch((err) => {
+                        var body = err.response.data;
+                        if (body['createNameError']) {
+                            this.createNameError = body['createNameError'];
+                        }
+
+                        if (body['createPasswordError']) {
+                            this.createPasswordError = body['createPasswordError'];
+                        }
+                    });
+                }
+
+            },
+            validateCreateRoom() {
+                  var isValid = true;
+                  if (!this.createName.trim()) {
+                      this.createNameError = "Room name cannot be empty.";
+                      isValid = false;
+                  }
+                  if (this.isPrivate && !this.createPassword) {
+                      this.createPasswordError = "A private room may not have an empty password.";
+                      isValid = false;
+                  }
+
+                  return isValid;
+            },
         },
 
         computed: {

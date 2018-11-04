@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\APIHelper;
 use App\Room;
 use App\RoomHelper;
 use Illuminate\Http\Request;
@@ -26,7 +25,7 @@ class RoomAPIController extends Controller
      */
     public function getAllRooms(Request $request) {
         $rooms = Room::all();
-        return APIHelper::createPayload($rooms, Response::HTTP_OK);
+        return response()->json($payload, Response::HTTP_OK);
     }
 
     /**
@@ -44,7 +43,7 @@ class RoomAPIController extends Controller
             $error = 'A room with the name '.$name.' already exists.';
         }
         if (!empty($error)) {
-            return APIHelper::createError($error, Response::HTTP_BAD_REQUEST);
+            return response()->json(["createNameError" => $error], Response::HTTP_BAD_REQUEST);
         }
 
         $password = isset($body['password']) ? $body['password'] : '';
@@ -55,7 +54,7 @@ class RoomAPIController extends Controller
         ]);
         RoomHelper::createMembership($room, $password);
 
-        return APIHelper::createPayload($room, Response::HTTP_OK);
+        return response()->json($room, Response::HTTP_OK);
     }
 
     /**
@@ -67,9 +66,9 @@ class RoomAPIController extends Controller
 
         if (!$room) {
             $error = 'No room with the ID '.$room_id.' exists.';
-            return APIHelper::createError($error, Response::HTTP_NOT_FOUND);
+            return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
         }
 
-        return APIHelper::createPayload($room, Response::HTTP_OK);
+        return response()->json($room, Response::HTTP_OK);
     }
 }

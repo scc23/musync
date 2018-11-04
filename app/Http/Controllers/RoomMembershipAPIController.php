@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\APIHelper;
 use App\Room;
 use App\RoomHelper;
 use Illuminate\Http\Request;
@@ -29,7 +28,7 @@ class RoomMembershipAPIController extends Controller
         $room = Room::find($room_id);
         if (!$room) {
             $error = 'No room with the ID '.$room_id.' exists.';
-            return APIHelper::createError($error, Response::HTTP_NOT_FOUND);
+            return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
         }
 
         $body = $request->json()->all();
@@ -37,9 +36,9 @@ class RoomMembershipAPIController extends Controller
         $membership = RoomHelper::createMembership($room, $password);
         if (!$membership) {
             $error = 'Invalid password.';
-            return APIHelper::createError($error, Response::HTTP_UNAUTHORIZED);
+            return response()->json(['error' => $error], Response::HTTP_UNAUTHORIZED);
         }
 
-        return APIHelper::createPayload($membership, Response::HTTP_OK);
+        return response()->json($membership, Response::HTTP_OK);
     }
 }

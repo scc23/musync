@@ -1,6 +1,6 @@
 <template>
     <div class="spotify-player">
-        <div class="controls">
+        <div class="bottom-controls">
             <form method="POST" action="/updateState">
                 <div class="btn-group">
                     <div v-if="!isPlaying">
@@ -14,9 +14,18 @@
                         </button>
                     </div>
                 </div>
-                <div class="status-bar">
+                <div class="progress-bar">
+                </div>
+                <div class="track-progress">
+                    {{ progress }}
+                </div>
+                <div class="track-duration">
+                    {{ duration }}
                 </div>
             </form>
+<!--             <button v-on:click="getUserData">
+                getUserData
+            </button> -->
         </div>
     </div>
 </template>
@@ -32,7 +41,10 @@
 
         data() {
             return {
+                deviceId: "",
                 isPlaying: false,
+                progress: "0:00",
+                duration: "0:00",
             }
         },
 
@@ -74,18 +86,56 @@
                 });
                 this.isPlaying = false;
             },
+            getUserData() {
+                spotifyApi.setAccessToken(this.accessToken);
+                spotifyApi.getMyDevices()
+                    .then(function(data) {
+                        console.log(data);
+                        this.deviceId = data["devices"][0]["id"];
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
+                    });
+            }
         },
     }
 </script>
 
 <style lang="scss" scoped>
 
-.status-bar {
+.spotify-player {
+    width: 100%;
+    height: 21%;
+    border-style: solid;
+}
+.spotify-player .bottom-controls {
+    position: relative;
+    width: 100%;
+    height: 35%;
+    top: 83px;
+}
+.spotify-player .bottom-controls .play-pause-btn {
+
+}
+.spotify-player .bottom-controls .progress-bar {
+    position: relative;
     height: 10px;
-    width: 79%;
+    width: 60%;
+    left: 40px;
     border-radius: 6px;
-    background-color: #7f8fa6;
     display: inline-block;
+}
+.spotify-player .bottom-controls .track-progress {
+    position: absolute;
+    left: 60px;
+    bottom: 10px;
+    text-align: center;
+}
+.spotify-player .bottom-controls .track-duration {
+    position: absolute;
+    left: 300px;
+    bottom: 10px;
+    text-align: center;
 }
 
 </style>

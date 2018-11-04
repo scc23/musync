@@ -49,7 +49,7 @@ class LoginController extends Controller
     public function redirectToProvider()
     {
         return Socialite::driver('spotify')
-            ->scopes(['user-modify-playback-state', 'user-read-playback-state'])
+            ->scopes(['streaming','user-read-birthdate','user-read-email','user-read-private','user-modify-playback-state', 'user-read-playback-state'])
             ->stateless(true)
             ->redirect();
     }

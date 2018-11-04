@@ -37,3 +37,5 @@ Route::post('/room/{id}/membership', 'RoomMembershipController@join')
      ->middleware('auth', 'auth.room')
      ->name('room.membership.create');
 
+//Send spotify player info to server
+Route::post('/updateState', 'SpotifyPlayerController@sendRequest');

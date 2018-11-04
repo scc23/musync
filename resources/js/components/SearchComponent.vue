@@ -34,13 +34,13 @@
     var spotifyApi = new SpotifyWebApi();
     export default {
         props: {
-            "accessToken": String
+            "accessToken": String,
+            "playlistId": String
         },
 
         data() {
             return {
                 trackUris: [],
-                playlistId: ""
             }
         },
 
@@ -68,23 +68,6 @@
         },
 
         methods: {
-            // Create an empty playlist in the host's Spotify account when a room is created
-            initPlaylist() {
-                spotifyApi.setAccessToken(this.accessToken);
-                spotifyApi.createPlaylist({name: "MuSync"})
-                    .then(function(data) {
-                        return data.id;
-                    })
-                    .then(function(playlistId) {
-                        // Save playlist id
-                        this.playlistId = playlistId;
-                        console.log(this.playlistId);
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.error(error);
-                    });
-            },
-
             // Fetch tracks from a genre and add them to the room's playlist
             fetchTracks(e) {
                 var genre = e.target.value;
@@ -149,14 +132,11 @@
             //         }
             //     });
             // }, 500)
-        },
-        mounted() {
-            this.initPlaylist();
         }
     }
 </script>
 
-<style>
+<style scoped>
     .genre-type {
         background: none;
         border: none;

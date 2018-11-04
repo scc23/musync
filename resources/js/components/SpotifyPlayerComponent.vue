@@ -68,7 +68,9 @@
     export default {
         props: {
             "accessToken": String,
-            "csrfToken": String
+            "csrfToken": String,
+            "spotifyId": String,
+            "playlistId": String
         },
 
         data() {
@@ -84,6 +86,7 @@
         methods: {
             togglePlayPauseBtn() {
                 if (!this.isPlaying) {
+                    console.log("spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId);
                     console.log("Play button is pressed");
                     this.play();
                     return;
@@ -93,7 +96,8 @@
             },
             play() {
                 spotifyApi.setAccessToken(this.accessToken);
-                spotifyApi.play({"uris": ["spotify:track:56y9Vdi0PWuDqjz6RQ2K93"]}, function(err, data) {
+                // Play the room creator's playlist associated with the room
+                spotifyApi.play({"context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId}, function(err, data) {
                     if (err) console.error(err);
                     else console.log(data);
                 });

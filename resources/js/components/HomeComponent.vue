@@ -61,18 +61,22 @@
                             </div>
                         </div>
                         <div v-else-if="displayBlock == 'join'">
-                            <form method="POST" :action="joinPath">
+                            <form method="POST" @submit.prevent="submitJoinRoom">
                                 <input type="hidden" name="_token" :value="csrfToken">
-                                <div class="row justify-content-center mb-2">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="join-room-id" class="mb-1">Room ID</label>
-                                        <input type="text" id="join-room-id" class="form-control" placeholder="Room ID" v-model="joinId">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-sm-6 form-group">
+                                        <label for="join-room-id" class="mb-1 control-label">Room ID</label>
+                                        <input type="text" id="join-room-id" class="form-control" placeholder="Room ID" v-model="joinId"
+                                            @change="clearJoinRoomErrors">
+                                        <span class="help-block">{{joinIdError}}</span>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-2">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="join-room-password" class="mb-1">Password</label>
-                                        <input type="password" name="join-room-password" id="join-room-password" class="form-control" placeholder="Password" v-model="joinPassword">
+                                    <div class="col-12 col-sm-6 form-group" v-if="joinHasPassword">
+                                        <label for="join-room-password" class="mb-1 control-label">Password</label>
+                                        <input type="password" name="join-room-password" id="join-room-password" class="form-control"
+                                            placeholder="Password" v-model="joinPassword" @change="clearJoinRoomPasswordError">
+                                        <span class="help-block">{{joinPasswordError}}</span>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-4">
@@ -84,7 +88,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-12 col-sm-6">
                                     <button type="button" class="home-btn btn btn-primary btn-block" @click="returnHome">
-                                    Back
+                                        Back
                                     </button>
                                 </div>
                             </div>
@@ -116,6 +120,9 @@
                 isPrivate: false,
                 joinId: "",
                 joinPassword: "",
+                joinIdError: "",
+                joinPasswordError: "Join password error",
+                joinHasPassword: false
             }
         },
 
@@ -124,25 +131,30 @@
         },
 
         methods: {
+            resetState() {
+              this.createName = "";
+              this.createPassword = "";
+              this.isPrivate = false;
+              this.joinId = "";
+              this.joinPassword = "";
+              this.clearCreateRoomNameError();
+              this.clearCreateRoomPasswordError();
+              this.clearJoinRoomErrors();
+              this.clearJoinRoomPasswordError();
+            },
             promptCreateRoom() {
                 this.header = "Create Room";
                 this.displayBlock = "create";
+                this.resetState();
             },
             promptJoinRoom() {
                 this.header = "Join Room";
                 this.displayBlock = "join";
+                this.resetState();
             },
             returnHome() {
                 this.header = "Dashboard";
                 this.displayBlock = "landing";
-                this.createName = "";
-                this.createPassword = "";
-                this.isPrivate = false;
-                this.joinId = "";
-                this.joinPassword = "";
-                this.clearCreateRoomNameError();
-                this.clearCreateRoomPasswordError();
-
             },
             clearPassword() {
                 // Condition run when isPrivate = true because @click
@@ -157,6 +169,14 @@
             },
             clearCreateRoomPasswordError() {
                 this.createPasswordError = "";
+            },
+            clearJoinRoomErrors() {
+                this.joinIdError = "";
+                this.joinHasPassword = false;
+                this.clearJoinRoomPasswordError();
+            },
+            clearJoinRoomPasswordError() {
+                this.joinPasswordError = "";
             },
             submitCreateRoom() {
                 if (this.validateCreateRoom()) {
@@ -179,7 +199,6 @@
                         }
                     });
                 }
-
             },
             validateCreateRoom() {
                   var isValid = true;
@@ -194,11 +213,45 @@
 
                   return isValid;
             },
-        },
+            submitJoinRoom() {
+                if (this.validateJoinRoom()) {
+                    var roomId = this.joinId;
+                    axios.post("/api/room/" + roomId + "/membership", {
+                        password: this.joinPassword
+                    })
+                    .then((res) => {
+                        document.location.pathname = "/room/" + roomId;
+                    })
+                    .catch((err) => {
+                        var body = err.response.data;
+                        if (body['joinIdError']) {
+                            this.joinIdError = body['joinIdError'];
+                        }
 
-        computed: {
-            joinPath() {
-                return "/room/" + this.joinId + "/membership";
+                        if (this.joinHasPassword && body['joinPasswordError']) {
+                            this.joinPasswordError = body['joinPasswordError'];
+                        } else if (body['joinPasswordError']) {
+                            this.joinPassword = "";
+                            this.joinHasPassword = true;
+                            this.joinPasswordError = "This room is a private room, please enter the password."
+                        }
+                    });
+                }
+            },
+            validateJoinRoom() {
+                var isValid = true;
+
+                if (!this.joinId || this.joinId.length != 4) {
+                    this.joinIdError = "The ID must be 4 characters long.";
+                    isValid = false;
+                }
+
+                if (this.joinHasPassword && this.joinPassword.length == 0) {
+                    this.joinPasswordError = "Please enter a password.";
+                    isValid = false;
+                }
+
+                return isValid;
             }
         }
     }

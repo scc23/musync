@@ -28,15 +28,15 @@ class RoomMembershipAPIController extends Controller
         $room = Room::find($room_id);
         if (!$room) {
             $error = 'No room with the ID '.$room_id.' exists.';
-            return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
+            return response()->json(['joinIdError' => $error], Response::HTTP_NOT_FOUND);
         }
 
         $body = $request->json()->all();
         $password = isset($body['password']) ? $body['password'] : '';
         $membership = RoomHelper::createMembership($room, $password);
         if (!$membership) {
-            $error = 'Invalid password.';
-            return response()->json(['error' => $error], Response::HTTP_UNAUTHORIZED);
+            $error = 'Incorrect password provided.';
+            return response()->json(['joinPasswordError' => $error], Response::HTTP_UNAUTHORIZED);
         }
 
         return response()->json($membership, Response::HTTP_OK);

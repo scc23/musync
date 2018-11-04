@@ -40,13 +40,13 @@
                                         <span class="help-block">{{createPasswordError}}</span>
                                     </div>
                                 </div>
-                                <div class="row justify-content-center mb-2">
+                                <div class="row justify-content-center">
                                     <div class="col-12 col-sm-6 form-group">
                                         <input type="checkbox" id="create-room-private" class="form-check-label mr-1" v-model="isPrivate" @click="clearPassword">
                                         <label for="create-room-private">Private</label>
                                     </div>
                                 </div>
-                                <div class="row justify-content-center mb-4">
+                                <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <input type="submit" class="home-btn btn btn-primary btn-block" value="Create">
                                     </div>
@@ -71,7 +71,7 @@
                                         <span class="help-block">{{joinIdError}}</span>
                                     </div>
                                 </div>
-                                <div class="row justify-content-center mb-2">
+                                <div class="row justify-content-center">
                                     <div class="col-12 col-sm-6 form-group" v-if="joinHasPassword">
                                         <label for="join-room-password" class="mb-1 control-label">Password</label>
                                         <input type="password" name="join-room-password" id="join-room-password" class="form-control"
@@ -79,7 +79,7 @@
                                         <span class="help-block">{{joinPasswordError}}</span>
                                     </div>
                                 </div>
-                                <div class="row justify-content-center mb-4">
+                                <div class="row justify-content-center mb-2">
                                     <div class="col-12 col-sm-6">
                                         <input type="submit" class="home-btn btn btn-primary btn-block" value="Join">
                                     </div>
@@ -233,7 +233,7 @@
                         } else if (body['joinPasswordError']) {
                             this.joinPassword = "";
                             this.joinHasPassword = true;
-                            this.joinPasswordError = "This room is a private room, please enter the password."
+                            this.joinPasswordError = "This room is a private room, enter the password."
                         }
                     });
                 }

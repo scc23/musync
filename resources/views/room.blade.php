@@ -34,7 +34,7 @@
                                 <playlist-component csrf-token="{{csrf_token()}}"></playlist-component>
                             </div>
                             <div class="col-4"> 
-                                {{-- User list component--}}
+                                {{-- User list component--}}                                
                                 <user-list-component :users="{{$users}}" csrf-token="{{csrf_token()}}"></user-list-component>
                                 {{-- Chat components --}}
                                 <div class="card">

@@ -20,22 +20,18 @@ class RoomAuthenticate
     public function handle($request, Closure $next)
     {
         $room_id = $request->route('id');
-        $room = Room::find($room_id);
+        if (!$room_id) {
+            return abort(Response::HTTP_BAD_REQUEST);
+        }
 
+        $room = Room::find($room_id);
         if (!$room) {
             return abort(Response::HTTP_NOT_FOUND);
         }
 
-        if (!$request->route()->named('room.membership.create')) {
-            if (!RoomHelper::isMember($room)) {
-                $password = Input::get('join-room-password');
-
-                $membership = RoomHelper::createMembership($room, $password);
-                if (!$membership) {
-                    return response('User is not authorized to access this room',
-                        Response::HTTP_UNAUTHORIZED);
-                }
-            }
+        if (!RoomHelper::isMember($room) && !RoomHelper::createMembership($room)) {
+            return response('User is not authorized to access this room',
+                Response::HTTP_UNAUTHORIZED);
         }
 
         return $next($request);

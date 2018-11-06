@@ -28,14 +28,7 @@ Route::post('logout', 'Auth\LoginController@logout')
 Route::get('/home', 'HomeController@index')
      ->name('home');
 
-Route::post('/rooms', 'RoomController@register')
-     ->middleware('auth');
-Route::get('/room/{id}', 'RoomController@show')
-     ->middleware('auth', 'auth.room')
-     ->name('room.id');
-Route::post('/room/{id}/membership', 'RoomMembershipController@join')
-     ->middleware('auth', 'auth.room')
-     ->name('room.membership.create');
+Route::get('/room/{id}', 'RoomController@show')->name('room.id');
 
 //Send spotify player info to server
 Route::post('/updateState', 'SpotifyPlayerController@sendRequest');

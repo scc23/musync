@@ -1,31 +1,35 @@
 <template>
-    <div class="spotify-player">
-        <div class="bottom-controls">
-            <form method="POST" action="/updateState">
-                <div class="btn-group">
-                    <div v-if="!isPlaying">
-                        <button class="btn btn-lg" type="button" v-on:click="togglePlayPauseBtn">
-                            <font-awesome-icon icon="play-circle"/>
-                        </button>
-                    </div>
-                    <div v-if="isPlaying">
-                        <button class="btn btn-lg" type="button" v-on:click="togglePlayPauseBtn">
-                            <font-awesome-icon icon="pause-circle"/>
-                        </button>
-                    </div>
+    <div class="card">
+        <div class="card-body" v-if="userState == 'idle'">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <button class="home-btn btn btn-primary btn-block" v-if="hasBroadcaster" @click="beginListening">
+                        Listen
+                    </button>
+                    <button class="home-btn btn btn-primary btn-block" v-else @click="beginBroadcasting">
+                        Broadcast
+                    </button>
                 </div>
-                <div class="progress-bar">
+            </div>
+        </div>
+        <div class="card-body" v-else-if="userState == 'broadcasting'">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <!-- Insert Spotify Player UI -->
+                    <button class="home-btn btn btn-primary btn-block" @click="stopBroadcasting">
+                        Stop Broadcasting
+                    </button>
                 </div>
-                <div class="track-progress">
-                    {{ progress }}
+            </div>
+        </div>
+        <div class="card-body" v-else-if="userState == 'listening'">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <button class="home-btn btn btn-primary btn-block" @click="stopListening">
+                        Stop Listening
+                    </button>
                 </div>
-                <div class="track-duration">
-                    {{ duration }}
-                </div>
-            </form>
-<!--             <button v-on:click="getUserData">
-                getUserData
-            </button> -->
+            </div>
         </div>
     </div>
 </template>
@@ -41,6 +45,8 @@
 
         data() {
             return {
+                userState: "idle",
+                hasBroadcaster: false,
                 deviceId: "",
                 isPlaying: false,
                 progress: "0:00",
@@ -96,6 +102,18 @@
                     .catch(function(error) {
                         console.error(error);
                     });
+            },
+            beginBroadcasting() {
+                this.userState = "broadcasting";
+            },
+            stopBroadcasting() {
+                this.userState = "idle";
+            },
+            beginListening() {
+                this.userState = "listening";
+            },
+            stopListening() {
+                this.userState = "idle";
             }
         },
     }

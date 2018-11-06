@@ -9,8 +9,7 @@ class Room extends Model
     protected $fillable = [
         'id',
         'name',
-        'password',
-        'playlist_id'
+        'password'
     ];
 
     protected $hidden = [

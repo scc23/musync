@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Socialite;
+use SpotifyWebAPI;
 
 class LoginController extends Controller
 {
@@ -75,6 +76,12 @@ class LoginController extends Controller
         }
         $authUser = $this->userFindOrCreate($spotifyUser);
         auth()->login($authUser, true);
+
+        // Create an empty MuSync playlist for the user
+        $api = new SpotifyWebAPI\SpotifyWebAPI();
+        $api->setAccessToken(Auth::user()->api_token);
+        $api->createPlaylist(['name' => 'MuSync']);
+
         return redirect()->to('/home');
     }
 

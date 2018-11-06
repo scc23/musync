@@ -18,7 +18,6 @@ class CreateRoomsTable extends Migration
             $table->timestamps();
             $table->string('name')->unique();
             $table->string('password');
-            $table->string('playlist_id');
         });
     }
 

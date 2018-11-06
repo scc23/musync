@@ -69,12 +69,12 @@
         props: {
             "accessToken": String,
             "csrfToken": String,
-            "spotifyId": String,
-            "playlistId": String
+            "spotifyId": String
         },
 
         data() {
             return {
+                playlistId: "",
                 userState: "idle",
                 hasBroadcaster: false,
                 isPlaying: false,
@@ -84,6 +84,20 @@
         },
 
         methods: {
+            // Get the MuSync playlist id from the user's playlists
+            init() {
+                spotifyApi.setAccessToken(this.accessToken);
+                spotifyApi.getUserPlaylists(this.spotifyId)
+                    .then(function(data) {
+                        console.log(data.items[0].id);
+                        this.playlistId = data.items[0].id;
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
+                    })
+
+                return this.playlistId;
+            },
             togglePlayPauseBtn() {
                 if (!this.isPlaying) {
                     console.log("spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId);
@@ -124,6 +138,20 @@
                 this.userState = "idle";
             }
         },
+        mounted() {
+            this.init();
+        },
+        computed: {
+            getPlaylistId() {
+                spotifyApi.setAccessToken(this.accessToken);
+                spotifyApi.getUserPlaylists(this.spotifyId)
+                    .then(function(data) {
+
+                    })
+
+                return this.playlistId;
+            }
+        }
     }
 </script>
 

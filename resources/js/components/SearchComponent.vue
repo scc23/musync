@@ -35,12 +35,13 @@
     export default {
         props: {
             "accessToken": String,
-            "playlistId": String
+            "spotifyId": String
         },
 
         data() {
             return {
                 trackUris: [],
+                playlistId: ""
             }
         },
 
@@ -68,6 +69,20 @@
         },
 
         methods: {
+            // Get the MuSync playlist id from the user's playlists
+            init() {
+                spotifyApi.setAccessToken(this.accessToken);
+                spotifyApi.getUserPlaylists(this.spotifyId)
+                    .then(function(data) {
+                        console.log(data.items[0].id);
+                        this.playlistId = data.items[0].id;
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
+                    })
+
+                return this.playlistId;
+            },
             // Fetch tracks from a genre and add them to the room's playlist
             fetchTracks(e) {
                 var genre = e.target.value;
@@ -97,7 +112,6 @@
                         console.error(error);
                     });
             }
-
             // Functions for search feature
             // Search for albums
             // searchAlbums: _.debounce(function(query, callback) {
@@ -132,6 +146,9 @@
             //         }
             //     });
             // }, 500)
+        },
+        mounted() {
+            this.init();
         }
     }
 </script>

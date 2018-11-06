@@ -7,8 +7,6 @@ use App\RoomHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
-use Auth;
-use SpotifyWebAPI;
 
 class RoomAPIController extends Controller
 {
@@ -48,18 +46,11 @@ class RoomAPIController extends Controller
             return response()->json(["createNameError" => $error], Response::HTTP_BAD_REQUEST);
         }
 
-        // Create an empty collaborative playlist for the room
-        $api = new SpotifyWebAPI\SpotifyWebAPI();
-        $api->setAccessToken(Auth::user()->api_token);
-        // Save playlist id in the room table
-        $playlistData = $api->createPlaylist(['name' => 'MuSync', 'public' => false, 'collaborative' => true]);
-
         $password = isset($body['password']) ? $body['password'] : '';
         $room = Room::create([
             'id' => RoomHelper::generateNewRoomID(),
             'name' => $name,
-            'password' => empty($password) ? '' : Hash::make($password),
-            'playlist_id' => $playlistData->id
+            'password' => empty($password) ? '' : Hash::make($password)
         ]);
         RoomHelper::createMembership($room, $password);
 

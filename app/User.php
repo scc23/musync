@@ -30,4 +30,14 @@ class User extends Authenticatable
     protected $hidden = [
         'remember_token',
     ];
+
+    /**
+    * A user can have many messages
+    * Adding this in User for now. Will test later.
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }    
 }

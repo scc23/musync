@@ -4,7 +4,7 @@
 <template>
     <div class="chat-messages">
         <ul class="chat">
-            <li class="left clearfix" v-for="message in dummyMessages">
+            <!-- <li class="left clearfix" v-for="message in dummyMessages">
                 <div class="chat-body clearfix">
                     <div class="header">
                         <strong class="primary-font">
@@ -15,6 +15,9 @@
                         {{message.message}}
                     </p>
                 </div>
+            </li> -->
+            <li class="left clearfix" v-for="message in messages">
+                <p> {{message.id}} {{message.user_id}} {{message.room_id}} {{message.message}}</p>
             </li>
         </ul> 
     </div>
@@ -24,8 +27,9 @@
     export default {
 
         // Dummy messages for display
-        name: 'dummyMessages',
-    
+        //name: 'dummyMessages',
+        props: ['messages'],
+        /*
         data(){
             return {
                 dummyMessages: [
@@ -47,7 +51,7 @@
                     },
                 ]
             }
-        }
+        } */
     }
 </script>
 

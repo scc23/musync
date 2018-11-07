@@ -33,6 +33,13 @@ class LoginController extends Controller
     protected $redirectTo = '/home';
 
     /**
+     * SpotifyWebAPI instancea.
+     *
+     * @var object
+     */
+    private $api;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -40,6 +47,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $this->api = new SpotifyWebAPI\SpotifyWebAPI();
     }
 
     /**
@@ -77,10 +85,18 @@ class LoginController extends Controller
         $authUser = $this->userFindOrCreate($spotifyUser);
         auth()->login($authUser, true);
 
-        // Create an empty MuSync playlist for the user
-        $api = new SpotifyWebAPI\SpotifyWebAPI();
-        $api->setAccessToken(Auth::user()->api_token);
-        $api->createPlaylist(['name' => 'MuSync']);
+        // Create an empty MuSync playlist for the user if it doesn't exist
+        $playlistExists = false;
+        $this->api->setAccessToken(Auth::user()->api_token);
+        $playlists = $this->api->getUserPlaylists(Auth::user()->spotify_id);
+        foreach ($playlists->items as $playlist) {
+            if ($playlist->name == 'MuSync') {
+                $playlistExists = true;
+            }
+        }
+        if (!$playlistExists) {
+            $api->createPlaylist(['name' => 'MuSync']);
+        }
 
         return redirect()->to('/home');
     }

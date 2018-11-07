@@ -89,13 +89,17 @@
                 spotifyApi.setAccessToken(this.accessToken);
                 spotifyApi.getUserPlaylists(this.spotifyId)
                     .then(function(data) {
-                        console.log(data.items[0].id);
-                        this.playlistId = data.items[0].id;
+                        // Find MuSync playlist
+                        for (var i = 0; i < data.items.length; i++) {
+                            if (data.items[i].name == "MuSync") {
+                                console.log(data.items[i].id);
+                                this.playlistId = data.items[i].id;
+                            }
+                        }
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                     })
-
                 return this.playlistId;
             },
             togglePlayPauseBtn() {

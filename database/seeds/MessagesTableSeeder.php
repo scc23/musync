@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class MessageTableSeeder extends Seeder
+class MessagesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,7 @@ class MessageTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Message::class, 8)->create();
+        // Seed 20 random messages
+        $messages = factory(App\Message::class, 20)->create();
     }
 }

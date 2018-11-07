@@ -3,10 +3,14 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Message::class, function (Faker $faker) {
+
+    // Choose a random room-user membership
+    $membership = App\RoomMembership::inRandomOrder()->first();
+    
     return [
-        'id' => rand(1,99),
-        'user_id' => rand(1,99),
-        'room_id' => str_random(4),
+        'id' => $faker->unique()->randomNumber(),
+        'user_id' => $membership->user_id,
+        'room_id' => $membership->room_id,
         'message' => $faker->realText(rand(10,60)),
     ];
 });

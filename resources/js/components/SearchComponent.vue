@@ -34,12 +34,14 @@
     var spotifyApi = new SpotifyWebApi();
     export default {
         props: {
-            "accessToken": String
+            "accessToken": String,
+            "spotifyId": String
         },
 
         data() {
             return {
-                tracks: []
+                trackUris: [],
+                playlistId: ""
             }
         },
 
@@ -67,37 +69,55 @@
         },
 
         methods: {
-            // Save the data of the fetched tracks in an array
-            // saveTracks(response) {
-            //     for (var i = 0; i < response.tracks.length; i++) {
-            //         this.tracks.push(response.tracks[i]);
-            //     }
-            //     console.log(this.tracks);
-            // },
-
-            // Fetch the recommended tracks of the selected genre from the Spotify
+            // Get the MuSync playlist id from the user's playlists
+            init() {
+                spotifyApi.setAccessToken(this.accessToken);
+                spotifyApi.getUserPlaylists(this.spotifyId)
+                    .then(function(data) {
+                        // Find MuSync playlist
+                        for (var i = 0; i < data.items.length; i++) {
+                            if (data.items[i].name == "MuSync") {
+                                console.log(data.items[i].id);
+                                this.playlistId = data.items[i].id;
+                            }
+                        }
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
+                    })
+                return this.playlistId;
+            },
+            // Fetch tracks from a genre and add them to the room's playlist
             fetchTracks(e) {
                 var genre = e.target.value;
+                this.trackUris = [];
                 console.log("Genre selected: " + genre);
                 spotifyApi.setAccessToken(this.accessToken);
+
                 spotifyApi.getRecommendations({seed_genres: genre})
                     .then(function(data) {
-                        return data.tracks.map(function(t) { return t.id });
+                        return data.tracks.map(function(t) { return t.uri });
                     })
-                    .then(function(trackIds) {
-                        return spotifyApi.getTracks(trackIds);
-                    })
-                    .then(function(tracksInfo) {
-                        console.log(tracksInfo);
-                    })
+                    .then(function(trackUris) {
+                        for (var i = 0; i < trackUris.length; i++) {
+                            this.trackUris.push(trackUris[i]);
+                            console.log(this.trackUris[i]);
+                        }
+                        // Replace tracks in playlist with updated tracks
+                        spotifyApi.replaceTracksInPlaylist(this.playlistId, trackUris)
+                            .then(function(data) {
+                                console.log(data);
+                            })
+                            .catch(function(error) {
+                                console.error(error);
+                            })
+                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                     });
-
             }
-
             // Functions for search feature
-            // Function to search for albums
+            // Search for albums
             // searchAlbums: _.debounce(function(query, callback) {
             //     $.ajax({
             //         url: "https://api.spotify.com/v1/search",
@@ -114,7 +134,7 @@
             //     });
             // }, 500),
 
-            // Function to search for artists
+            // Search for artists
             // searchArtists: _.debounce(function(query, callback) {
             //     $.ajax({
             //         url: "https://api.spotify.com/v1/search",
@@ -131,9 +151,24 @@
             //     });
             // }, 500)
         },
-
-        computed: {
-            //
+        mounted() {
+            this.init();
         }
     }
 </script>
+
+<style scoped>
+    .genre-type {
+        background: none;
+        border: none;
+        cursor: pointer;
+        opacity: 1;
+        transition: opacity .5s ease-out;
+        -moz-transition: opacity .5s ease-out;
+        -webkit-transition: opacity .5s ease-out;
+        -o-transition: opacity .5s ease-out;
+    }
+    .genre-type:hover {
+        opacity: 0.5;
+    }
+</style>

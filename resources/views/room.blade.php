@@ -11,10 +11,10 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                            <search-component access-token="{{ Auth::user()->api_token }}"></search-component>
+                            <search-component access-token="{{ Auth::user()->api_token }}" spotify-id="{{ Auth::user()->spotify_id }}"></search-component>
                         </div>
                         <div class ="col-4">
-                            <spotify-player-component csrf-token="{{csrf_token()}}" access-token="{{Auth::user()->api_token}}"></spotify-player-component>
+                            <spotify-player-component csrf-token="{{csrf_token()}}" access-token="{{Auth::user()->api_token}}" spotify-id="{{ Auth::user()->spotify_id }}"></spotify-player-component>
                             <playlist-component csrf-token="{{csrf_token()}}"></playlist-component>
                         </div>
                         <div class="col-4"> 

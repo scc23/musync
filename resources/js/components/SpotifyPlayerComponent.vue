@@ -1,31 +1,63 @@
 <template>
-    <div class="spotify-player">
-        <div class="bottom-controls">
-            <form method="POST" action="/updateState">
-                <div class="btn-group">
-                    <div v-if="!isPlaying">
-                        <button class="btn btn-lg" type="button" v-on:click="togglePlayPauseBtn">
-                            <font-awesome-icon icon="play-circle"/>
-                        </button>
+    <div class="card">
+        <div class="card-body" v-if="userState == 'idle'">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <button class="home-btn btn btn-primary btn-block" v-if="hasBroadcaster" @click="beginListening">
+                        Listen
+                    </button>
+                    <button class="home-btn btn btn-primary btn-block" v-else @click="beginBroadcasting">
+                        Broadcast
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" v-else-if="userState == 'broadcasting'">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="row justify-content-center">
+                        Currently Playing Song
                     </div>
-                    <div v-if="isPlaying">
-                        <button class="btn btn-lg" type="button" v-on:click="togglePlayPauseBtn">
-                            <font-awesome-icon icon="pause-circle"/>
-                        </button>
-                    </div>
+                    <form method="POST" action="/updateState">
+                        <div class="row justify-content-start form-group">
+                            <div class="col-sm-2">
+                                <div v-if="!isPlaying">
+                                    <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
+                                        <font-awesome-icon icon="play-circle"/>
+                                    </button>
+                                </div>
+                                <div v-if="isPlaying">
+                                    <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
+                                        <font-awesome-icon icon="pause-circle"/>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="track-progress">
+                                    {{ progress }}
+                                </div>
+                                <div class="progress-bar">
+                                </div>
+                                <div class="track-duration">
+                                    {{ duration }}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <button class="home-btn btn btn-primary btn-block" @click="stopBroadcasting">
+                        Stop Broadcasting
+                    </button>
                 </div>
-                <div class="progress-bar">
+            </div>
+        </div>
+        <div class="card-body" v-else-if="userState == 'listening'">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-8">
+                    <button class="home-btn btn btn-primary btn-block" @click="stopListening">
+                        Stop Listening
+                    </button>
                 </div>
-                <div class="track-progress">
-                    {{ progress }}
-                </div>
-                <div class="track-duration">
-                    {{ duration }}
-                </div>
-            </form>
-<!--             <button v-on:click="getUserData">
-                getUserData
-            </button> -->
+            </div>
         </div>
     </div>
 </template>
@@ -41,7 +73,8 @@
 
         data() {
             return {
-                deviceId: "",
+                userState: "idle",
+                hasBroadcaster: false,
                 isPlaying: false,
                 progress: "0:00",
                 duration: "0:00",
@@ -65,18 +98,6 @@
                     else console.log(data);
                 });
                 this.isPlaying = true;
-            //     // Send request to server
-            //     $.ajax({
-            //         type: "POST",
-            //         url: "/updateState",
-            //         data: {_token: this.csrfToken},
-            //         success:function() {
-            //             console.log("data sent to server!");
-            //         },
-            //         error:function(data, textStatus, errorThrown) {
-            //             console.log(data);
-            //         }
-            //     });
             },
             pause() {
                 spotifyApi.setAccessToken(this.accessToken);
@@ -86,16 +107,17 @@
                 });
                 this.isPlaying = false;
             },
-            getUserData() {
-                spotifyApi.setAccessToken(this.accessToken);
-                spotifyApi.getMyDevices()
-                    .then(function(data) {
-                        console.log(data);
-                        this.deviceId = data["devices"][0]["id"];
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.error(error);
-                    });
+            beginBroadcasting() {
+                this.userState = "broadcasting";
+            },
+            stopBroadcasting() {
+                this.userState = "idle";
+            },
+            beginListening() {
+                this.userState = "listening";
+            },
+            stopListening() {
+                this.userState = "idle";
             }
         },
     }
@@ -103,39 +125,20 @@
 
 <style lang="scss" scoped>
 
-.spotify-player {
-    width: 100%;
-    height: 21%;
-    border-style: solid;
-}
-.spotify-player .bottom-controls {
-    position: relative;
-    width: 100%;
-    height: 35%;
-    top: 83px;
-}
-.spotify-player .bottom-controls .play-pause-btn {
-
-}
-.spotify-player .bottom-controls .progress-bar {
-    position: relative;
+.progress-bar {
     height: 10px;
-    width: 60%;
-    left: 40px;
+    width: 71%;
     border-radius: 6px;
     display: inline-block;
 }
-.spotify-player .bottom-controls .track-progress {
-    position: absolute;
-    left: 60px;
-    bottom: 10px;
-    text-align: center;
+.track-progress {
+    display: inline-block;
 }
-.spotify-player .bottom-controls .track-duration {
-    position: absolute;
-    left: 300px;
-    bottom: 10px;
-    text-align: center;
+.track-duration {
+    display: inline-block;
+}
+.play-pause-btn {
+    border: none;
 }
 
 </style>

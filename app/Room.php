@@ -24,4 +24,9 @@ class Room extends Model
     {
         return $this->hasMany('App\RoomMembership');
     }
+
+    public function broadcaster()
+    {
+        return $this->hasOne('App\RoomBroadcaster');
+    }
 }

@@ -27,7 +27,7 @@
                                     </button>
                                 </div>
                                 <div v-if="isPlaying">
-                                    <button type="button" v-on:click="togglePlayPauseBtn">
+                                    <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
                                         <font-awesome-icon icon="pause-circle"/>
                                     </button>
                                 </div>

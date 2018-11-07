@@ -17,3 +17,6 @@ Route::get('/rooms', 'RoomAPIController@getAllRooms');
 Route::post('/rooms', 'RoomAPIController@createRoom');
 Route::get('/room/{id}', 'RoomAPIController@getRoomById');
 Route::post('/room/{id}/membership', 'RoomMembershipAPIController@joinRoom');
+Route::get('/room/{id}/broadcast', 'RoomBroadcastAPIController@getBroadcaster');
+Route::post('/room/{id}/broadcast', 'RoomBroadcastAPIController@beginBroadcast');
+Route::delete('/room/{id}/broadcast', 'RoomBroadcastAPIController@stopBroadcast');

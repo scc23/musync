@@ -95,7 +95,7 @@ class LoginController extends Controller
             }
         }
         if (!$playlistExists) {
-            $api->createPlaylist(['name' => 'MuSync']);
+            $this->api->createPlaylist(['name' => 'MuSync']);
         }
 
         return redirect()->to('/home');

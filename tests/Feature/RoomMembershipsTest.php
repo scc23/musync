@@ -8,13 +8,19 @@ use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Hash;
 
 class RoomMembershipsTest extends TestCase
 {
     use RefreshDatabase;
+
+    private function createRoomWithPassword($password)
+    {
+        return factory(Room::class)->create([
+            'password' => Hash::make($password)
+        ]);
+    }
 
     /**
      * Test that a RoomMembership is created when a Room is created.
@@ -26,7 +32,7 @@ class RoomMembershipsTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->assertTrue(RoomMembership::count() == 0);
-        $this->withHeaders([
+        $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$user->api_token
         ])->json('POST', '/api/rooms', [
             'name' => 'Test Room'
@@ -46,7 +52,7 @@ class RoomMembershipsTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $this->withHeaders([
+        $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$user->api_token
         ])->json('POST', '/api/rooms', [
             'name' => 'Test Room',
@@ -64,10 +70,7 @@ class RoomMembershipsTest extends TestCase
      */
     public function testRoomMembershipNotAuthorized()
     {
-        $room = factory(Room::class)->create([
-            'password' => Hash::make('Test Password')
-        ]);
-
+        $room = $this->createRoomWithPassword('Test Password');
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user)
@@ -83,6 +86,25 @@ class RoomMembershipsTest extends TestCase
     {
         $room = factory(Room::class)->create();
         $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)
+                         ->call('GET', '/room/'.$room->id);
+        $response->assertOk();
+        $this->assertDatabaseHas('room_memberships',
+            ['room_id' => $room->id, 'user_id' => $user->id]);
+    }
+
+    /**
+     * Test that a user who has joined a private room can directly fetch
+     * the room via the direct URL (i.e., GET /room/{id}).
+     */
+    public function testGetPrivateRoom()
+    {
+        $room = $this->createRoomWithPassword('Test Password');
+        $user = factory(User::class)->create();
+        $room_membership = factory(RoomMembership::class)->create([
+            'room_id' => $room->id, 'user_id' => $user->id
+        ]);
 
         $response = $this->actingAs($user)
                          ->call('GET', '/room/'.$room->id);
@@ -113,9 +135,7 @@ class RoomMembershipsTest extends TestCase
      * Test that a user who has not joined a private room is not authorized.
      */
     public function testJoinPrivateRoom() {
-        $room = factory(Room::class)->create([
-            'password' => Hash::make('Test Password')
-        ]);
+        $room = $this->createRoomWithPassword('Test Password');
         $user = factory(User::class)->create();
 
         $room = Room::first();
@@ -136,9 +156,7 @@ class RoomMembershipsTest extends TestCase
      * invalid password).
      */
     public function testJoinPrivateRoomWithWrongPassword() {
-        $room = factory(Room::class)->create([
-            'password' => Hash::make('Test Password')
-        ]);
+        $room = $this->createRoomWithPassword('Test Password');
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user)->withHeaders([

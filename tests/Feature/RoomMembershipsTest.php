@@ -9,11 +9,18 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Hash;
 
 class RoomMembershipsTest extends TestCase
 {
     use RefreshDatabase;
+
+    private function createRoomWithPassword($password)
+    {
+        return factory(Room::class)->create([
+            'password' => Hash::make($password)
+        ]);
+    }
 
     /**
      * Test that a RoomMembership is created when a Room is created.
@@ -25,7 +32,7 @@ class RoomMembershipsTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->assertTrue(RoomMembership::count() == 0);
-        $this->withHeaders([
+        $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$user->api_token
         ])->json('POST', '/api/rooms', [
             'name' => 'Test Room'
@@ -45,7 +52,7 @@ class RoomMembershipsTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $this->withHeaders([
+        $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$user->api_token
         ])->json('POST', '/api/rooms', [
             'name' => 'Test Room',
@@ -63,18 +70,10 @@ class RoomMembershipsTest extends TestCase
      */
     public function testRoomMembershipNotAuthorized()
     {
-        $user1 = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
+        $room = $this->createRoomWithPassword('Test Password');
+        $user = factory(User::class)->create();
 
-        $this->withHeaders([
-            'Authorization' => 'Bearer '.$user1->api_token
-        ])->json('POST', '/api/rooms', [
-            'name' => 'Test Room',
-            'password' => 'Test Password'
-        ]);
-
-        $room = Room::first();
-        $response = $this->actingAs($user2)
+        $response = $this->actingAs($user)
                          ->call('GET', '/room/'.$room->id);
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
@@ -85,21 +84,33 @@ class RoomMembershipsTest extends TestCase
      */
     public function testGetPublicRoom()
     {
-        $user1 = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
+        $room = factory(Room::class)->create();
+        $user = factory(User::class)->create();
 
-        $this->withHeaders([
-            'Authorization' => 'Bearer '.$user1->api_token
-        ])->json('POST', '/api/rooms', [
-            'name' => 'Test Room',
-        ]);
-
-        $room = Room::first();
-        $response = $this->actingAs($user2)
+        $response = $this->actingAs($user)
                          ->call('GET', '/room/'.$room->id);
         $response->assertOk();
         $this->assertDatabaseHas('room_memberships',
-            ['room_id' => $room->id, 'user_id' => $user2->id]);
+            ['room_id' => $room->id, 'user_id' => $user->id]);
+    }
+
+    /**
+     * Test that a user who has joined a private room can directly fetch
+     * the room via the direct URL (i.e., GET /room/{id}).
+     */
+    public function testGetPrivateRoom()
+    {
+        $room = $this->createRoomWithPassword('Test Password');
+        $user = factory(User::class)->create();
+        $room_membership = factory(RoomMembership::class)->create([
+            'room_id' => $room->id, 'user_id' => $user->id
+        ]);
+
+        $response = $this->actingAs($user)
+                         ->call('GET', '/room/'.$room->id);
+        $response->assertOk();
+        $this->assertDatabaseHas('room_memberships',
+            ['room_id' => $room->id, 'user_id' => $user->id]);
     }
 
     /**
@@ -107,50 +118,36 @@ class RoomMembershipsTest extends TestCase
      */
     public function testJoinPublicRoom()
     {
-        $user1 = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
+        $room = factory(Room::class)->create();
+        $user = factory(User::class)->create();
 
-        $this->withHeaders([
-            'Authorization' => 'Bearer '.$user1->api_token
-        ])->json('POST', '/api/rooms', [
-            'name' => 'Test Room',
-        ]);
-
-        $room = Room::first();
-        $response = $this->actingAs($user2)->withHeaders([
-            'Authorization' => 'Bearer '.$user2->api_token
+        $response = $this->actingAs($user)->withHeaders([
+            'Authorization' => 'Bearer '.$user->api_token
         ])->json('POST', '/api/room/'.$room->id.'/membership', [
             'name' => 'Test Room',
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('room_memberships',
-            ['room_id' => $room->id, 'user_id' => $user2->id]);
+            ['room_id' => $room->id, 'user_id' => $user->id]);
     }
 
     /**
      * Test that a user who has not joined a private room is not authorized.
      */
     public function testJoinPrivateRoom() {
-        $user1 = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
-
-        $this->withHeaders([
-            'Authorization' => 'Bearer '.$user1->api_token
-        ])->json('POST', '/api/rooms', [
-            'name' => 'Test Room',
-            'password' => 'Test Password'
-        ]);
+        $room = $this->createRoomWithPassword('Test Password');
+        $user = factory(User::class)->create();
 
         $room = Room::first();
-        $response = $this->actingAs($user2)->withHeaders([
-            'Authorization' => 'Bearer '.$user2->api_token
+        $response = $this->actingAs($user)->withHeaders([
+            'Authorization' => 'Bearer '.$user->api_token
         ])->json('POST', '/api/room/'.$room->id.'/membership', [
             'password' => 'Test Password'
         ]);
 
         $response->assertOk();
         $this->assertDatabaseHas('room_memberships',
-            ['room_id' => $room->id, 'user_id' => $user2->id]);
+            ['room_id' => $room->id, 'user_id' => $user->id]);
     }
 
     /**
@@ -159,19 +156,11 @@ class RoomMembershipsTest extends TestCase
      * invalid password).
      */
     public function testJoinPrivateRoomWithWrongPassword() {
-        $user1 = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
+        $room = $this->createRoomWithPassword('Test Password');
+        $user = factory(User::class)->create();
 
-        $this->withHeaders([
-            'Authorization' => 'Bearer '.$user1->api_token
-        ])->json('POST', '/api/rooms', [
-            'name' => 'Test Room',
-            'password' => 'Test Password'
-        ]);
-
-        $room = Room::first();
-        $response = $this->actingAs($user2)->withHeaders([
-            'Authorization' => 'Bearer '.$user2->api_token
+        $response = $this->actingAs($user)->withHeaders([
+            'Authorization' => 'Bearer '.$user->api_token
         ])->json('POST', '/api/room/'.$room->id.'/membership', [
             'name' => 'Test Room',
             'password' => 'Wrong Password'

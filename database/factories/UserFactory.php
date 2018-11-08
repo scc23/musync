@@ -15,7 +15,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     return [
-    	'spotify_id' => $faker->name,
+        'spotify_id' => $faker->name,
         'name' => $faker->name,
         'api_token' => str_random(10),
         'refresh_token' => str_random(10),

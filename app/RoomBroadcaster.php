@@ -13,6 +13,8 @@ class RoomBroadcaster extends Model
 
     protected $primaryKey = 'room_id';
 
+    public $incrementing = false;
+
     public function room()
     {
         return $this->belongsTo('App\Room');

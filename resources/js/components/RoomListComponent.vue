@@ -2,12 +2,11 @@
     <div class="row justify-content-center mb-3">
         <div class="col-12 col-sm-6">
             <ul class='list-group border'>
-                <li v-for="room in rooms" class="list-group-item list-group-item-action">
-                    <div class="room-identification">
-                        <div class="room-name">{{room.name}}</div>
-                        <div class="room-id">{{room.id}}</div>
-                    </div>
-                    <span class="room-privacy-indicator"><!-- Icon --></span>
+                <li class="list-group-item list-group-item-action" v-for="room in rooms">
+                    <room-listing-component v-bind:room-id="room.id"
+                                            v-bind:room-name="room.name"
+                                            v-bind:is-private="room.isPrivate">
+                    </room-listing-component>
                 </li>
             </ul>
         </div>
@@ -16,6 +15,9 @@
 
 <script>
     export default {
+        components: {
+            'room-listing-component': require('./RoomListingComponent.vue')
+        },
         props: {
             "csrfToken": String,
             "accessToken": String
@@ -61,17 +63,5 @@
         border-bottom: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-    }
-
-    .room-identification {
-        float: left;
-    }
-
-    .room-name {
-        font-weight: bold
-    }
-
-    .room-privacy-indicator {
-        float: right;
     }
 </style>

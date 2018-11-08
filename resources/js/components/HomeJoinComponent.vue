@@ -18,6 +18,8 @@
                     <span class="help-block">{{joinPasswordError}}</span>
                 </div>
             </div>
+            <room-list-component csrf-token="csrfToken" access-token="accessToken">
+            </room-list-component>
             <div class="row justify-content-center mb-2">
                 <div class="col-12 col-sm-6">
                     <input type="submit" class="home-btn btn btn-primary btn-block" value="Join">
@@ -36,6 +38,9 @@
 
 <script>
     export default {
+      components: {
+          'room-list-component': require('./RoomListComponent.vue')
+      },
       props: {
           "csrfToken": String,
           "accessToken": String

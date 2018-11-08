@@ -6,7 +6,6 @@
         </div>
         <span class="room-access-indicator">
           <font-awesome-icon icon="lock" v-if="!hasAccess"/>
-          <!-- <font-awesome-icon icon="unlock" v-else/> -->
         </span>
     </div>
 </template>

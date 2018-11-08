@@ -25,7 +25,7 @@ class RoomAPIController extends Controller
      */
     public function getAllRooms(Request $request) {
         $rooms = Room::all();
-        return response()->json($payload, Response::HTTP_OK);
+        return response()->json($rooms, Response::HTTP_OK);
     }
 
     /**

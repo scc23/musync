@@ -2,10 +2,11 @@
     <div class="row justify-content-center mb-3">
         <div class="col-12 col-sm-6">
             <ul class='list-group border'>
-                <li class="list-group-item list-group-item-action" v-for="room in rooms" @click="joinRoom(room.id)">
+                <li class="list-group-item list-group-item-action" v-for="room in rooms"
+                                                                   @click="joinRoom(room.id, room.hasAccess)">
                     <room-listing-component v-bind:room-id="room.id"
                                             v-bind:room-name="room.name"
-                                            v-bind:is-private="room.isPrivate">
+                                            v-bind:has-access="room.hasAccess">
                     </room-listing-component>
                 </li>
             </ul>
@@ -45,8 +46,8 @@
                     })
                 });
             },
-            joinRoom(id) {
-                this.$emit("join-room", id);
+            joinRoom(id, hasAccess) {
+                this.$emit("join-room", id, hasAccess);
             }
         },
         created() {

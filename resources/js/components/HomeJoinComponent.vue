@@ -67,6 +67,11 @@
             clearRoomPasswordError() {
                 this.joinPasswordError = "";
             },
+            indicateRoomHasPassword() {
+                this.joinPassword = "";
+                this.joinHasPassword = true;
+                this.joinPasswordError = "This room is a private room, enter the password."
+            },
             validateInput() {
                 var isValid = true;
 
@@ -100,16 +105,21 @@
                         if (this.joinHasPassword && body['joinPasswordError']) {
                             this.joinPasswordError = body['joinPasswordError'];
                         } else if (body['joinPasswordError']) {
-                            this.joinPassword = "";
-                            this.joinHasPassword = true;
-                            this.joinPasswordError = "This room is a private room, enter the password."
+                            this.indicateRoomHasPassword();
                         }
                     });
                 }
             },
-            setIdAndSubmit(id) {
+            setIdAndSubmit(id, hasAccess) {
+                this.clearRoomErrors();
+                this.clearRoomPasswordError();
+
                 this.joinId = id;
-                this.submitJoin();
+                if (hasAccess) {
+                    this.submitJoin();
+                } else {
+                    this.indicateRoomHasPassword();
+                }
             }
         }
     }

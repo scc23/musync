@@ -4,9 +4,9 @@
             <div class="room-name">{{roomName}}</div>
             <div class="room-id">{{roomId}}</div>
         </div>
-        <span class="room-privacy-indicator">
-          <font-awesome-icon icon="lock" v-if="isPrivate"/>
-          <font-awesome-icon icon="unlock" v-else/>
+        <span class="room-access-indicator">
+          <font-awesome-icon icon="lock" v-if="!hasAccess"/>
+          <!-- <font-awesome-icon icon="unlock" v-else/> -->
         </span>
     </div>
 </template>
@@ -16,7 +16,7 @@
         props: {
             "roomId": String,
             "roomName": String,
-            "isPrivate": Boolean
+            "hasAccess": Boolean
         }
     }
 </script>
@@ -30,7 +30,7 @@
         font-weight: bold
     }
 
-    .room-privacy-indicator {
+    .room-access-indicator {
         float: right;
         padding-top: 10px;
     }

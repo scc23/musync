@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="room-identification">
-            <div class="room-name">{{roomId}}</div>
-            <div class="room-id">{{roomName}}</div>
+            <div class="room-name">{{roomName}}</div>
+            <div class="room-id">{{roomId}}</div>
         </div>
         <span class="room-privacy-indicator">
           <font-awesome-icon icon="lock" v-if="isPrivate"/>

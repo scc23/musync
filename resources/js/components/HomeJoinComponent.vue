@@ -18,7 +18,8 @@
                     <span class="help-block">{{joinPasswordError}}</span>
                 </div>
             </div>
-            <room-list-component csrf-token="csrfToken" access-token="accessToken">
+            <room-list-component csrf-token="csrfToken" access-token="accessToken"
+                                 v-on:join-room="setIdAndSubmit">
             </room-list-component>
             <div class="row justify-content-center mb-2">
                 <div class="col-12 col-sm-6">
@@ -38,74 +39,78 @@
 
 <script>
     export default {
-      components: {
-          'room-list-component': require('./RoomListComponent.vue')
-      },
-      props: {
-          "csrfToken": String,
-          "accessToken": String
-      },
-      data() {
-          return {
-            joinId: "",
-            joinPassword: "",
-            joinIdError: "",
-            joinPasswordError: "Join password error",
-            joinHasPassword: false
-          };
-      },
-      methods: {
-          returnLanding(event) {
-              this.$emit("set-body-component", "landing");
-          },
-          clearRoomErrors() {
-              this.joinIdError = "";
-              this.joinHasPassword = false;
-              this.clearRoomPasswordError();
-          },
-          clearRoomPasswordError() {
-              this.joinPasswordError = "";
-          },
-          validateInput() {
-              var isValid = true;
+        components: {
+            'room-list-component': require('./RoomListComponent.vue')
+        },
+        props: {
+            "csrfToken": String,
+            "accessToken": String
+        },
+        data() {
+            return {
+              joinId: "",
+              joinPassword: "",
+              joinIdError: "",
+              joinPasswordError: "Join password error",
+              joinHasPassword: false
+            };
+        },
+        methods: {
+            returnLanding(event) {
+                this.$emit("set-body-component", "landing");
+            },
+            clearRoomErrors() {
+                this.joinIdError = "";
+                this.joinHasPassword = false;
+                this.clearRoomPasswordError();
+            },
+            clearRoomPasswordError() {
+                this.joinPasswordError = "";
+            },
+            validateInput() {
+                var isValid = true;
 
-              if (!this.joinId || this.joinId.length != 4) {
-                  this.joinIdError = "The ID must be 4 characters long.";
-                  isValid = false;
-              }
+                if (!this.joinId || this.joinId.length != 4) {
+                    this.joinIdError = "The ID must be 4 characters long.";
+                    isValid = false;
+                }
 
-              if (this.joinHasPassword && this.joinPassword.length == 0) {
-                  this.joinPasswordError = "Please enter a password.";
-                  isValid = false;
-              }
+                if (this.joinHasPassword && this.joinPassword.length == 0) {
+                    this.joinPasswordError = "Please enter a password.";
+                    isValid = false;
+                }
 
-              return isValid;
-          },
-          submitJoin() {
-              if (this.validateInput()) {
-                  var roomId = this.joinId;
-                  axios.post("/api/room/" + roomId + "/membership", {
-                      password: this.joinPassword
-                  })
-                  .then((res) => {
-                      document.location.pathname = "/room/" + roomId;
-                  })
-                  .catch((err) => {
-                      var body = err.response.data;
-                      if (body['joinIdError']) {
-                          this.joinIdError = body['joinIdError'];
-                      }
+                return isValid;
+            },
+            submitJoin() {
+                if (this.validateInput()) {
+                    var roomId = this.joinId;
+                    axios.post("/api/room/" + roomId + "/membership", {
+                        password: this.joinPassword
+                    })
+                    .then((res) => {
+                        document.location.pathname = "/room/" + roomId;
+                    })
+                    .catch((err) => {
+                        var body = err.response.data;
+                        if (body['joinIdError']) {
+                            this.joinIdError = body['joinIdError'];
+                        }
 
-                      if (this.joinHasPassword && body['joinPasswordError']) {
-                          this.joinPasswordError = body['joinPasswordError'];
-                      } else if (body['joinPasswordError']) {
-                          this.joinPassword = "";
-                          this.joinHasPassword = true;
-                          this.joinPasswordError = "This room is a private room, enter the password."
-                      }
-                  });
-              }
-          },
-      }
+                        if (this.joinHasPassword && body['joinPasswordError']) {
+                            this.joinPasswordError = body['joinPasswordError'];
+                        } else if (body['joinPasswordError']) {
+                            this.joinPassword = "";
+                            this.joinHasPassword = true;
+                            this.joinPasswordError = "This room is a private room, enter the password."
+                        }
+                    });
+                }
+            },
+            setIdAndSubmit(id) {
+                this.joinId = id;
+                this.submitJoin();
+            }
+        }
     }
 </script>

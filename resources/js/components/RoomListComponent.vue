@@ -2,7 +2,7 @@
     <div class="row justify-content-center mb-3">
         <div class="col-12 col-sm-6">
             <ul class='list-group border'>
-                <li class="list-group-item list-group-item-action" v-for="room in rooms">
+                <li class="list-group-item list-group-item-action" v-for="room in rooms" @click="joinRoom(room.id)">
                     <room-listing-component v-bind:room-id="room.id"
                                             v-bind:room-name="room.name"
                                             v-bind:is-private="room.isPrivate">
@@ -24,19 +24,34 @@
         },
         data() {
             return {
-                // TODO - Remove test data
-                rooms: [
-                    {'id': "1111", 'name': 'Public 1', 'isPrivate': false},
-                    {'id': "2222", 'name': 'Public 2', 'isPrivate': false},
-                    {'id': "3333", 'name': 'Public 3', 'isPrivate': false},
-                    {'id': "4444", 'name': 'Public 4', 'isPrivate': false},
-                    {'id': "1111", 'name': 'Private 1', 'isPrivate': true},
-                    {'id': "2222", 'name': 'Private 2', 'isPrivate': true},
-                    {'id': "3333", 'name': 'Private 3', 'isPrivate': true},
-                    {'id': "4444", 'name': 'Private 4', 'isPrivate': true},
-                ]
+                rooms: []
             };
         },
+        methods: {
+            refreshList() {
+                axios.get("/api/rooms")
+                .then((res) => {
+                    this.rooms = res.data;
+
+                    // Add border-bottom to last room listing if list is not
+                    // filled until the bottom.
+                    var borderBottom = '0';
+                    if (this.rooms.length < 4) {
+                        borderBottom = '1px';
+                    }
+
+                    $('.list-group-item:last-child').css({
+                        'border-bottom': borderBottom
+                    })
+                });
+            },
+            joinRoom(id) {
+                this.$emit("join-room", id);
+            }
+        },
+        created() {
+            this.refreshList();
+        }
     }
 </script>
 
@@ -60,7 +75,6 @@
     }
 
     .list-group-item:last-child {
-        border-bottom: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
     }

@@ -44,7 +44,6 @@
     export default {
         props: {
             "csrfToken": String,
-            "accessToken": String
         },
         data() {
             return {

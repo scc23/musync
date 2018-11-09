@@ -18,7 +18,7 @@
                     <span class="help-block">{{joinPasswordError}}</span>
                 </div>
             </div>
-            <room-list-component csrf-token="csrfToken" access-token="accessToken"
+            <room-list-component csrf-token="csrfToken"
                                  v-on:join-room="setIdAndSubmit">
             </room-list-component>
             <div class="row justify-content-center mb-2">
@@ -44,7 +44,6 @@
         },
         props: {
             "csrfToken": String,
-            "accessToken": String
         },
         data() {
             return {

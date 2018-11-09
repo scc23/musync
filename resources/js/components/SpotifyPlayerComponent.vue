@@ -21,16 +21,14 @@
                     <form method="POST" action="/updateState">
                         <div class="row justify-content-start form-group">
                             <div class="col-sm-2">
-                                <div v-if="!isPlaying">
-                                    <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
+                                <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
+                                    <div v-if="!isPlaying">
                                         <font-awesome-icon icon="play-circle"/>
-                                    </button>
-                                </div>
-                                <div v-if="isPlaying">
-                                    <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
+                                    </div>
+                                    <div v-if="isPlaying">
                                         <font-awesome-icon icon="pause-circle"/>
-                                    </button>
-                                </div>
+                                    </div>
+                                </button>
                             </div>
                             <div class="col">
                                 <div class="track-progress">
@@ -115,19 +113,23 @@
                 // Play the room creator's playlist associated with the room
                 spotifyApi.play({
                     "device_id": this.spotifyDeviceId,
-                    "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId
-                }, function(err, data) {
-                    if (err) console.error(err);
-                    else console.log(data);
-                });
-                this.isPlaying = true;
+                    "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId})
+                    .then(function(data) {
+                        this.isPlaying = true;
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
+                    })
             },
             pause() {
-                spotifyApi.pause(function(err, data) {
-                    if (err) console.error(err);
-                    else console.log(data);
-                });
-                this.isPlaying = false;
+                spotifyApi.setAccessToken(this.accessToken);
+                spotifyApi.pause()
+                    .then(function(data) {
+                        this.isPlaying = false;
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(err);
+                    })
             },
             beginBroadcasting() {
                 this.userState = "broadcasting";

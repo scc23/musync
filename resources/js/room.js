@@ -2,10 +2,10 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlayCircle, faPauseCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlayCircle, faPauseCircle, faStepForward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faPlayCircle, faPauseCircle);
+library.add(faPlayCircle, faPauseCircle, faStepForward);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 

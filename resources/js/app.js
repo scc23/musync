@@ -2,12 +2,19 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlayCircle, faPauseCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faLock, faPlayCircle, faPauseCircle } from '@fortawesome/free-solid-svg-icons';
+library.add(faLock, faPlayCircle, faPauseCircle);
 
-library.add(faPlayCircle, faPauseCircle);
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
+
+const homeApp = new Vue({
+    el: "#home-app",
+    components: {
+        'home-component': require('./components/HomeComponent.vue')
+    }
+});
 
 const roomApp = new Vue({
     el: '#room-app',

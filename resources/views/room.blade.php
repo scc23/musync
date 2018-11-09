@@ -2,9 +2,7 @@
 
 @section('title', 'Room')
 
-@section ('content')
-<script src="{{ asset('js/room.js') }}" defer></script>
-
+@section('content')
 <div id="room-app">
     <room-component room-name="{{$room->name}}"
                     room-id="{{$room->id}}"

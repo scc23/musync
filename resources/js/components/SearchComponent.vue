@@ -30,6 +30,7 @@
 </template>
 
 <script>
+    import axios from "axios";
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
     export default {
@@ -71,19 +72,25 @@
         methods: {
             // Get the MuSync playlist id from the user's playlists
             init() {
-                spotifyApi.setAccessToken(this.accessToken);
                 spotifyApi.getUserPlaylists(this.spotifyId)
                     .then(function(data) {
                         // Find MuSync playlist
                         for (var i = 0; i < data.items.length; i++) {
                             if (data.items[i].name == "MuSync") {
-                                console.log(data.items[i].id);
                                 this.playlistId = data.items[i].id;
                             }
                         }
                     }.bind(this))
                     .catch(function(error) {
-                        console.error(error);
+                        axios.post("/api/token/refresh")
+                        .then((res) => {
+                            spotifyApi.setAccessToken(res.data.api_token);
+                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
+                            console.log("Access token refreshed.");
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
                     })
                 return this.playlistId;
             },
@@ -92,7 +99,6 @@
                 var genre = e.target.value;
                 this.trackUris = [];
                 console.log("Genre selected: " + genre);
-                spotifyApi.setAccessToken(this.accessToken);
 
                 spotifyApi.getRecommendations({seed_genres: genre})
                     .then(function(data) {
@@ -101,19 +107,26 @@
                     .then(function(trackUris) {
                         for (var i = 0; i < trackUris.length; i++) {
                             this.trackUris.push(trackUris[i]);
-                            console.log(this.trackUris[i]);
                         }
                         // Replace tracks in playlist with updated tracks
                         spotifyApi.replaceTracksInPlaylist(this.playlistId, trackUris)
                             .then(function(data) {
-                                console.log(data);
+                                console.log("Tracks added to playlist.");
                             })
                             .catch(function(error) {
                                 console.error(error);
                             })
                     }.bind(this))
                     .catch(function(error) {
-                        console.error(error);
+                        axios.post("/api/token/refresh")
+                        .then((res) => {
+                            spotifyApi.setAccessToken(res.data.api_token);
+                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
+                            console.log("Access token refreshed.");
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
                     });
             }
             // Functions for search feature
@@ -152,12 +165,14 @@
             // }, 500)
         },
         mounted() {
+            spotifyApi.setAccessToken(this.accessToken);
+            axios.defaults.headers.common["Authorization"] = "Bearer " + this.accessToken;
             this.init();
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .genre-type {
         background: none;
         border: none;

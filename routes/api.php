@@ -20,3 +20,4 @@ Route::post('/room/{id}/membership', 'RoomMembershipAPIController@joinRoom');
 Route::get('/room/{id}/broadcast', 'RoomBroadcastAPIController@getBroadcaster');
 Route::post('/room/{id}/broadcast', 'RoomBroadcastAPIController@beginBroadcast');
 Route::delete('/room/{id}/broadcast', 'RoomBroadcastAPIController@stopBroadcast');
+Route::post('/token/refresh', 'RefreshTokenController@getNewAccessToken');

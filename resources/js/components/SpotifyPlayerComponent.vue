@@ -92,7 +92,6 @@
                         // Find MuSync playlist
                         for (var i = 0; i < data.items.length; i++) {
                             if (data.items[i].name == "MuSync") {
-                                console.log(data.items[i].id);
                                 this.playlistId = data.items[i].id;
                             }
                         }

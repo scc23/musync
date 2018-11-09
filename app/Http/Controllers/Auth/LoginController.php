@@ -7,6 +7,7 @@ use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Socialite;
 use SpotifyWebAPI;
 
@@ -134,27 +135,5 @@ class LoginController extends Controller
             ]);
         }
         return $user;
-    }
-
-    /**
-     * Use the refresh token to get a new access token
-     *
-     * @return void
-     */
-    public function getNewAccessToken()
-    {
-        $session = new SpotifyWebAPI\Session(
-            'spotify_client_id',
-            'spotify_client_secret',
-            'spotify_callback_url'
-        );
-
-        $api = new SpotifyWebAPI\SpotifyWebAPI();
-        $refreshToken = $user->refresh_token;
-        $session->refreshAccessToken($refreshToken);
-        $newAccessToken = $session->getAccessToken();
-        $user->api_token = $newAccessToken;
-        $user->save();
-        die();
     }
 }

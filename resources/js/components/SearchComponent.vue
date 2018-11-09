@@ -2,7 +2,6 @@
     <div>
         <div id="genres">
             <h2>Genres</h2>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="new-release">New-Release</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="acoustic">Acoustic</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="anime">Anime</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="cantopop">Cantopop</button><br>
@@ -22,6 +21,7 @@
             <button class="genre-type" v-on:click="fetchTracks($event)" value="k-pop">K-Pop</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="mandopop">Mandopop</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="opera">Opera</button><br>
+            <button class="genre-type" v-on:click="fetchTracks($event)" value="pop">Pop</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="r-n-b">R&B</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="rock">Rock</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="techno">Techno</button><br>
@@ -41,7 +41,6 @@
 
         data() {
             return {
-                trackUris: [],
                 playlistId: ""
             }
         },
@@ -105,13 +104,10 @@
                         return data.tracks.map(function(t) { return t.uri });
                     })
                     .then(function(trackUris) {
-                        for (var i = 0; i < trackUris.length; i++) {
-                            this.trackUris.push(trackUris[i]);
-                        }
-                        // Replace tracks in playlist with updated tracks
-                        spotifyApi.replaceTracksInPlaylist(this.playlistId, trackUris)
+                        // Add a single track to the playlist
+                        spotifyApi.addTracksToPlaylist(this.playlistId, [trackUris[0]])
                             .then(function(data) {
-                                console.log("Tracks added to playlist.");
+                                console.log("Added a track to the playlist.");
                             })
                             .catch(function(error) {
                                 console.error(error);

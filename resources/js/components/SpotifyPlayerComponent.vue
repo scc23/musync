@@ -21,16 +21,21 @@
                     <form method="POST" action="/updateState">
                         <div class="row justify-content-start form-group">
                             <div class="col-sm-2">
-                                <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
-                                    <div v-if="!isPlaying">
-                                        <font-awesome-icon icon="play-circle"/>
-                                    </div>
-                                    <div v-if="isPlaying">
-                                        <font-awesome-icon icon="pause-circle"/>
-                                    </div>
-                                </button>
+                                <div class="btn-group">
+                                    <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
+                                        <div v-if="!isPlaying">
+                                            <font-awesome-icon icon="play-circle"/>
+                                        </div>
+                                        <div v-if="isPlaying">
+                                            <font-awesome-icon icon="pause-circle"/>
+                                        </div>
+                                    </button>
+                                    <button class="step-forward-btn" type="button" v-on:click="nextTrack">
+                                        <font-awesome-icon icon="step-forward"/>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col">
+                            <div class="col track-container">
                                 <div class="track-progress">
                                     {{ progress }}
                                 </div>
@@ -128,7 +133,18 @@
                         this.isPlaying = false;
                     }.bind(this))
                     .catch(function(error) {
-                        console.error(err);
+                        console.error(error);
+                    })
+            },
+            nextTrack() {
+                spotifyApi.setAccessToken(this.accessToken);
+                console.log("step forward is pressed");
+                spotifyApi.skipToNext()
+                    .then(function(data) {
+                        this.isPlaying = true;
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
                     })
             },
             beginBroadcasting() {
@@ -177,6 +193,16 @@
 }
 .play-pause-btn {
     border: none;
+    outline: none;
+    cursor: pointer;
+}
+.step-forward-btn {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.track-container {
+    margin-left: 10px;
 }
 
 </style>

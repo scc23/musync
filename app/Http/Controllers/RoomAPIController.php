@@ -25,7 +25,11 @@ class RoomAPIController extends Controller
      */
     public function getAllRooms(Request $request) {
         $rooms = Room::all();
-        return response()->json($payload, Response::HTTP_OK);
+        foreach ($rooms as $room) {
+            $room['hasAccess'] = $this->userHasAccess($room);
+        }
+
+        return response()->json($rooms, Response::HTTP_OK);
     }
 
     /**
@@ -69,6 +73,12 @@ class RoomAPIController extends Controller
             return response()->json(['error' => $error], Response::HTTP_NOT_FOUND);
         }
 
+        $room['hasAccess'] = $this->userHasAccess;
+
         return response()->json($room, Response::HTTP_OK);
+    }
+
+    private function userHasAccess($room) {
+        return (!$room['isPrivate'] || RoomHelper::isMember($room));
     }
 }

@@ -16,9 +16,18 @@ class Room extends Model
         'password'
     ];
 
+    protected $appends = [
+        'isPrivate'
+    ];
+
     protected $primaryKey = 'id';
 
     public $incrementing = false;
+
+    public function getIsPrivateAttribute()
+    {
+        return !empty($this->attributes['password']);
+    }
 
     public function memberships()
     {

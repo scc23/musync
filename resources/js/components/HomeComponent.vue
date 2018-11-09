@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header" v-text="header"></div>
                     <div class="card-body">
-                        <div csrf-token="csrfToken" access-token="accessToken"
+                        <div csrf-token="csrfToken"
                              v-bind:is="bodyComponent"
                              v-on:set-body-component="setBodyComponent">
                         </div>
@@ -35,7 +35,7 @@
                 bodyComponent: "landing"
             }
         },
-        mounted() {
+        created() {
             axios.defaults.headers.common["Authorization"] = "Bearer " + this.accessToken;
         },
         methods: {

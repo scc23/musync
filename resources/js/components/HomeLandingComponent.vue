@@ -21,7 +21,6 @@
     export default {
         props: {
             "csrfToken": String,
-            "accessToken": String
         },
         methods: {
             promptCreate() {

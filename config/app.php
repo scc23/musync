@@ -10,9 +10,9 @@ return [
     | This value is the Spotify Client ID. This value is used to create a
     | new Spotify Web API Session.
     |
-    */    
+    */
 
-    'spotify_client_id' => env('SPOTIFY_CLIENT_ID', null),
+    'spotify_client_id' => env('SPOTIFY_CLIENT_ID'),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,9 +22,9 @@ return [
     | This value is the Spotify Client Secret. This value is used to create a
     | new Spotify Web API Session.
     |
-    */    
+    */
 
-    'spotify_client_secret' => env('SPOTIFY_CLIENT_SECRET', null),
+    'spotify_client_secret' => env('SPOTIFY_CLIENT_SECRET'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,9 +34,9 @@ return [
     | This value is the Spotify Client Secret. This value is used to create a
     | new Spotify Web API Session.
     |
-    */    
+    */
 
-    'spotify_callback_url' => env('SPOTIFY_CALLBACK_URL', null),
+    'spotify_callback_url' => env('SPOTIFY_CALLBACK_URL'),
 
     /*
     |--------------------------------------------------------------------------

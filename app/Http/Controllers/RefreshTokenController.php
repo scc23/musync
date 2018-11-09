@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use Config;
 use SpotifyWebAPI;
 
 class RefreshTokenController extends Controller
@@ -24,9 +25,9 @@ class RefreshTokenController extends Controller
     {
         $user = Auth::user();
         $session = new SpotifyWebAPI\Session(
-            \Config::get('app.spotify_client_id'),
-            \Config::get('app.spotify_client_secret'),
-            \Config::get('app.spotify_callback_url')
+            Config::get('app.spotify_client_id'),
+            Config::get('app.spotify_client_secret'),
+            Config::get('app.spotify_callback_url')
         );
 
         // Refresh the access token

@@ -69,7 +69,8 @@
         props: {
             "accessToken": String,
             "csrfToken": String,
-            "spotifyId": String
+            "spotifyId": String,
+            "spotifyDeviceId": String
         },
 
         data() {

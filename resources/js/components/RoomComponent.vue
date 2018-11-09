@@ -16,7 +16,8 @@
                             <div class="col-4">
                                 <spotify-player-component v-bind:csrf-token="csrfToken"
                                                           v-bind:access-token="accessToken"
-                                                          v-bind:spotify-id="spotifyId">
+                                                          v-bind:spotify-id="spotifyId"
+                                                          v-bind:spotify-device-id="spotifyDeviceId">
                                 </spotify-player-component>
                                 <playlist-component v-bind:csrf-token="csrfToken">
                                 </playlist-component>
@@ -59,10 +60,49 @@
             "accessToken": String,
             "spotifyId": String
         },
+        data() {
+            return {
+                "currentAccessToken": "",
+                "spotifyDeviceId": ""
+            };
+        },
         created() {
-            this.setAccessToken(this.accessToken);
+            this.currentAccessToken = this.accessToken;
+            this.initializeSpotifyPlayer(this.currentAccessToken);
+            this.setAccessToken(this.currentAccessToken);
         },
         methods: {
+            initializeSpotifyPlayer(token) {
+                window.onSpotifyWebPlaybackSDKReady = () => {
+                    const player = new Spotify.Player({
+                        name: 'MuSync Web Player',
+                        getOAuthToken: cb => { cb(token); }
+                    });
+
+                    // Error handling
+                    player.addListener('initialization_error', ({ message }) => { console.error(message); });
+                    player.addListener('authentication_error', ({ message }) => { console.error(message); });
+                    player.addListener('account_error', ({ message }) => { console.error(message); });
+                    player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+                    // Playback status updates
+                    player.addListener('player_state_changed', state => { console.log(state); });
+
+                    // Ready
+                    player.addListener('ready', ({ device_id }) => {
+                      console.log('Ready with Device ID', device_id);
+                      this.spotifyDeviceId = device_id;
+                    });
+
+                    // Not Ready
+                    player.addListener('not_ready', ({ device_id }) => {
+                      console.log('Device ID has gone offline', device_id);
+                    });
+
+                    // Connect to the player!
+                    player.connect();
+                };
+            },
             setAccessToken(token) {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + token;
             }

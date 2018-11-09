@@ -16,7 +16,7 @@ use Faker\Generator as Faker;
 $factory->define(App\User::class, function (Faker $faker) {
 
     do {
-        $id = $faker->unique()->randomNumber($nbDigits = NULL, $strict = false);
+        $id = $faker->unique()->randomNumber($nbDigits = 3, $strict = false);
     } while ( App\User::where('id', $id)->exists() );
     
     return [        

@@ -17,8 +17,12 @@
                 </div>
             </li> -->
             <li class="left clearfix" v-for="message in messages">
-                <p> {{message.id}} {{message.user_id}} {{message.room_id}} {{message.message}}</p>
-            </li>
+                <p> 
+                    <b>{{message.name}}</b> <br> 
+                    {{message.message}}
+                </p>
+                
+            </li> 
         </ul> 
     </div>
 </template>

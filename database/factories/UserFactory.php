@@ -14,13 +14,8 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\User::class, function (Faker $faker) {
-
-    do {
-        $id = $faker->unique()->randomNumber($nbDigits = 3, $strict = false);
-    } while ( App\User::where('id', $id)->exists() );
     
     return [        
-        'id' => $id,
         'spotify_id' => str_random(10),
         'name' => $faker->userName,
         'refresh_token' =>  str_random(10),

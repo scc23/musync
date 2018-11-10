@@ -11,9 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Clean the current database
-        $this->command->call('migrate:fresh');
-        
         // It is important that the seeders are called in this particular order
         // as RoomMemberships and Messages rely on Rooms and Users
         $this->call([

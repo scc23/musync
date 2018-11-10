@@ -8,7 +8,6 @@ $factory->define(App\Message::class, function (Faker $faker) {
     $membership = App\RoomMembership::inRandomOrder()->first();
     
     return [
-        'id' => $faker->unique()->randomNumber(),
         'user_id' => $membership->user_id,
         'room_id' => $membership->room_id,
         'message' => $faker->realText(rand(10,60)),

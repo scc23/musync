@@ -31,5 +31,8 @@
         <env name="MAIL_DRIVER" value="array"/>
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>
+        <env name="SPOTIFY_CLIENT_ID" value="192eb32574c940c3be02fddf89a3f24d"/>
+        <env name="SPOTIFY_CLIENT_SECRET" value="daa098ee7ead44e781aa7044e49c7c8f"/>
+        <env name="SPOTIFY_CALLBACK_URL" value="http://192.168.10.10/login/spotify/callback"/>
     </php>
 </phpunit>

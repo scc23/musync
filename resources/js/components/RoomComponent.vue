@@ -25,6 +25,8 @@
                                                           v-bind:spotify-device-id="spotifyDeviceId"
                                                           v-bind:spotify-player-state="spotifyPlayerState"
                                                           v-bind:playlist-id="playlistId">
+                                                          v-bind:room-id="roomId"
+                                                          v-bind:has-broadcaster="hasBroadcaster">
                                 </spotify-player-component>
                                 <playlist-component v-bind:access-token="accessToken"
                                                     v-bind:spotify-id="spotifyId">
@@ -70,7 +72,9 @@
                 "currentAccessToken": "",
                 "spotifyDeviceId": "",
                 "spotifyPlayerState": {},
-                "playlistId": ""
+                "playlistId": "",
+                "hasBroadcaster": false,
+                "isBroadcaster": false
             };
         },
         created() {
@@ -79,6 +83,8 @@
             this.setAccessToken(this.currentAccessToken);
             this.initializePlaylistId(this.currentAccessToken, this.currentSpotifyId);
             this.initializeSpotifyPlayer(this.currentAccessToken);
+            this.getRoomBroadcasterStatus();
+            window.addEventListener("beforeunload", this.disconnectSession);
         },
         methods: {
             initializePlaylistId(token, id) {
@@ -111,7 +117,7 @@
                         getOAuthToken: cb => { cb(token); }
                     });
 
-                    player.addListener('player_state_changed', state => { 
+                    player.addListener('player_state_changed', state => {
                         this.spotifyPlayerState = state;
                     });
 
@@ -134,6 +140,26 @@
                 spotifyApi.setAccessToken(token);
                 axios.defaults.headers.common["Authorization"] = "Bearer " + token;
                 spotifyApi.setAccessToken(token);
+            },
+            getRoomBroadcasterStatus() {
+                axios.get('/api/room/' + this.roomId + '/broadcast')
+                .then((res) => {
+                    this.hasBroadcaster = true;
+                })
+                .catch((err) => {
+                    if (err.response.status == 404) {
+                        this.hasBroadcaster = false;
+                    }
+                });
+            },
+            disconnectSession() {
+                axios.delete("/api/room/" + this.roomId + "/broadcast")
+                .then((res) => {
+                    this.isBroadcaster = false;
+                })
+                .catch((err) => {
+                    console.log("Could not stop broadcasting.");
+                });
             }
         },
     }

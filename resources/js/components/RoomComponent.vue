@@ -10,7 +10,8 @@
                         <div class="row">
                             <div class="col-4">
                                 <search-component v-bind:access-token="accessToken"
-                                                  v-bind:spotify-id="spotifyId">
+                                                  v-bind:spotify-id="spotifyId"
+                                                  v-bind:playlist-id="playlistId">
                                 </search-component>
                             </div>
                             <div class="col-4">
@@ -18,9 +19,12 @@
                                                           v-bind:access-token="accessToken"
                                                           v-bind:spotify-id="spotifyId"
                                                           v-bind:spotify-device-id="spotifyDeviceId"
-                                                          v-bind:spotify-player-state="spotifyPlayerState">
+                                                          v-bind:spotify-player-state="spotifyPlayerState"
+                                                          v-bind:playlist-id="playlistId">
                                 </spotify-player-component>
-                                <playlist-component v-bind:csrf-token="csrfToken">
+                                <playlist-component v-bind:access-token="accessToken"
+                                                    v-bind:spotify-id="spotifyId"
+                                                    v-bind:playlist-id="playlistId">
                                 </playlist-component>
                             </div>
                             <div class="col-4">
@@ -61,15 +65,42 @@
             return {
                 "currentAccessToken": "",
                 "spotifyDeviceId": "",
-                "spotifyPlayerState": {}
+                "spotifyPlayerState": {},
+                "playlistId": ""
             };
         },
         created() {
             this.currentAccessToken = this.accessToken;
+            this.currentSpotifyId = this.spotifyId;
             this.setAccessToken(this.currentAccessToken);
+            this.initializePlaylistId(this.currentAccessToken, this.currentSpotifyId);
             this.initializeSpotifyPlayer(this.currentAccessToken);
         },
         methods: {
+            initializePlaylistId(token, id) {
+                spotifyApi.setAccessToken(token);
+                spotifyApi.getUserPlaylists(id)
+                    .then(function(data) {
+                        // Find MuSync playlist
+                        for (var i = 0; i < data.items.length; i++) {
+                            if (data.items[i].name == "MuSync") {
+                                this.playlistId = data.items[i].id;
+                            }
+                        }
+                    }.bind(this))
+                    .catch(function(error) {
+                        axios.post("/api/token/refresh")
+                        .then((res) => {
+                            spotifyApi.setAccessToken(res.data.api_token);
+                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
+                            console.log("Access token refreshed.");
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                    })
+            },
+
             initializeSpotifyPlayer(token) {
                 window.onSpotifyWebPlaybackSDKReady = () => {
                     const player = new Spotify.Player({

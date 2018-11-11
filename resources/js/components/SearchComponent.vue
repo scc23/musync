@@ -36,13 +36,8 @@
     export default {
         props: {
             "accessToken": String,
-            "spotifyId": String
-        },
-
-        data() {
-            return {
-                playlistId: ""
-            }
+            "spotifyId": String,
+            "playlistId": String
         },
 
         watch: {
@@ -69,30 +64,6 @@
         },
 
         methods: {
-            // Get the MuSync playlist id from the user's playlists
-            init() {
-                spotifyApi.getUserPlaylists(this.spotifyId)
-                    .then(function(data) {
-                        // Find MuSync playlist
-                        for (var i = 0; i < data.items.length; i++) {
-                            if (data.items[i].name == "MuSync") {
-                                this.playlistId = data.items[i].id;
-                            }
-                        }
-                    }.bind(this))
-                    .catch(function(error) {
-                        axios.post("/api/token/refresh")
-                        .then((res) => {
-                            spotifyApi.setAccessToken(res.data.api_token);
-                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
-                            console.log("Access token refreshed.");
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                        });
-                    })
-                return this.playlistId;
-            },
             // Fetch tracks from a genre and add them to the room's playlist
             fetchTracks(e) {
                 var genre = e.target.value;
@@ -125,45 +96,10 @@
                         });
                     });
             }
-            // Functions for search feature
-            // Search for albums
-            // searchAlbums: _.debounce(function(query, callback) {
-            //     $.ajax({
-            //         url: "https://api.spotify.com/v1/search",
-            //         data: {
-            //             q: query,
-            //             type: "album"
-            //         },
-            //         headers: {
-            //             "Authorization" : "Bearer " + this.accessToken
-            //         },
-            //         success: function(response) {
-            //             callback(response.albums.items);
-            //         }
-            //     });
-            // }, 500),
-
-            // Search for artists
-            // searchArtists: _.debounce(function(query, callback) {
-            //     $.ajax({
-            //         url: "https://api.spotify.com/v1/search",
-            //         data: {
-            //             q: query,
-            //             type: "artist"
-            //         },
-            //         headers: {
-            //             "Authorization" : "Bearer " + this.accessToken
-            //         },
-            //         success: function(response) {
-            //             callback(response.artists.items);
-            //         }
-            //     });
-            // }, 500)
         },
         mounted() {
             spotifyApi.setAccessToken(this.accessToken);
             axios.defaults.headers.common["Authorization"] = "Bearer " + this.accessToken;
-            this.init();
         }
     }
 </script>

@@ -14,30 +14,7 @@ const roomApp = new Vue({
     components: {
         'room-component': require('./components/RoomComponent.vue')
     },
+    
     created() {
     },
-    data: {
-        messages: []
-    },
-    /* going to fix with issue #16
-    created() {
-        this.fetchMessages();
-    },
-
-    methods: {
-        fetchMessages() {
-            axios.get('/room/{id}').then(response => {
-                this.messages = response.data;
-            });
-        },
-
-        addMessage(message) {
-            this.messages.push(message);
-
-            axios.post('/room/{id}', message).then(response => {
-              console.log(response.data);
-            });
-        }
-    }
-    */
 });

@@ -8,23 +8,51 @@
                 <div class="chat-body clearfix">
                     <div class="header">
                         <strong class="primary-font">
-                            {{message.name}}
+                            {{message.user}}
                         </strong> 
-                        <p>
-                            {{message.message}}
-                        </p>
                     </div>
+                    <p>
+                        {{message.message}}
+                    </p>
                 </div>
-            </li> 
+            </li>
         </ul> 
     </div>
 </template>
 
+
 <script>
-    export default {
-        props: ['messages'],
+    export default {  
+        props: {
+            "csrfToken": String
+        },
+
+        data(){
+            return {
+                // dummy messages for display
+                messages: [
+                    {
+                        user: 'John',
+                        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+                    },
+                    {
+                        user: 'Paul',
+                        message: 'Curabitur bibendum ornaredolor, quis ullamcorper ligula sodales.'
+                    },
+                    {
+                        user: 'John',
+                        message: 'Curabitur bibendum ornaredolor, quis ullamcorper ligula sodales.'
+                    },
+                    {
+                        user: 'John',
+                        message: 'Curabitur bibendum ornaredolor, quis ullamcorper ligula sodales.'
+                    },
+                ]
+            }
+        }
     }
 </script>
+
 
 <style lang="scss" scoped>
     
@@ -45,8 +73,4 @@
         color: #777777;
     }
 
-    .card-body > .chat-messages {
-        overflow-y: scroll;  
-        height: 400px;
-    }
 </style>

@@ -35,16 +35,7 @@ class RoomController extends Controller
     public function show(Request $request) {
         $room_id = $request->route('id');
         $room = Room::find($room_id);
-
-        $member_ids = RoomMembership::select('user_id')->where('room_id',$room_id)->get();
-        $users = User::findMany($member_ids);
-
-        $messages = Message::select('messages.id','name', 'message') 
-                            ->join('users', 'messages.user_id', '=', 'users.id') 
-                            ->where('room_id',$room_id) 
-                            ->orderBy('messages.id', 'asc') 
-                            ->get();
-
-        return view('room', ['room' => $room, 'users' => $users, 'messages' => $messages]);
+        
+        return view('room', ['room' => $room]);
     }
 }

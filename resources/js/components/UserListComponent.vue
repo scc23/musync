@@ -1,19 +1,25 @@
 <template>
     <div class="user-list">
-        <h2>Users</h2>
-        <ul >
-            <li v-for="user in users">
-                <p>{{ user.name }}</p>
-            </li>
-        </ul>
+        <div class="card">
+            <div class="card-header">Online Listeners
+            </div>
+            <div class="card-body">  
+            </div>
+
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['users'],
+        props: {
+            "csrfToken": String
+        },
         mounted() {
             console.log('User list Component mounted.');
         }
     }
 </script>
+
+<style lang="scss" scoped>
+</style>

@@ -23,15 +23,10 @@
                                 </playlist-component>
                             </div>
                             <div class="col-4">
-                                <!-- <user-list-component csrf-token="csrfToken"
-                                                     access-token"accessToken">
+                                <user-list-component v-bind:csrf-token="csrfToken">
                                 </user-list-component>
-                                <chat-messages-component csrf-token="csrfToken"
-                                                         access-token"accessToken">
-                                </chat-messages-component>
-                                <chat-form-component csrf-token="csrfToken"
-                                                     access-token"accessToken">
-                                </chat-form-component> -->
+                                <chat-component v-bind:csrf-token="csrfToken">
+                                </chat-component>
                             </div>
                         </div>
                     </div>
@@ -50,8 +45,7 @@
             "spotify-player-component": require("./SpotifyPlayerComponent.vue"),
             "playlist-component": require("./PlaylistComponent.vue"),
             "user-list-component": require("./UserListComponent.vue"),
-            "chat-messages-component": require("./ChatMessagesComponent.vue"),
-            "chat-form-component": require("./ChatFormComponent.vue")
+            "chat-component": require("./ChatComponent.vue"),
         },
         props: {
             "roomName": String,

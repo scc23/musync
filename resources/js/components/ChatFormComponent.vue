@@ -13,6 +13,9 @@
 
 <script>
     export default {
+        props: {
+            "csrfToken": String, 
+        },
 
         data() {
             return {
@@ -27,3 +30,6 @@
         }    
     }
 </script>
+
+<style lang="scss" scoped>
+</style>

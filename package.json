@@ -23,7 +23,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.8",
         "@fortawesome/free-solid-svg-icons": "^5.5.0",
         "@fortawesome/vue-fontawesome": "^0.1.2",
-        "laravel-echo": "^1.4.0",
+        "laravel-echo": "^1.4.1",
         "pusher-js": "^4.3.1",
         "spotify-web-api-js": "^1.1.1"
     }

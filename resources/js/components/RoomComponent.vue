@@ -23,8 +23,7 @@
                                                           v-bind:playlist-id="playlistId">
                                 </spotify-player-component>
                                 <playlist-component v-bind:access-token="accessToken"
-                                                    v-bind:spotify-id="spotifyId"
-                                                    v-bind:playlist-id="playlistId">
+                                                    v-bind:spotify-id="spotifyId">
                                 </playlist-component>
                             </div>
                             <div class="col-4">
@@ -78,7 +77,6 @@
         },
         methods: {
             initializePlaylistId(token, id) {
-                spotifyApi.setAccessToken(token);
                 spotifyApi.getUserPlaylists(id)
                     .then(function(data) {
                         // Find MuSync playlist
@@ -98,7 +96,7 @@
                         .catch((err) => {
                             console.error(err);
                         });
-                    })
+                    });
             },
 
             initializeSpotifyPlayer(token) {
@@ -128,6 +126,7 @@
                 };
             },
             setAccessToken(token) {
+                spotifyApi.setAccessToken(token);
                 axios.defaults.headers.common["Authorization"] = "Bearer " + token;
                 spotifyApi.setAccessToken(token);
             }

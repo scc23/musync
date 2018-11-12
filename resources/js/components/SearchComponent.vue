@@ -33,6 +33,7 @@
     import axios from "axios";
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
+    
     export default {
         props: {
             "accessToken": String,
@@ -78,7 +79,7 @@
                         // Add a single track to the playlist
                         spotifyApi.addTracksToPlaylist(this.playlistId, [trackUris[0]])
                             .then(function(data) {
-                                console.log("Added a track to the playlist.");
+                                console.log("Added a track to the playlist " + this.playlistId);
                             })
                             .catch(function(error) {
                                 console.error(error);
@@ -110,11 +111,12 @@
         border: none;
         cursor: pointer;
         opacity: 1;
-        transition: opacity .5s ease-out;
-        -moz-transition: opacity .5s ease-out;
-        -webkit-transition: opacity .5s ease-out;
-        -o-transition: opacity .5s ease-out;
+        transition: opacity .2s ease-out;
+        -moz-transition: opacity .2s ease-out;
+        -webkit-transition: opacity .2s ease-out;
+        -o-transition: opacity .2s ease-out;
     }
+    
     .genre-type:hover {
         opacity: 0.5;
     }

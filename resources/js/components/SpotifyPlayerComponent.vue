@@ -95,7 +95,7 @@
             return {
                 userState: "idle",
                 isPaused: true,
-                progress: "0:00",
+                progress: 0,
                 currentTrack: {name: "", artists: "", duration: 0, albumArt: ""},
             }
         },
@@ -184,7 +184,11 @@
                 var seconds = (this.currentTrack["duration"] / 1000) % 60;
                 // return format is "x:xx"
                 return Math.floor(minutes) + ":" + String("0" + (Math.floor(seconds))).slice(-2);
-            }
+            }, 
+
+            // progressMsToMinSec: function() {
+            //     // 
+            // }
         }
     }
 </script>

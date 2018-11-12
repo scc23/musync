@@ -16,7 +16,7 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="row justify-content-center">
-                        Currently Playing Song
+                        {{ currentTrack["name"] }}
                     </div>
                     <form method="POST" action="/updateState">
                         <div class="row justify-content-start form-group">
@@ -42,7 +42,7 @@
                                 <div class="progress-bar">
                                 </div>
                                 <div class="track-duration">
-                                    {{ duration }}
+                                    {{ currentTrack["duration"] }}
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                 hasBroadcaster: false,
                 isPlaying: false,
                 progress: "0:00",
-                duration: "0:00",
+                currentTrack: {name: "", artists: "", duration: "0:00"},
             }
         },
 
@@ -119,8 +119,16 @@
                 spotifyApi.play({
                     "device_id": this.spotifyDeviceId,
                     "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId})
-                    .then(function(data) {
-                        this.isPlaying = true;
+                    .then(function() {
+                        return spotifyApi.getMyCurrentPlayingTrack();
+                    })
+                    .then(function(currentPlayingTrack) {
+                        this.isPlaying = currentPlayingTrack["is_playing"];
+                        console.log(currentPlayingTrack);
+                        this.currentTrack["name"] = currentPlayingTrack["item"]["name"]; 
+                        //TODO: Get track artist of all the artist. currentPlayingTrack["item"]["artists"] returns an array
+                        // this.currentTrack["artists"] = currentPlayingTrack["item"]["artists"][0]["name"];
+                        this.currentTrack["duration"] = this.durationMsToMinSec(currentPlayingTrack["item"]["duration_ms"]);
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
@@ -129,8 +137,12 @@
             pause() {
                 spotifyApi.setAccessToken(this.accessToken);
                 spotifyApi.pause()
-                    .then(function(data) {
-                        this.isPlaying = false;
+                    .then(function() {
+                        return spotifyApi.getMyCurrentPlayingTrack();
+                    })
+                    .then(function(currentPlayingTrack) {
+                        this.isPlaying = currentPlayingTrack["is_playing"];
+                        console.log(currentPlayingTrack);
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
@@ -140,12 +152,25 @@
                 spotifyApi.setAccessToken(this.accessToken);
                 console.log("step forward is pressed");
                 spotifyApi.skipToNext()
-                    .then(function(data) {
-                        this.isPlaying = true;
+                    .then(function() {
+                        return spotifyApi.getMyCurrentPlayingTrack();
+                    })
+                    .then(function(currentPlayingTrack) {
+                        this.isPlaying = currentPlayingTrack["is_playing"];
+                        console.log(currentPlayingTrack);
+                        this.currentTrack["name"] = currentPlayingTrack["item"]["name"]; 
+                        //TODO: Get track artist of all the artist. currentPlayingTrack["item"]["artists"] returns an array
+                        // this.currentTrack["artists"] = currentPlayingTrack["item"]["artists"][0]["name"];
+                        this.currentTrack["duration"] = this.durationMsToMinSec(currentPlayingTrack["item"]["duration_ms"]);
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                     })
+            },
+            durationMsToMinSec(ms) {
+                var minutes = (ms / 1000) / 60;
+                var seconds = (ms / 1000) % 60;
+                return Math.floor(minutes) + ":" + Math.floor(seconds);
             },
             beginBroadcasting() {
                 this.userState = "broadcasting";
@@ -163,17 +188,6 @@
         mounted() {
             this.init();
         },
-        computed: {
-            getPlaylistId() {
-                spotifyApi.setAccessToken(this.accessToken);
-                spotifyApi.getUserPlaylists(this.spotifyId)
-                    .then(function(data) {
-
-                    })
-
-                return this.playlistId;
-            }
-        }
     }
 </script>
 

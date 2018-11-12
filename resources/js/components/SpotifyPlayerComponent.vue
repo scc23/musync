@@ -87,7 +87,6 @@
         methods: {
             // Get the MuSync playlist id from the user's playlists
             init() {
-                spotifyApi.setAccessToken(this.accessToken);
                 spotifyApi.getUserPlaylists(this.spotifyId)
                     .then(function(data) {
                         // Find MuSync playlist
@@ -113,16 +112,17 @@
                 this.pause();
             },
             play() {
-                spotifyApi.setAccessToken(this.accessToken);
                 // Play the room creator's playlist associated with the room
-                spotifyApi.play({"context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId}, function(err, data) {
+                spotifyApi.play({
+                    "device_id": this.spotifyDeviceId,
+                    "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId
+                }, function(err, data) {
                     if (err) console.error(err);
                     else console.log(data);
                 });
                 this.isPlaying = true;
             },
             pause() {
-                spotifyApi.setAccessToken(this.accessToken);
                 spotifyApi.pause(function(err, data) {
                     if (err) console.error(err);
                     else console.log(data);

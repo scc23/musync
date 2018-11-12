@@ -76,6 +76,7 @@
 <script>
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
+    
     export default {
         props: {
             "accessToken": String,
@@ -83,11 +84,11 @@
             "spotifyId": String,
             "spotifyDeviceId": String,
             "spotifyPlayerState": Object,
+            "playlistId": String
         },
 
         data() {
             return {
-                playlistId: "",
                 userState: "idle",
                 hasBroadcaster: false,
                 isPaused: true,
@@ -97,22 +98,6 @@
         },
 
         methods: {
-            // Get the MuSync playlist id from the user's playlists
-            init() {
-                spotifyApi.getUserPlaylists(this.spotifyId)
-                    .then(function(data) {
-                        // Find MuSync playlist
-                        for (var i = 0; i < data.items.length; i++) {
-                            if (data.items[i].name == "MuSync") {
-                                this.playlistId = data.items[i].id;
-                            }
-                        }
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.error(error);
-                    })
-                return this.playlistId;
-            },
             togglePlayPauseBtn() {
                 if (this.isPaused) {
                     console.log("spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId);
@@ -167,9 +152,6 @@
             stopListening() {
                 this.userState = "idle";
             }
-        },
-        mounted() {
-            this.init();
         },
         watch: {
             "spotifyPlayerState": function(newState, oldState) {

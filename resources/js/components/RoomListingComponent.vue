@@ -26,7 +26,7 @@
     }
 
     .room-name {
-        font-weight: bold
+        font-weight: bold;
     }
 
     .room-access-indicator {

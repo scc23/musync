@@ -1,7 +1,10 @@
 <template>
-    <div>
-        <div id="genres">
-            <h2>Genres</h2>
+    <div class="card">
+        <div class="card-header">
+            Genres
+            <div class="notes">Click on a genre to add a track to the playlist queue.</div>
+        </div>
+        <div class="card-body">
             <button class="genre-type" v-on:click="fetchTracks($event)" value="acoustic">Acoustic</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="anime">Anime</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="cantopop">Cantopop</button><br>
@@ -33,71 +36,21 @@
     import axios from "axios";
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
+    
     export default {
         props: {
             "accessToken": String,
-            "spotifyId": String
-        },
-
-        data() {
-            return {
-                playlistId: ""
-            }
-        },
-
-        watch: {
-            // Function for search feature
-            // Watch what user types in the search box
-            // searchText: function() {
-            //     let self = this;
-            //     // Clear albums and artists array once user starts typing in search box
-            //     self.albums = {};
-            //     self.artists = {};
-
-            //     // Check if albums and artists arrays are empty
-            //     if (self.searchText.length > 0) {
-            //         var query = self.searchText.toLowerCase();
-            //         query.replace(/ /gi, "-");
-            //         self.searchAlbums(query, function(response) {
-            //             self.albums = response;
-            //         });
-            //         self.searchArtists(query, function(response) {
-            //             self.artists = response;
-            //         });
-            //     }
-            // }
+            "spotifyId": String,
+            "playlistId": String
         },
 
         methods: {
-            // Get the MuSync playlist id from the user's playlists
-            init() {
-                spotifyApi.getUserPlaylists(this.spotifyId)
-                    .then(function(data) {
-                        // Find MuSync playlist
-                        for (var i = 0; i < data.items.length; i++) {
-                            if (data.items[i].name == "MuSync") {
-                                this.playlistId = data.items[i].id;
-                            }
-                        }
-                    }.bind(this))
-                    .catch(function(error) {
-                        axios.post("/api/token/refresh")
-                        .then((res) => {
-                            spotifyApi.setAccessToken(res.data.api_token);
-                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
-                            console.log("Access token refreshed.");
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                        });
-                    })
-                return this.playlistId;
-            },
             // Fetch tracks from a genre and add them to the room's playlist
             fetchTracks(e) {
                 var genre = e.target.value;
                 this.trackUris = [];
                 console.log("Genre selected: " + genre);
+                console.log("Playlist id: " + this.playlistId);
 
                 spotifyApi.getRecommendations({seed_genres: genre})
                     .then(function(data) {
@@ -125,60 +78,31 @@
                         });
                     });
             }
-            // Functions for search feature
-            // Search for albums
-            // searchAlbums: _.debounce(function(query, callback) {
-            //     $.ajax({
-            //         url: "https://api.spotify.com/v1/search",
-            //         data: {
-            //             q: query,
-            //             type: "album"
-            //         },
-            //         headers: {
-            //             "Authorization" : "Bearer " + this.accessToken
-            //         },
-            //         success: function(response) {
-            //             callback(response.albums.items);
-            //         }
-            //     });
-            // }, 500),
-
-            // Search for artists
-            // searchArtists: _.debounce(function(query, callback) {
-            //     $.ajax({
-            //         url: "https://api.spotify.com/v1/search",
-            //         data: {
-            //             q: query,
-            //             type: "artist"
-            //         },
-            //         headers: {
-            //             "Authorization" : "Bearer " + this.accessToken
-            //         },
-            //         success: function(response) {
-            //             callback(response.artists.items);
-            //         }
-            //     });
-            // }, 500)
         },
+        
         mounted() {
             spotifyApi.setAccessToken(this.accessToken);
             axios.defaults.headers.common["Authorization"] = "Bearer " + this.accessToken;
-            this.init();
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    .notes {
+        font-size: 12px;
+    }
+
     .genre-type {
         background: none;
         border: none;
         cursor: pointer;
         opacity: 1;
-        transition: opacity .5s ease-out;
-        -moz-transition: opacity .5s ease-out;
-        -webkit-transition: opacity .5s ease-out;
-        -o-transition: opacity .5s ease-out;
+        transition: opacity .2s ease-out;
+        -moz-transition: opacity .2s ease-out;
+        -webkit-transition: opacity .2s ease-out;
+        -o-transition: opacity .2s ease-out;
     }
+
     .genre-type:hover {
         opacity: 0.5;
     }

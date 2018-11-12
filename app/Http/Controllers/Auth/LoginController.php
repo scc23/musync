@@ -85,6 +85,19 @@ class LoginController extends Controller
         $authUser = $this->userFindOrCreate($spotifyUser);
         auth()->login($authUser, true);
 
+        // Create an empty MuSync playlist for the user if it doesn't exist
+        $playlistExists = false;
+        $this->api->setAccessToken(Auth::user()->api_token);
+        $playlists = $this->api->getUserPlaylists(Auth::user()->spotify_id);
+        foreach ($playlists->items as $playlist) {
+            if ($playlist->name == 'MuSync') {
+                $playlistExists = true;
+            }
+        }
+        if (!$playlistExists) {
+            $this->api->createPlaylist(['name' => 'MuSync']);
+        }
+
         return redirect()->to('/home');
     }
 
@@ -120,20 +133,6 @@ class LoginController extends Controller
                 'refresh_token' => $spotifyUser->refreshToken,
             ]);
         }
-
-        // Create an empty MuSync playlist for the user if it doesn't exist
-        $playlistExists = false;
-        $this->api->setAccessToken($user->api_token);
-        $playlists = $this->api->getUserPlaylists($user->spotify_id);
-        foreach ($playlists->items as $playlist) {
-            if ($playlist->name == 'MuSync') {
-                $playlistExists = true;
-            }
-        }
-        if (!$playlistExists) {
-            $this->api->createPlaylist(['name' => 'MuSync']);
-        }
-
         return $user;
     }
 }

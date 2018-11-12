@@ -1,16 +1,16 @@
 <template>
-	<div class="card">
+    <div class="card">
         <div class="card-header">Search</div>
         <input type="text" placeholder="Search for a track">
     </div>
 </template>
 
 <script>
-	var SpotifyWebApi = require('spotify-web-api-js');
+    var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
 
     export default {
-    	props: {
+        props: {
             "accessToken": String,
             "spotifyId": String,
             "playlistId": String

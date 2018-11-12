@@ -99,7 +99,8 @@
                 spotifyApi.removeTracksFromPlaylist(this.playlistId, tracks)
                     .then(function(data) {
                         console.log("Playlist cleared.");
-                    })
+                        this.playlistTracks = [];
+                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                         // axios.post("/api/token/refresh")

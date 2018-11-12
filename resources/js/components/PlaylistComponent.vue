@@ -6,7 +6,8 @@
             </div>
             <ul class='list-group border'>
                 <li class="list-group-item list-group-item-action" v-for="playlistTrack in playlistTracks">
-                    <playlist-listing-component v-bind:playlistTrack="playlistTrack">
+                    <playlist-listing-component v-bind:playlist-track="playlistTrack"
+                                                v-bind:playlist-id="playlistId">
                     </playlist-listing-component>
                 </li>
             </ul>
@@ -64,17 +65,18 @@
                                     this.playlistTracks.push({
                                         trackName: data.items[i].track.name,
                                         trackArtist: data.items[i].track.artists[0].name,
-                                        trackAlbumArt: data.items[i].track.album.images[0].url
+                                        trackAlbumArt: data.items[i].track.album.images[0].url,
+                                        trackUri: data.items[i].track.uri
                                     });
                                 }
                                 // console.log(this.playlistTracks);
-                                console.log(this.trackUris);
+                                // console.log(this.trackUris);
                             }.bind(this))
                     }.bind(this))
                     .catch(function(error) {
                         axios.post("/api/token/refresh")
                         .then((res) => {
-                            spotifyApi.setAccessToken(res.data.api_token);
+                            // spotifyApi.setAccessToken(res.data.api_token);
                             axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
                             console.log("Access token refreshed.");
                         })
@@ -131,7 +133,7 @@
     }
 
     .list-group {
-        height: 500px;
+        height: 535px;
         overflow: scroll;
         overflow-y:scroll;
     }

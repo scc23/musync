@@ -1,7 +1,10 @@
 <template>
-    <div>
-        <div id="genres">
-            <h2>Genres</h2>
+    <div class="card">
+        <div class="card-header">
+            Genres
+            <div class="notes">Click on a genre to add a track to the playlist queue.</div>
+        </div>
+        <div class="card-body">
             <button class="genre-type" v-on:click="fetchTracks($event)" value="acoustic">Acoustic</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="anime">Anime</button><br>
             <button class="genre-type" v-on:click="fetchTracks($event)" value="cantopop">Cantopop</button><br>
@@ -106,6 +109,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .notes {
+        font-size: 12px;
+    }
+
     .genre-type {
         background: none;
         border: none;
@@ -116,7 +123,7 @@
         -webkit-transition: opacity .2s ease-out;
         -o-transition: opacity .2s ease-out;
     }
-    
+
     .genre-type:hover {
         opacity: 0.5;
     }

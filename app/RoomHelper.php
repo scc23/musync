@@ -43,9 +43,12 @@ class RoomHelper
         return ($membership != null);
     }
 
-    public static function isRoomBroadcaster($room_id)
+    public static function isRoomBroadcaster($room)
     {
-        return true;
+        $user_id = Auth::user()->id;
+        $room_broadcaster = $room->broadcaster;
+
+        return !empty($room_broadcaster) && $room_broadcaster->user_id == $user_id;
     }
 
     /**

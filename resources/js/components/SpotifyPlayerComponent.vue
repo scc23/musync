@@ -93,7 +93,6 @@
             return {
                 userState: "idle",
                 isPaused: true,
-                isPlaying: false,
                 progress: "0:00",
                 currentTrack: {name: "", artists: "", duration: 0, albumArt: ""},
             }
@@ -149,16 +148,15 @@
                 })
             },
             stopBroadcasting() {
-                axios.delete('/api/room/' + this.roomId + '/broadcast')
-                .then((res) => {
-                    this.userState = "idle";
-                })
+                this.$emit("disconnect-session", true);
+                this.userState = "idle";
             },
             beginListening() {
                 this.userState = "listening";
             },
             stopListening() {
-                this.userState = "idle";
+              this.$emit("disconnect-session", false);
+              this.userState = "idle";
             }
         },
         watch: {

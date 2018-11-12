@@ -11,10 +11,13 @@
 |
 */
 
+use App\Room;
+use App\RoomHelper;
 Broadcast::channel('home', function($user) {
     return Auth::check();
 });
 
-Broadcast::channel('room.{room_id}', function ($user, $room_id) {
-    return true;
+
+Broadcast::channel('room.{room}', function ($user, Room $room) {
+    return RoomHelper::isMember($room);
 });

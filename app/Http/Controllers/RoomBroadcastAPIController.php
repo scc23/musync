@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BroadcasterConnected;
+use App\Events\BroadcasterDisconnected;
 use App\Room;
 use App\RoomBroadcaster;
 use Auth;
@@ -54,10 +56,12 @@ class RoomBroadcastAPIController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
+        $user_id = Auth::user()->id;
         $broadcaster = RoomBroadcaster::create([
-            'room_id' => $room->id,
-            'user_id' => Auth::user()->id
+            'room_id' => $room_id,
+            'user_id' => $user_id
         ]);
+        broadcast(new BroadcasterConnected($room_id, $user_id))->toOthers();
 
         return response()->json($broadcaster, Response::HTTP_OK);
     }
@@ -78,6 +82,8 @@ class RoomBroadcastAPIController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
+        $user_id = $broadcaster->user_id;
+        broadcast(new BroadcasterDisconnected($room_id, $user_id))->toOthers();
         $broadcaster->delete();
 
         return response()->json($broadcaster, Response::HTTP_OK);

@@ -82,6 +82,7 @@
             this.currentSpotifyId = this.spotifyId;
             this.setAccessToken(this.currentAccessToken);
             this.initializePlaylistId(this.currentAccessToken, this.currentSpotifyId);
+            this.initializeEventListeners();
             this.initializeSpotifyPlayer(this.currentAccessToken);
             this.getRoomBroadcasterStatus();
             window.addEventListener("beforeunload", this.disconnectSession);
@@ -109,7 +110,15 @@
                         });
                     });
             },
-
+            initializeEventListeners() {
+                Echo.private(`room.${this.roomId}`)
+                    .listen("BroadcasterConnected", (eventObj) => {
+                        console.log("Broadcaster connected: " + eventObj);
+                    })
+                    .listen("BroadcasterDisconnected", (eventObj) => {
+                        console.log("Broadcaster disconnected: " + eventObj);
+                    });
+            },
             initializeSpotifyPlayer(token) {
                 window.onSpotifyWebPlaybackSDKReady = () => {
                     const player = new Spotify.Player({

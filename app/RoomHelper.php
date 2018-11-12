@@ -11,7 +11,8 @@ class RoomHelper
     /**
      * Generate a four character long unique ID.
      */
-    public static function generateNewRoomID() {
+    public static function generateNewRoomID()
+    {
         $id = str_random(4);
         # Generate new ID if found.
         while (Room::find($id) != null) {
@@ -24,7 +25,8 @@ class RoomHelper
     /**
      * Determine if the provided Room name is unique.
      */
-    public static function isRoomNameUnique($name) {
+    public static function isRoomNameUnique($name)
+    {
         $room_count = Room::where('name', $name)->count();
 
         return ($room_count == 0);
@@ -39,6 +41,11 @@ class RoomHelper
                                     ->where('user_id', '=', $user_id)
                                     ->first();
         return ($membership != null);
+    }
+
+    public static function isRoomBroadcaster($room_id)
+    {
+        return true;
     }
 
     /**

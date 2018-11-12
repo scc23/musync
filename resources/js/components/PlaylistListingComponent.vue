@@ -1,12 +1,13 @@
 <template>
     <div class="track-block">
         <div>
-            <span class="track-album-art"><img width="50" height="50" v-bind:src="playlistTrack.trackAlbumArt"/></span>
+            <span class="track-album-art"><img width="70" height="70" v-bind:src="playlistTrack.trackAlbumArt"/></span>
             <span class="track-name">{{playlistTrack.trackName}}</span>
             <button class="remove-button" v-on:click="removeTrack($event)" v-bind:value="playlistTrack.trackUri">Remove</button><br>
-            <span class="track-artist">{{playlistTrack.trackArtist}}</span>
+            <span class="track-artist">{{playlistTrack.trackArtist}}</span><br>
+            <span class="track-duration">{{trackDuration}}</span>
         </div>
-        
+
         <!-- TODO: Click on a track to play it immediately -->
     </div>
 </template>
@@ -21,6 +22,20 @@
             "playlistId": String
         },
 
+        data() {
+            return {
+                "trackDuration": ""
+            }
+        },
+
+        created() {
+            this.convertMilliseconds();
+        },
+
+        watch: {
+            // 
+        },
+
         methods: {
             removeTrack(e) {
                 var track = e.target.value;
@@ -31,6 +46,12 @@
                     .catch(function(error) {
                         console.error(error);
                     });
+            },
+
+            convertMilliseconds() {
+                var min = Math.floor(this.playlistTrack.trackDuration / 60000);
+                var sec = ((this.playlistTrack.trackDuration % 60000) / 1000).toFixed(0);
+                this.trackDuration = min + ":" + (sec < 10 ? '0' : '') + sec;
             }
         }
     }
@@ -69,5 +90,10 @@
     .track-artist {
         float: left;
         font-size: 12px;
+    }
+
+    .track-duration {
+        float: left;
+        font-size: 8px;
     }
 </style>

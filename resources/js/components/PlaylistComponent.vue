@@ -32,8 +32,7 @@
         data() {
             return {
                 "playlistId": "",
-                "playlistTracks": [],
-                "trackUris": []
+                "playlistTracks": []
             }
         },
 
@@ -42,11 +41,12 @@
         },
 
         watch: {
-            //
+            // 
         },
 
         methods: {
             refreshPlaylist() {
+                // Get the playlist id of the MuSync playlist
                 spotifyApi.getUserPlaylists()
                     .then(function(data) {
                         for (var i = 0; i < data.items.length; i++) {
@@ -56,27 +56,30 @@
                         }
                     }.bind(this))
                     .then(function(data) {
-                        console.log("playlist id: " + this.playlistId);
+                        console.log("Playlist id: " + this.playlistId);
+                        // Get the tracks in the MuSync playlist
                         spotifyApi.getPlaylistTracks(this.playlistId)
                             .then(function(data) {
+                                // Store the tracks in playlistTracks
                                 // console.log(data.items);
                                 for (var i = 0; i < data.items.length; i++) {
-                                    this.trackUris.push(data.items[i].track.uri);
                                     this.playlistTracks.push({
                                         trackName: data.items[i].track.name,
                                         trackArtist: data.items[i].track.artists[0].name,
                                         trackAlbumArt: data.items[i].track.album.images[0].url,
+                                        trackDuration: data.items[i].track.duration_ms,
                                         trackUri: data.items[i].track.uri
                                     });
                                 }
                                 // console.log(this.playlistTracks);
-                                // console.log(this.trackUris);
                             }.bind(this))
+                            .catch(function(error) {
+                                console.error(error);
+                            })
                     }.bind(this))
                     .catch(function(error) {
                         axios.post("/api/token/refresh")
                         .then((res) => {
-                            // spotifyApi.setAccessToken(res.data.api_token);
                             axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
                             console.log("Access token refreshed.");
                         })
@@ -87,7 +90,13 @@
             },
 
             clearPlaylist() {
-                spotifyApi.removeTracksFromPlaylist(this.playlistId, this.trackUris)
+                // Get the track uris from playlistTracks
+                var tracks = [];
+                for (var i = 0; i < this.playlistTracks.length; i++) {
+                    tracks.push(this.playlistTracks[i].trackUri);
+                }
+                // Remove all the tracks from the MuSync playlist
+                spotifyApi.removeTracksFromPlaylist(this.playlistId, tracks)
                     .then(function(data) {
                         console.log("Playlist cleared.");
                     })
@@ -104,11 +113,7 @@
                         // });
                     });
             }
-        },
-
-        // mounted() {
-        //     this.refreshPlaylist();
-        // }
+        }
     }
 </script>
 
@@ -134,7 +139,7 @@
 
     .list-group {
         height: 535px;
-        overflow: scroll;
+        /*overflow: scroll;*/
         overflow-y:scroll;
     }
 

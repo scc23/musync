@@ -9,10 +9,14 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <search-component v-bind:access-token="accessToken"
-                                                  v-bind:spotify-id="spotifyId"
-                                                  v-bind:playlist-id="playlistId">
-                                </search-component>
+                                <!-- <search-tracks-component v-bind:access-token="accessToken"
+                                                         v-bind:spotify-id="spotifyId"
+                                                         v-bind:playlist-id="playlistId">
+                                </search-tracks-component> -->
+                                <genre-list-component v-bind:access-token="accessToken"
+                                                      v-bind:spotify-id="spotifyId"
+                                                      v-bind:playlist-id="playlistId">
+                                </genre-list-component>
                             </div>
                             <div class="col-4">
                                 <spotify-player-component v-bind:csrf-token="csrfToken"
@@ -47,7 +51,8 @@
 
     export default {
         components: {
-            "search-component": require("./SearchComponent.vue"),
+            "search-tracks-component": require("./SearchTracksComponent"),
+            "genre-list-component": require("./GenreListComponent.vue"),
             "spotify-player-component": require("./SpotifyPlayerComponent.vue"),
             "playlist-component": require("./PlaylistComponent.vue"),
             "user-list-component": require("./UserListComponent.vue"),
@@ -134,5 +139,5 @@
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>

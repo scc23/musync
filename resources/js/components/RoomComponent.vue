@@ -17,7 +17,8 @@
                                 <spotify-player-component v-bind:csrf-token="csrfToken"
                                                           v-bind:access-token="accessToken"
                                                           v-bind:spotify-id="spotifyId"
-                                                          v-bind:spotify-device-id="spotifyDeviceId">
+                                                          v-bind:spotify-device-id="spotifyDeviceId"
+                                                          v-bind:spotify-player-state="spotifyPlayerState">
                                 </spotify-player-component>
                                 <playlist-component v-bind:csrf-token="csrfToken">
                                 </playlist-component>
@@ -59,7 +60,8 @@
         data() {
             return {
                 "currentAccessToken": "",
-                "spotifyDeviceId": ""
+                "spotifyDeviceId": "",
+                "spotifyPlayerState": {}
             };
         },
         created() {
@@ -73,6 +75,10 @@
                     const player = new Spotify.Player({
                         name: 'MuSync Web Player',
                         getOAuthToken: cb => { cb(token); }
+                    });
+
+                    player.addListener('player_state_changed', state => { 
+                        this.spotifyPlayerState = state;
                     });
 
                     // Ready
@@ -94,7 +100,7 @@
                 axios.defaults.headers.common["Authorization"] = "Bearer " + token;
                 spotifyApi.setAccessToken(token);
             }
-        }
+        },
     }
 </script>
 

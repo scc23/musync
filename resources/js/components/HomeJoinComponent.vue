@@ -19,6 +19,7 @@
                 </div>
             </div>
             <room-list-component csrf-token="csrfToken"
+                                 v-bind:rooms="rooms"
                                  v-on:join-room="setIdAndSubmit">
             </room-list-component>
             <div class="row justify-content-center mb-2">
@@ -44,6 +45,7 @@
         },
         props: {
             "csrfToken": String,
+            "rooms": Array
         },
         data() {
             return {

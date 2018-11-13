@@ -5,8 +5,9 @@
                 <button class='clear-button' v-on:click="clearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
-                    <li class="list-group-item list-group-item-action" v-for="playlistTrack in playlistTracks" v-bind:class="{ 'current-track':currentTrack['name'] == playlistTrack.trackName }">
-                        <!-- v-if="currentTrack['name'] == playlistTrack.trackName" -->
+                    <li class="list-group-item list-group-item-action" v-for="playlistTrack in playlistTracks"
+                                                                       v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
+                                                                       @click="updateTrackToPlay(playlistTrack.trackUri)">
                         <playlist-listing-component v-bind:playlist-track="playlistTrack"
                                                     v-bind:playlist-id="playlistId">
                         </playlist-listing-component>
@@ -25,25 +26,23 @@
         components: {
             'playlist-listing-component': require('./PlaylistListingComponent.vue')
         },
-
         props: {
             "accessToken": String,
             "spotifyId": String,
-            "spotifyPlayerState": Object
+            "spotifyPlayerState": Object,
+            "trackToPlay": String
         },
-
         data() {
             return {
                 "playlistId": "",
                 "playlistTracks": [],
                 "currentTrack": {name: "", artists: "", duration: 0, albumArt: ""},
+                // "trackSelected": String
             }
         },
-
         created() {
             this.refreshPlaylist();
         },
-
         watch: {
             "spotifyPlayerState": function(newState, oldState) {
                 this.spotifyPlayerState = newState;
@@ -55,7 +54,6 @@
                 console.log("Currently playing track: " + this.currentTrack["name"]);
             }
         },
-
         methods: {
             refreshPlaylist() {
                 // Get the playlist id of the MuSync playlist
@@ -100,7 +98,6 @@
                         });
                     });
             },
-
             clearPlaylist() {
                 // Get the track uris from playlistTracks
                 var tracks = [];
@@ -125,6 +122,10 @@
                         //     console.error(err);
                         // });
                     });
+            },
+            updateTrackToPlay(value) {
+                // console.log("Clicked on track: " + value);
+                this.$emit('update', value);
             }
         }
     }
@@ -132,7 +133,7 @@
 
 <style lang="scss" scoped>
     .current-track {
-        background-color: #c6c6c6;
+        background-color: #c9c9c9;
     }
 
     .clear-block {

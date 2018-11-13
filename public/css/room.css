@@ -1,0 +1,128 @@
+body {
+    background-color: #000000;
+}
+
+
+.navbar {
+    background-color: #191414;
+}
+
+.container {
+    color: #ffffff;
+}
+
+.navbar .navbar-brand {
+    background-color: #191414;
+    color: #ffffff;
+}
+
+.navbar .navbar-brand:hover {background-color: #191414;color: #bfbfbf;}
+.navbar .navbar-brand:focus {background-color: #191414;color: #bfbfbf;}
+
+
+.btn-light {color: #ffffff; align-items:center; display: flex;}
+.btn-light:hover {color: #bfbfbf; text-decoration:none;}
+.btn-light:focus {color: #bfbfbf;}
+
+.btn-dark {color: #ffffff; align-items:center; display: flex;}
+.btn-dark:hover {color: #ffffff; text-decoration:none;}
+.btn-dark:focus {color: #bfbfbf;}
+
+
+.navbar .navbar-nav .nav-link {
+    background-color: #191414;
+    color: #ffffff;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    background-color: #191414;
+    color: #bfbfbf;
+}
+.navbar .navbar-nav .nav-link:focus {
+    color: #bfbfbf;
+}
+
+
+/*maybe change this colour to #191414? but can't see icon*/
+.navbar-toggler-icon {
+    background-color: #ffffff;
+}
+
+
+
+.dropdown-menu {
+    background-color: #191414;
+    color: #ffffff;
+}
+
+.dropdown-menu .dropdown-item {
+    background-color: #191414;
+    color: #ffffff;
+}
+
+/*change color on hover (lighter grey)*/
+.dropdown-menu .dropdown-item:hover {
+    background-color: #154c28; 
+}
+
+
+
+
+.card {
+    background-color: black;
+    border-color: gray;
+}
+
+.card-body {
+    background-color: #191414;
+}
+
+
+.col-12 .form-control {
+    background-color: #191414;
+    color: #ffffff;
+}
+
+
+.genre-type {
+    color: #e4f1fe;
+}
+
+
+
+.play-pause-btn {background-color: #191414;}
+.step-forward-btn {background-color: #191414;}
+
+.svg-inline--fa.fa-play-circle.fa-w-16 {color: white;}
+.svg-inline--fa.fa-step-forward.fa-w-14 {color: white;}
+
+.home-btn {background-color: #1DB954;border:none;}
+.home-btn:active {background-color: #154c28;border:none;}
+.home-btn:hover {background-color: #154c28;border:none;}
+
+
+.clear-button {color: #ffffff;}
+
+.card-footer {background-color: #191414;}
+
+
+.input-group .form-control {background-color: #110f0f;}
+
+
+.home-btn.btn.btn-primary.btn-block {background-color: #1DB954;border:none;}
+.home-btn.btn.btn-primary.btn-block:hover {background-color: #154c28;border:none;}
+.home-btn.btn.btn-primary.btn-block:active {background-color: #154c28;border:none;}
+
+
+/* Send button */
+.btn.btn-secondary.btn-sm {background-color: #1DB954;}
+.btn.btn-secondary.btn-sm:hover {background-color: #154c28;}
+.btn.btn-secondary.btn-sm:active {background-color: #154c28;}
+
+
+
+
+/*
+.clear-block.border {border-color: gray;}
+.list-group.border {border-color: gray;}
+*/

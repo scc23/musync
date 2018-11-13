@@ -14,20 +14,27 @@
 <script>
     export default {
         props: {
-            "csrfToken": String, 
+            "userName": String,
+            "roomId": String
         },
-
         data() {
             return {
-                newMessage: '',        
+                newMessage: '',
             }
         },
-
         methods: {
             sendMessage:function() {
-                this.newMessage = ''
+                var message = {
+                    user: this.userName,
+                    message: this.newMessage
+                }
+                Echo.private(`room.${this.roomId}`)
+                    .whisper("MessageSent", message);
+                this.newMessage = '';
+
+                this.$emit("message-created", message);
             }
-        }    
+        }
     }
 </script>
 

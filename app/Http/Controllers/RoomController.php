@@ -35,7 +35,7 @@ class RoomController extends Controller
     public function show(Request $request) {
         $room_id = $request->route('id');
         $room = Room::find($room_id);
-        
+
         return view('room', ['room' => $room]);
     }
 }

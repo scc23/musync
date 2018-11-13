@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
-        <link href="{{ asset('css/welcome-page.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/welcome.css') }}" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -18,7 +18,6 @@
                 @auth
                     <a href="{{ url('/home') }}">Home</a>
                 @else
-                    <a href="/login/spotify"  class="btn btn-success btn-md">Login with Spotify</a>
                 @endauth
             </div>
 
@@ -27,6 +26,9 @@
                     MuSync
                 </div>
             </div>
+
+            <a href="/login/spotify"  class="btn btn-success btn-md">Login with Spotify</a>
+
         </div>
     </body>
 </html>

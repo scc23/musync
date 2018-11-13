@@ -48,6 +48,17 @@
                             @endif
                         </li>
                     @else
+
+                        <!-- THEME BUTTONS -->
+
+                        <!-- 
+                        <button type="button" class="btn-light" id="btn-light" v-on:click="chooseTheme($event)" value="LIGHT">LIGHT</button>
+                        <div>&nbsp;&nbsp;</div>
+                        
+                        <button type="button" class="btn-dark" id="btn-dark" v-on:click="chooseTheme($event)" value="DARK">DARK</button>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                        -->
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>

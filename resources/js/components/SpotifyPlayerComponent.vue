@@ -18,7 +18,7 @@
                     <div class="row justify-content-center">
                         <div class="col-sm-4">
                             <div v-if="currentTrack.albumArt != ''">
-                                <span><img width="50" height="50" v-bind:src="currentTrack.albumArt"/></span>
+                                <span><img width="90" height="90" v-bind:src="currentTrack.albumArt"/></span>
                             </div>
                         </div>
                         <div class="col-sm-8">
@@ -86,7 +86,8 @@
             "spotifyPlayerState": Object,
             "playlistId": String,
             "roomId": String,
-            "hasBroadcaster": Boolean
+            "hasBroadcaster": Boolean,
+            "trackToPlay": Number
         },
 
         data() {
@@ -167,6 +168,10 @@
                 this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
                 this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
                 this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+            },
+            "trackToPlay": function(newState, oldState) {
+                this.trackToPlay = newState;
+                console.log("trackToPlay updated to " + this.trackToPlay + " in SpotifyPlayerComponent.");
             }
         },
         computed: {

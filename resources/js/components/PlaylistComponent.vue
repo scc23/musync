@@ -5,11 +5,16 @@
                 <button class='clear-button' v-on:click="clearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
-                <li class="list-group-item list-group-item-action" v-for="playlistTrack in playlistTracks">
-                    <playlist-listing-component v-bind:playlist-track="playlistTrack"
-                                                v-bind:playlist-id="playlistId">
-                    </playlist-listing-component>
-                </li>
+                    <li class="list-group-item list-group-item-action" v-for="(playlistTrack, index) in playlistTracks"
+                                                                       v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
+                                                                       @click="updateTrackToPlay(index)">
+                        <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
+                                                    v-bind:playlist-track="playlistTrack"
+                                                    v-bind:playlist-id="playlistId"
+                                                    @update="onPlaylistListingUpdate">
+                        </playlist-listing-component>
+                    </li>
+                </span>
             </ul>
         </div>
     </div>
@@ -23,27 +28,33 @@
         components: {
             'playlist-listing-component': require('./PlaylistListingComponent.vue')
         },
-
         props: {
             "accessToken": String,
-            "spotifyId": String
+            "spotifyId": String,
+            "spotifyPlayerState": Object,
+            "trackToPlay": Number
         },
-
         data() {
             return {
                 "playlistId": "",
-                "playlistTracks": []
+                "playlistTracks": [],
+                "currentTrack": {name: "", artists: "", duration: 0, albumArt: ""}
             }
         },
-
         created() {
             this.refreshPlaylist();
         },
-
         watch: {
-            // 
+            "spotifyPlayerState": function(newState, oldState) {
+                this.spotifyPlayerState = newState;
+                this.isPaused = this.spotifyPlayerState["paused"];
+                this.currentTrack["name"] = this.spotifyPlayerState["track_window"]["current_track"]["name"];
+                this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
+                this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
+                this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+                console.log("Currently playing track: " + this.currentTrack["name"]);
+            }
         },
-
         methods: {
             refreshPlaylist() {
                 // Get the playlist id of the MuSync playlist
@@ -88,7 +99,6 @@
                         });
                     });
             },
-
             clearPlaylist() {
                 // Get the track uris from playlistTracks
                 var tracks = [];
@@ -113,12 +123,24 @@
                         //     console.error(err);
                         // });
                     });
+            },
+            updateTrackToPlay(value) {
+                // console.log("Clicked on track: " + value);
+                this.$emit('update', value);
+            },
+            onPlaylistListingUpdate(newData) {
+                this.playlistTracks = newData;
+                console.log("Playlist updated to remove a track.");
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    .current-track {
+        background-color: #c9c9c9;
+    }
+
     .clear-block {
         padding-left: 5px;
     }

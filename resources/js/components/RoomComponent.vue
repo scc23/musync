@@ -27,10 +27,14 @@
                                                           v-bind:playlist-id="playlistId"
                                                           v-bind:room-id="roomId"
                                                           v-bind:has-broadcaster="hasBroadcaster"
-                                                          v-on:disconnect-session="disconnectSession">
+                                                          v-on:disconnect-session="disconnectSession"
+                                                          v-bind:track-to-play="trackToPlay">
                                 </spotify-player-component>
                                 <playlist-component v-bind:access-token="accessToken"
-                                                    v-bind:spotify-id="spotifyId">
+                                                    v-bind:spotify-id="spotifyId"
+                                                    v-bind:spotify-player-state="spotifyPlayerState"
+                                                    v-bind:track-to-play="trackToPlay"
+                                                    @update="onPlaylistUpdate">
                                 </playlist-component>
                             </div>
                             <div class="col-4">
@@ -75,6 +79,7 @@
                 "spotifyPlayerState": {},
                 "playlistId": "",
                 "hasBroadcaster": false,
+                "trackToPlay": undefined
             };
         },
         created() {
@@ -175,8 +180,12 @@
             abruptlyCloseSession() {
                 spotifyApi.pause();
                 axios.delete('/api/room/' + this.roomId + '/broadcast');
+            },
+            onPlaylistUpdate(newData) {
+                this.trackToPlay = newData;
+                console.log("Track to play: " + this.trackToPlay);
             }
-        },
+        }
     }
 </script>
 

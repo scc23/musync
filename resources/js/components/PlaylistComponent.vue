@@ -8,8 +8,10 @@
                     <li class="list-group-item list-group-item-action" v-for="playlistTrack in playlistTracks"
                                                                        v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
                                                                        @click="updateTrackToPlay(playlistTrack.trackUri)">
-                        <playlist-listing-component v-bind:playlist-track="playlistTrack"
-                                                    v-bind:playlist-id="playlistId">
+                        <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
+                                                    v-bind:playlist-track="playlistTrack"
+                                                    v-bind:playlist-id="playlistId"
+                                                    @update="onPlaylistListingUpdate">
                         </playlist-listing-component>
                     </li>
                 </span>
@@ -36,8 +38,7 @@
             return {
                 "playlistId": "",
                 "playlistTracks": [],
-                "currentTrack": {name: "", artists: "", duration: 0, albumArt: ""},
-                // "trackSelected": String
+                "currentTrack": {name: "", artists: "", duration: 0, albumArt: ""}
             }
         },
         created() {
@@ -126,6 +127,10 @@
             updateTrackToPlay(value) {
                 // console.log("Clicked on track: " + value);
                 this.$emit('update', value);
+            },
+            onPlaylistListingUpdate(newData) {
+                this.playlistTracks = newData;
+                console.log("Playlist updated to remove a track.");
             }
         }
     }

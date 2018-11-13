@@ -2,9 +2,11 @@
     <div class="track-block">
         <div>
             <span class="track-album-art"><img width="70" height="70" v-bind:src="playlistTrack.trackAlbumArt"/></span>
-            <span class="track-name">{{playlistTrack.trackName}}</span>
-            <button class="remove-button" v-on:click="removeTrack($event)" v-bind:value="playlistTrack.trackUri">Remove</button><br>
-            <span class="track-artist">{{playlistTrack.trackArtist}}</span><br>
+            <span class="track-name">{{playlistTrack.trackName}}</span><br>
+            <span class="track-artist">{{playlistTrack.trackArtist}}</span>
+            <button class="remove-button" v-on:click="removeTrack($event)"
+                                          v-bind:value="playlistTrack.trackUri"
+                                          @click="updateTrackToRemove(playlistTrack.trackUri)">X</button><br>
             <span class="track-duration">{{trackDuration}}</span>
         </div>
 
@@ -18,24 +20,21 @@
 
     export default {
         props: {
+            "playlistTracks": Array,
             "playlistTrack": Object,
             "playlistId": String
         },
-
         data() {
             return {
                 "trackDuration": ""
             }
         },
-
         created() {
             this.convertMilliseconds();
         },
-
         watch: {
             // 
         },
-
         methods: {
             removeTrack(e) {
                 var track = e.target.value;
@@ -47,11 +46,19 @@
                         console.error(error);
                     });
             },
-
             convertMilliseconds() {
                 var min = Math.floor(this.playlistTrack.trackDuration / 60000);
                 var sec = ((this.playlistTrack.trackDuration % 60000) / 1000).toFixed(0);
                 this.trackDuration = min + ":" + (sec < 10 ? '0' : '') + sec;
+            },
+            updateTrackToRemove(value) {
+                var newPlaylistTracks = [];
+                for (var i = 0; i < this.playlistTracks.length; i++) {
+                    if (this.playlistTracks[i].trackUri != value) {
+                        newPlaylistTracks.push(this.playlistTracks[i]);
+                    }
+                }
+                this.$emit('update', newPlaylistTracks);
             }
         }
     }

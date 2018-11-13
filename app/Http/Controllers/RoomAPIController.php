@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RoomCreated;
 use App\Room;
 use App\RoomHelper;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +59,7 @@ class RoomAPIController extends Controller
             'password' => empty($password) ? '' : Hash::make($password)
         ]);
         RoomHelper::createMembership($room, $password);
+        broadcast(new RoomCreated($room, Auth::id()));
 
         return response()->json($room, Response::HTTP_OK);
     }

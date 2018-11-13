@@ -21,37 +21,13 @@
         },
         props: {
             "csrfToken": String,
-        },
-        data() {
-            return {
-                rooms: []
-            };
+            "rooms": Array
         },
         methods: {
-            refreshList() {
-                axios.get("/api/rooms")
-                .then((res) => {
-                    this.rooms = res.data;
-
-                    // Add border-bottom to last room listing if list is not
-                    // filled until the bottom.
-                    var borderBottom = '0';
-                    if (this.rooms.length < 4) {
-                        borderBottom = '1px';
-                    }
-
-                    $('.list-group-item:last-child').css({
-                        'border-bottom': borderBottom
-                    })
-                });
-            },
             joinRoom(id, hasAccess) {
                 this.$emit("join-room", id, hasAccess);
             }
         },
-        created() {
-            this.refreshList();
-        }
     }
 </script>
 

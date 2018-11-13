@@ -1,8 +1,14 @@
 @extends('layouts.app')
-
 @section('title', 'Room')
-
 @section ('content')
+
+
+
+<!--  -->
+<link href="{{ asset('css/room.css') }}" rel="stylesheet" type="text/css">
+<!--  -->
+
+
 <script src="https://sdk.scdn.co/spotify-player.js" defer></script>
 <script src="{{ asset('js/room.js') }}" defer></script>
 
@@ -17,3 +23,5 @@
     </room-component>
 </div>
 @endsection
+
+

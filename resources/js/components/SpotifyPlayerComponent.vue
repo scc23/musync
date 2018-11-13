@@ -76,7 +76,7 @@
 <script>
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
-    
+
     export default {
         props: {
             "accessToken": String,
@@ -84,13 +84,14 @@
             "spotifyId": String,
             "spotifyDeviceId": String,
             "spotifyPlayerState": Object,
-            "playlistId": String
+            "playlistId": String,
+            "roomId": String,
+            "hasBroadcaster": Boolean
         },
 
         data() {
             return {
                 userState: "idle",
-                hasBroadcaster: false,
                 isPaused: true,
                 progress: "0:00",
                 currentTrack: {name: "", artists: "", duration: 0, albumArt: ""},
@@ -141,16 +142,21 @@
                     })
             },
             beginBroadcasting() {
-                this.userState = "broadcasting";
+                axios.post('/api/room/' + this.roomId + '/broadcast')
+                .then((res) => {
+                    this.userState = "broadcasting";
+                })
             },
             stopBroadcasting() {
+                this.$emit("disconnect-session", true);
                 this.userState = "idle";
             },
             beginListening() {
                 this.userState = "listening";
             },
             stopListening() {
-                this.userState = "idle";
+              this.$emit("disconnect-session", false);
+              this.userState = "idle";
             }
         },
         watch: {

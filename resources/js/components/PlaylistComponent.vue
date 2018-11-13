@@ -5,11 +5,13 @@
                 <button class='clear-button' v-on:click="clearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
-                <li class="list-group-item list-group-item-action" v-for="playlistTrack in playlistTracks">
-                    <playlist-listing-component v-bind:playlist-track="playlistTrack"
-                                                v-bind:playlist-id="playlistId">
-                    </playlist-listing-component>
-                </li>
+                    <li class="list-group-item list-group-item-action" v-for="playlistTrack in playlistTracks" v-bind:class="{ 'current-track':currentTrack['name'] == playlistTrack.trackName }">
+                        <!-- v-if="currentTrack['name'] == playlistTrack.trackName" -->
+                        <playlist-listing-component v-bind:playlist-track="playlistTrack"
+                                                    v-bind:playlist-id="playlistId">
+                        </playlist-listing-component>
+                    </li>
+                </span>
             </ul>
         </div>
     </div>
@@ -26,13 +28,15 @@
 
         props: {
             "accessToken": String,
-            "spotifyId": String
+            "spotifyId": String,
+            "spotifyPlayerState": Object
         },
 
         data() {
             return {
                 "playlistId": "",
-                "playlistTracks": []
+                "playlistTracks": [],
+                "currentTrack": {name: "", artists: "", duration: 0, albumArt: ""},
             }
         },
 
@@ -41,7 +45,15 @@
         },
 
         watch: {
-            // 
+            "spotifyPlayerState": function(newState, oldState) {
+                this.spotifyPlayerState = newState;
+                this.isPaused = this.spotifyPlayerState["paused"];
+                this.currentTrack["name"] = this.spotifyPlayerState["track_window"]["current_track"]["name"];
+                this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
+                this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
+                this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+                console.log("Currently playing track: " + this.currentTrack["name"]);
+            }
         },
 
         methods: {
@@ -119,6 +131,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .current-track {
+        background-color: #c6c6c6;
+    }
+
     .clear-block {
         padding-left: 5px;
     }

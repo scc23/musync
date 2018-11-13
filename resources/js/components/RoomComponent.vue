@@ -30,7 +30,8 @@
                                                           v-on:disconnect-session="disconnectSession">
                                 </spotify-player-component>
                                 <playlist-component v-bind:access-token="accessToken"
-                                                    v-bind:spotify-id="spotifyId">
+                                                    v-bind:spotify-id="spotifyId"
+                                                    v-bind:spotify-player-state="spotifyPlayerState">
                                 </playlist-component>
                             </div>
                             <div class="col-4">

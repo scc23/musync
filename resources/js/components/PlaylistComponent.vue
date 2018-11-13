@@ -5,9 +5,9 @@
                 <button class='clear-button' v-on:click="clearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
-                    <li class="list-group-item list-group-item-action" v-for="playlistTrack in playlistTracks"
+                    <li class="list-group-item list-group-item-action" v-for="(playlistTrack, index) in playlistTracks"
                                                                        v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
-                                                                       @click="updateTrackToPlay(playlistTrack.trackUri)">
+                                                                       @click="updateTrackToPlay(index)">
                         <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
                                                     v-bind:playlist-track="playlistTrack"
                                                     v-bind:playlist-id="playlistId"
@@ -32,7 +32,7 @@
             "accessToken": String,
             "spotifyId": String,
             "spotifyPlayerState": Object,
-            "trackToPlay": String
+            "trackToPlay": Number
         },
         data() {
             return {

@@ -4,7 +4,7 @@
 <template>
     <div class="chat-messages">
         <ul class="chat">
-            <li class="left clearfix" v-for="message in messages">
+            <li class="chat-message left clearfix" v-for="message in messages">
                 <div class="chat-body clearfix">
                     <div class="header">
                         <strong class="primary-font">
@@ -24,8 +24,8 @@
 <script>
     export default {
         props: {
-            "messages": Array
-        }
+            "messages": Array,
+        },
     }
 </script>
 

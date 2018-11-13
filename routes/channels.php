@@ -13,6 +13,7 @@
 
 use App\Room;
 use App\RoomHelper;
+
 Broadcast::channel('home', function($user) {
     return Auth::check();
 });

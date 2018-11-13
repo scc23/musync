@@ -22,17 +22,34 @@
                 newMessage: '',
             }
         },
+        mounted() {
+            $('#btn-chat').prop('disabled', true);
+        },
         methods: {
-            sendMessage:function() {
-                var message = {
-                    user: this.userName,
-                    message: this.newMessage
-                }
-                Echo.private(`room.${this.roomId}`)
-                    .whisper("MessageSent", message);
-                this.newMessage = '';
+            isValidMessage: function() {
+                return (this.newMessage.trim().length != 0);
+            },
+            sendMessage: function() {
+                if (this.isValidMessage()) {
+                    var message = {
+                        user: this.userName,
+                        message: this.newMessage
+                    }
+                    Echo.private(`room.${this.roomId}`)
+                        .whisper("MessageSent", message);
+                    this.newMessage = '';
 
-                this.$emit("message-created", message);
+                    this.$emit("message-created", message);
+                }
+            }
+        },
+        watch: {
+            newMessage: function() {
+                if (this.isValidMessage()) {
+                    $('#btn-chat').prop('disabled', false);
+                } else {
+                    $('#btn-chat').prop('disabled', true);
+                }
             }
         }
     }

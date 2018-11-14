@@ -45,12 +45,12 @@
                             </div>
                             <div class="col track-container">
                                 <div class="track-progress">
-                                    {{ progressMsToMinSec }}
+                                    {{ msToMinSec(currentTrack["trackPosition"]) }}
                                 </div>
                                 <div class="progress-bar">
                                 </div>
                                 <div class="track-duration">
-                                    {{ durationMsToMinSec }}
+                                    {{ msToMinSec(currentTrack["duration"]) }}
                                 </div>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                 }
             },
             incrementProgressTime() {
-                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 10
+                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 10;
             },
             setCurrentTrackIndex() {
                 var playlistTracks = [];
@@ -183,6 +183,11 @@
                     .catch(function(error) {
                         console.error(error);
                     })
+            },
+            msToMinSec(ms) {
+                var minutes = (ms / 1000) / 60;
+                var seconds = (ms / 1000) % 60;
+                return Math.floor(minutes) + ":" + String("0" + (Math.floor(seconds))).slice(-2);
             },
             beginBroadcasting() {
                 axios.post('/api/room/' + this.roomId + '/broadcast')
@@ -228,21 +233,6 @@
             },
             "currentTrack.name": function(newValue, oldValue) {
                 this.setCurrentTrackIndex();
-            }
-        },
-        computed: {
-            durationMsToMinSec: function() {
-                var minutes = (this.currentTrack["duration"] / 1000) / 60;
-                var seconds = (this.currentTrack["duration"] / 1000) % 60;
-                // return format is "x:xx"
-                return Math.floor(minutes) + ":" + String("0" + (Math.floor(seconds))).slice(-2);
-            }, 
-
-            progressMsToMinSec: function() {
-                var minutes = (this.currentTrack["trackPosition"] / 1000) / 60;
-                var seconds = (this.currentTrack["trackPosition"] / 1000) % 60;
-                // return format is "x:xx"
-                return Math.floor(minutes) + ":" + String("0" + (Math.floor(seconds))).slice(-2);
             }
         }
     }

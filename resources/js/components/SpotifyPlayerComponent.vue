@@ -57,10 +57,7 @@
                     </form>
                     <button class="home-btn btn btn-primary btn-block" @click="stopBroadcasting">
                         Stop Broadcasting
-                    </button>
-                    <button v-on:click="setCurrentTrackIndex">
-                        Click me
-                    </button>
+                    </button> 
                 </div>
             </div>
         </div>
@@ -99,7 +96,7 @@
                 userState: "idle",
                 isPaused: true,
                 interval: null,
-                currentTrack: {name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0},
+                currentTrack: {name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0}
             }
         },
 
@@ -155,7 +152,6 @@
                 spotifyApi.skipToNext({
                     "device_id": this.spotifyDeviceId})
                     .then(function() {
-                        this.trackIndex += 1;
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
@@ -164,13 +160,12 @@
             toggleProgressTimer() {
                 if (this.isPaused) {
                     clearInterval(this.interval);
-                    console.log("timer stops");
                 } else {
-                    this.interval = setInterval(this.incrementProgressTime, 1000);
+                    this.interval = setInterval(this.incrementProgressTime, 10);
                 }
             },
             incrementProgressTime() {
-                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 1000
+                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 10
             },
             setCurrentTrackIndex() {
                 var playlistTracks = [];
@@ -221,6 +216,9 @@
             "trackToPlay": function(newState, oldState) {
                 this.trackToPlay = newState;
                 console.log("trackToPlay updated to " + this.trackToPlay + " in SpotifyPlayerComponent.");
+                this.currentTrack["trackIndex"] = this.trackToPlay;
+                this.currentTrack["trackPosition"] = 0;
+                this.play();
             },
             "playlistTracks": function(newState, oldState) {
                 this.playlistTracks = newState;

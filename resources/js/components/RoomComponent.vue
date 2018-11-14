@@ -15,7 +15,9 @@
                                 </search-tracks-component> -->
                                 <genre-list-component v-bind:access-token="accessToken"
                                                       v-bind:spotify-id="spotifyId"
-                                                      v-bind:playlist-id="playlistId">
+                                                      v-bind:playlist-id="playlistId"
+                                                      v-bind:playlist-tracks="playlistTracks"
+                                                      @addTrack="addTrackToPlaylist">
                                 </genre-list-component>
                             </div>
                             <div class="col-4">
@@ -28,13 +30,17 @@
                                                           v-bind:room-id="roomId"
                                                           v-bind:has-broadcaster="hasBroadcaster"
                                                           v-on:disconnect-session="disconnectSession"
-                                                          v-bind:track-to-play="trackToPlay">
+                                                          v-bind:track-to-play="trackToPlay"
+                                                          v-bind:playlist-tracks="playlistTracks">
                                 </spotify-player-component>
                                 <playlist-component v-bind:access-token="accessToken"
                                                     v-bind:spotify-id="spotifyId"
                                                     v-bind:spotify-player-state="spotifyPlayerState"
                                                     v-bind:track-to-play="trackToPlay"
-                                                    @update="onPlaylistUpdate">
+                                                    v-bind:playlist-tracks="playlistTracks"
+                                                    @getTrack="getTrackToPlay"
+                                                    @change="clearPlaylist"
+                                                    @removeTrack="removeTrackFromPlaylist">
                                 </playlist-component>
                             </div>
                             <div class="col-4">
@@ -79,21 +85,22 @@
                 "spotifyPlayerState": {},
                 "playlistId": "",
                 "hasBroadcaster": false,
-                "trackToPlay": undefined
+                "trackToPlay": undefined,
+                "playlistTracks": []
             };
         },
         created() {
             this.currentAccessToken = this.accessToken;
             this.currentSpotifyId = this.spotifyId;
             this.setAccessToken(this.currentAccessToken);
-            this.initializePlaylistId(this.currentAccessToken, this.currentSpotifyId);
+            this.initializePlaylist(this.currentAccessToken, this.currentSpotifyId);
             this.initializeEventListeners();
             this.initializeSpotifyPlayer(this.currentAccessToken);
             this.getRoomBroadcasterStatus();
             window.addEventListener("beforeunload", this.abruptlyCloseSession);
         },
         methods: {
-            initializePlaylistId(token, id) {
+            initializePlaylist(token, id) {
                 spotifyApi.getUserPlaylists(id)
                     .then(function(data) {
                         // Find MuSync playlist
@@ -102,6 +109,28 @@
                                 this.playlistId = data.items[i].id;
                             }
                         }
+                    }.bind(this))
+                    .then(function(data) {
+                        // console.log("Playlist id: " + this.playlistId);
+                        // Get the tracks in the MuSync playlist
+                        spotifyApi.getPlaylistTracks(this.playlistId)
+                            .then(function(data) {
+                                // Store the tracks in playlistTracks
+                                // console.log(data.items);
+                                for (var i = 0; i < data.items.length; i++) {
+                                    this.playlistTracks.push({
+                                        trackName: data.items[i].track.name,
+                                        trackArtist: data.items[i].track.artists[0].name,
+                                        trackAlbumArt: data.items[i].track.album.images[0].url,
+                                        trackDuration: data.items[i].track.duration_ms,
+                                        trackUri: data.items[i].track.uri
+                                    });
+                                }
+                                // console.log(this.playlistTracks);
+                            }.bind(this))
+                            .catch(function(error) {
+                                console.error(error);
+                            })
                     }.bind(this))
                     .catch(function(error) {
                         axios.post("/api/token/refresh")
@@ -181,9 +210,54 @@
                 spotifyApi.pause();
                 axios.delete('/api/room/' + this.roomId + '/broadcast');
             },
-            onPlaylistUpdate(newData) {
+            getTrackToPlay(newData) {
                 this.trackToPlay = newData;
                 console.log("Track to play: " + this.trackToPlay);
+            },
+            clearPlaylist() {
+                // Get the track uris from playlistTracks
+                var tracks = [];
+                for (var i = 0; i < this.playlistTracks.length; i++) {
+                    tracks.push(this.playlistTracks[i].trackUri);
+                }
+                // Remove all the tracks from the MuSync playlist
+                spotifyApi.removeTracksFromPlaylist(this.playlistId, tracks)
+                    .then(function(data) {
+                        console.log("Playlist cleared.");
+                        this.playlistTracks = [];
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
+                    });
+                this.playlistTracks = [];
+            },
+            removeTrackFromPlaylist(index, uri) {
+                console.log("Playlist id: " + this.playlistId);
+                console.log("Track uri: " + uri);
+                spotifyApi.removeTracksFromPlaylist(this.playlistId, [uri])
+                    .then(function(data) {
+                        console.log("Track removed from playlist.");
+                        this.playlistTracks.splice(index, 1);
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
+                    });
+            },
+            addTrackToPlaylist(trackData) {
+                console.log(trackData);
+                spotifyApi.addTracksToPlaylist(this.playlistId, [trackData.uri])
+                    .then(function(data) {
+                        this.playlistTracks.push({
+                            trackName: trackData.name,
+                            trackArtist: trackData.artists[0].name,
+                            trackAlbumArt: trackData.album.images[0].url,
+                            trackDuration: trackData.duration_ms,
+                            trackUri: trackData.uri
+                        });
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.error(error);
+                    });
             }
         }
     }

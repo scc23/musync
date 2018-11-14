@@ -2,16 +2,17 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class='clear-block border'>
-                <button class='clear-button' v-on:click="clearPlaylist()">Clear all</button>
+                <button class='clear-button' @click="updateClearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
-                    <li class="list-group-item list-group-item-action" v-for="(playlistTrack, index) in playlistTracks"
+                    <li class="list-group-item list-group-item-action" v-for="(playlistTrack, playlistTrackIndex) in playlistTracks"
                                                                        v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
-                                                                       @click="updateTrackToPlay(index)">
+                                                                       @click="updateTrackToPlay(playlistTrackIndex)">
                         <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
                                                     v-bind:playlist-track="playlistTrack"
                                                     v-bind:playlist-id="playlistId"
-                                                    @update="onPlaylistListingUpdate">
+                                                    v-bind:playlist-track-index="playlistTrackIndex"
+                                                    @getTrackToRemove="updatePlaylistRemoveTrack">
                         </playlist-listing-component>
                     </li>
                 </span>
@@ -32,17 +33,14 @@
             "accessToken": String,
             "spotifyId": String,
             "spotifyPlayerState": Object,
-            "trackToPlay": Number
+            "trackToPlay": Number,
+            "playlistTracks": Array
         },
         data() {
             return {
                 "playlistId": "",
-                "playlistTracks": [],
                 "currentTrack": {name: "", artists: "", duration: 0, albumArt: ""}
             }
-        },
-        created() {
-            this.refreshPlaylist();
         },
         watch: {
             "spotifyPlayerState": function(newState, oldState) {
@@ -53,84 +51,23 @@
                 this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
                 this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
                 console.log("Currently playing track: " + this.currentTrack["name"]);
+            },
+            "playlistTracks": function(newState, oldState) {
+                this.playlistTracks = newState;
             }
         },
         methods: {
-            refreshPlaylist() {
-                // Get the playlist id of the MuSync playlist
-                spotifyApi.getUserPlaylists()
-                    .then(function(data) {
-                        for (var i = 0; i < data.items.length; i++) {
-                            if (data.items[i].name == "MuSync") {
-                                this.playlistId = data.items[i].id;
-                            }
-                        }
-                    }.bind(this))
-                    .then(function(data) {
-                        console.log("Playlist id: " + this.playlistId);
-                        // Get the tracks in the MuSync playlist
-                        spotifyApi.getPlaylistTracks(this.playlistId)
-                            .then(function(data) {
-                                // Store the tracks in playlistTracks
-                                // console.log(data.items);
-                                for (var i = 0; i < data.items.length; i++) {
-                                    this.playlistTracks.push({
-                                        trackName: data.items[i].track.name,
-                                        trackArtist: data.items[i].track.artists[0].name,
-                                        trackAlbumArt: data.items[i].track.album.images[0].url,
-                                        trackDuration: data.items[i].track.duration_ms,
-                                        trackUri: data.items[i].track.uri
-                                    });
-                                }
-                                // console.log(this.playlistTracks);
-                            }.bind(this))
-                            .catch(function(error) {
-                                console.error(error);
-                            })
-                    }.bind(this))
-                    .catch(function(error) {
-                        axios.post("/api/token/refresh")
-                        .then((res) => {
-                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
-                            console.log("Access token refreshed.");
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                        });
-                    });
+            updateClearPlaylist() {
+                // Call parent function to clear the entire playlist
+                this.$emit("change");
             },
-            clearPlaylist() {
-                // Get the track uris from playlistTracks
-                var tracks = [];
-                for (var i = 0; i < this.playlistTracks.length; i++) {
-                    tracks.push(this.playlistTracks[i].trackUri);
-                }
-                // Remove all the tracks from the MuSync playlist
-                spotifyApi.removeTracksFromPlaylist(this.playlistId, tracks)
-                    .then(function(data) {
-                        console.log("Playlist cleared.");
-                        this.playlistTracks = [];
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.error(error);
-                        // axios.post("/api/token/refresh")
-                        // .then((res) => {
-                        //     spotifyApi.setAccessToken(res.data.api_token);
-                        //     axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
-                        //     console.log("Access token refreshed.");
-                        // })
-                        // .catch((err) => {
-                        //     console.error(err);
-                        // });
-                    });
+            updatePlaylistRemoveTrack(index, uri) {
+                // Call parent function to remove track from playlist
+                this.$emit("removeTrack", index, uri);
             },
             updateTrackToPlay(value) {
-                // console.log("Clicked on track: " + value);
-                this.$emit('update', value);
-            },
-            onPlaylistListingUpdate(newData) {
-                this.playlistTracks = newData;
-                console.log("Playlist updated to remove a track.");
+                // Pass the playlist index of the track to be played
+                this.$emit("getTrack", value);
             }
         }
     }

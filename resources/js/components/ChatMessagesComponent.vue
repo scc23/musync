@@ -4,58 +4,34 @@
 <template>
     <div class="chat-messages">
         <ul class="chat">
-            <li class="left clearfix" v-for="message in messages">
+            <li class="chat-message left clearfix" v-for="message in messages">
                 <div class="chat-body clearfix">
                     <div class="header">
                         <strong class="primary-font">
                             {{message.user}}
-                        </strong> 
+                        </strong>
                     </div>
                     <p>
                         {{message.message}}
                     </p>
                 </div>
             </li>
-        </ul> 
+        </ul>
     </div>
 </template>
 
 
 <script>
-    export default {  
+    export default {
         props: {
-            "csrfToken": String
+            "messages": Array,
         },
-
-        data(){
-            return {
-                // dummy messages for display
-                messages: [
-                    {
-                        user: 'John',
-                        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-                    },
-                    {
-                        user: 'Paul',
-                        message: 'Curabitur bibendum ornaredolor, quis ullamcorper ligula sodales.'
-                    },
-                    {
-                        user: 'John',
-                        message: 'Curabitur bibendum ornaredolor, quis ullamcorper ligula sodales.'
-                    },
-                    {
-                        user: 'John',
-                        message: 'Curabitur bibendum ornaredolor, quis ullamcorper ligula sodales.'
-                    },
-                ]
-            }
-        }
     }
 </script>
 
 
 <style lang="scss" scoped>
-    
+
     .chat {
         list-style: none;
         margin: 0;
@@ -63,7 +39,7 @@
     }
 
     .chat li {
-        margin-bottom: 10px;  
+        margin-bottom: 10px;
         padding-bottom: 5px;
         border-bottom: 1px dotted #B3A9A9;
     }

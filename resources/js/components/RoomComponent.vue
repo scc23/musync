@@ -46,7 +46,8 @@
                             <div class="col-4">
                                 <user-list-component v-bind:csrf-token="csrfToken">
                                 </user-list-component>
-                                <chat-component v-bind:csrf-token="csrfToken">
+                                <chat-component v-bind:user-name="userName"
+                                                v-bind:room-id="roomId">
                                 </chat-component>
                             </div>
                         </div>
@@ -72,6 +73,7 @@
             "chat-component": require("./ChatComponent.vue"),
         },
         props: {
+            "userName": String,
             "roomName": String,
             "roomId": String,
             "csrfToken": String,

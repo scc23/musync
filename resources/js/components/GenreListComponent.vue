@@ -41,7 +41,8 @@
         props: {
             "accessToken": String,
             "spotifyId": String,
-            "playlistId": String
+            "playlistId": String,
+            "playlistTracks": Array
         },
 
         methods: {

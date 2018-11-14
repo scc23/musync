@@ -87,7 +87,8 @@
             "playlistId": String,
             "roomId": String,
             "hasBroadcaster": Boolean,
-            "trackToPlay": Number
+            "trackToPlay": Number,
+            "playlistTracks": Array
         },
 
         data() {

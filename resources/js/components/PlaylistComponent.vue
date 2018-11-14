@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class='clear-block border'>
-                <button class='clear-button' v-on:click="clearPlaylist()">Clear all</button>
+                <button class='clear-button' @click="updateClearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
                     <li class="list-group-item list-group-item-action" v-for="(playlistTrack, index) in playlistTracks"
@@ -32,17 +32,14 @@
             "accessToken": String,
             "spotifyId": String,
             "spotifyPlayerState": Object,
-            "trackToPlay": Number
+            "trackToPlay": Number,
+            "playlistTracks": Array
         },
         data() {
             return {
                 "playlistId": "",
-                "playlistTracks": [],
                 "currentTrack": {name: "", artists: "", duration: 0, albumArt: ""}
             }
-        },
-        created() {
-            this.refreshPlaylist();
         },
         watch: {
             "spotifyPlayerState": function(newState, oldState) {
@@ -56,50 +53,7 @@
             }
         },
         methods: {
-            refreshPlaylist() {
-                // Get the playlist id of the MuSync playlist
-                spotifyApi.getUserPlaylists()
-                    .then(function(data) {
-                        for (var i = 0; i < data.items.length; i++) {
-                            if (data.items[i].name == "MuSync") {
-                                this.playlistId = data.items[i].id;
-                            }
-                        }
-                    }.bind(this))
-                    .then(function(data) {
-                        console.log("Playlist id: " + this.playlistId);
-                        // Get the tracks in the MuSync playlist
-                        spotifyApi.getPlaylistTracks(this.playlistId)
-                            .then(function(data) {
-                                // Store the tracks in playlistTracks
-                                // console.log(data.items);
-                                for (var i = 0; i < data.items.length; i++) {
-                                    this.playlistTracks.push({
-                                        trackName: data.items[i].track.name,
-                                        trackArtist: data.items[i].track.artists[0].name,
-                                        trackAlbumArt: data.items[i].track.album.images[0].url,
-                                        trackDuration: data.items[i].track.duration_ms,
-                                        trackUri: data.items[i].track.uri
-                                    });
-                                }
-                                // console.log(this.playlistTracks);
-                            }.bind(this))
-                            .catch(function(error) {
-                                console.error(error);
-                            })
-                    }.bind(this))
-                    .catch(function(error) {
-                        axios.post("/api/token/refresh")
-                        .then((res) => {
-                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
-                            console.log("Access token refreshed.");
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                        });
-                    });
-            },
-            clearPlaylist() {
+            updateClearPlaylist() {
                 // Get the track uris from playlistTracks
                 var tracks = [];
                 for (var i = 0; i < this.playlistTracks.length; i++) {
@@ -123,6 +77,8 @@
                         //     console.error(err);
                         // });
                     });
+
+                this.$emit('change')
             },
             updateTrackToPlay(value) {
                 // console.log("Clicked on track: " + value);

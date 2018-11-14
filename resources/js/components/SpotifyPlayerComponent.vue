@@ -45,19 +45,19 @@
                             </div>
                             <div class="col track-container">
                                 <div class="track-progress">
-                                    {{ progress }}
+                                    {{ msToMinSec(currentTrack["trackPosition"]) }}
                                 </div>
                                 <div class="progress-bar">
                                 </div>
                                 <div class="track-duration">
-                                    {{ durationMsToMinSec }}
+                                    {{ msToMinSec(currentTrack["duration"]) }}
                                 </div>
                             </div>
                         </div>
                     </form>
                     <button class="home-btn btn btn-primary btn-block" @click="stopBroadcasting">
                         Stop Broadcasting
-                    </button>
+                    </button> 
                 </div>
             </div>
         </div>
@@ -95,8 +95,8 @@
             return {
                 userState: "idle",
                 isPaused: true,
-                progress: "0:00",
-                currentTrack: {name: "", artists: "", duration: 0, albumArt: ""},
+                interval: null,
+                currentTrack: {name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0}
             }
         },
 
@@ -112,22 +112,36 @@
                 this.pause();
             },
             play() {
-                // Play the room creator's playlist associated with the room
-                spotifyApi.play({
-                    "device_id": this.spotifyDeviceId,
-                    "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId})
-                    .then(function() {
-                    })
-                    .catch(function(error) {
-                        console.error(error);
-                    })
+                // Play the room creator's playlist associated with the room if current song doesn't exist
+                if (Object.keys(this.spotifyPlayerState).length === 0) {
+                    spotifyApi.play({
+                        "device_id": this.spotifyDeviceId,
+                        "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId})
+                        .then(function() {
+                        }.bind(this))
+                        .catch(function(error) {
+                            console.error(error);
+                        })
+                // Play the room's current song
+                } else {
+                    spotifyApi.play({
+                        "device_id": this.spotifyDeviceId,
+                        "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId,
+                        "offset": {"position": this.currentTrack["trackIndex"]},
+                        "position_ms": this.currentTrack["trackPosition"]})
+                        .then(function() {
+                        }.bind(this))
+                        .catch(function(error) {
+                            console.error(error);
+                        })
+                }
             },
             pause() {
                 spotifyApi.setAccessToken(this.accessToken);
                 spotifyApi.pause({
                     "device_id": this.spotifyDeviceId})
                     .then(function() {
-                    })
+                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                     })
@@ -138,10 +152,32 @@
                 spotifyApi.skipToNext({
                     "device_id": this.spotifyDeviceId})
                     .then(function() {
-                    })
+                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                     })
+            },
+            toggleProgressTimer() {
+                if (this.isPaused) {
+                    clearInterval(this.interval);
+                } else {
+                    this.interval = setInterval(this.incrementProgressTime, 10);
+                }
+            },
+            incrementProgressTime() {
+                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 10;
+            },
+            setCurrentTrackIndex() {
+                for (var i = 0; i < this.playlistTracks.length; i++) {
+                    if (this.currentTrack["name"] == this.playlistTracks[i]["trackName"]) {
+                        this.currentTrack["trackIndex"] = i;
+                    }
+                }
+            },
+            msToMinSec(ms) {
+                var minutes = (ms / 1000) / 60;
+                var seconds = (ms / 1000) % 60;
+                return Math.floor(minutes) + ":" + String("0" + (Math.floor(seconds))).slice(-2);
             },
             beginBroadcasting() {
                 axios.post('/api/room/' + this.roomId + '/broadcast')
@@ -169,21 +205,24 @@
                 this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
                 this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
                 this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+                this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
+                this.currentTrack["trackPosition"] = this.spotifyPlayerState["position"];
             },
             "trackToPlay": function(newState, oldState) {
                 this.trackToPlay = newState;
                 console.log("trackToPlay updated to " + this.trackToPlay + " in SpotifyPlayerComponent.");
+                this.currentTrack["trackIndex"] = this.trackToPlay;
+                this.currentTrack["trackPosition"] = 0;
+                this.play();
             },
             "playlistTracks": function(newState, oldState) {
                 this.playlistTracks = newState;
-            }
-        },
-        computed: {
-            durationMsToMinSec: function() {
-                var minutes = (this.currentTrack["duration"] / 1000) / 60;
-                var seconds = (this.currentTrack["duration"] / 1000) % 60;
-                // return format is "x:xx"
-                return Math.floor(minutes) + ":" + String("0" + (Math.floor(seconds))).slice(-2);
+            },
+            "isPaused": function(newValue, oldValue) {
+                this.toggleProgressTimer();
+            },
+            "currentTrack.name": function(newValue, oldValue) {
+                this.setCurrentTrackIndex();
             }
         }
     }

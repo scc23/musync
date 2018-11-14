@@ -44,7 +44,7 @@
                                 </playlist-component>
                             </div>
                             <div class="col-4">
-                                <user-list-component v-bind:csrf-token="csrfToken">
+                                <user-list-component v-bind:room-id="roomId">
                                 </user-list-component>
                                 <chat-component v-bind:user-name="userName"
                                                 v-bind:room-id="roomId">

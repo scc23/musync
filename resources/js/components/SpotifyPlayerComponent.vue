@@ -168,21 +168,11 @@
                 this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 10;
             },
             setCurrentTrackIndex() {
-                var playlistTracks = [];
-                spotifyApi.getPlaylistTracks(this.playlistId)
-                    .then(function(data) {
-                        return data["items"];
-                    })
-                    .then(function(playlistTracks) {
-                        for (var i = 0; i < playlistTracks.length; i++) {
-                            if (this.currentTrack["name"] == playlistTracks[i]["track"]["name"]) {
-                                this.currentTrack["trackIndex"] = i;
-                            }
-                        }
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.error(error);
-                    })
+                for (var i = 0; i < this.playlistTracks.length; i++) {
+                    if (this.currentTrack["name"] == this.playlistTracks[i]["trackName"]) {
+                        this.currentTrack["trackIndex"] = i;
+                    }
+                }
             },
             msToMinSec(ms) {
                 var minutes = (ms / 1000) / 60;
@@ -227,7 +217,7 @@
             },
             "playlistTracks": function(newState, oldState) {
                 this.playlistTracks = newState;
-            }
+            },
             "isPaused": function(newValue, oldValue) {
                 this.toggleProgressTimer();
             },

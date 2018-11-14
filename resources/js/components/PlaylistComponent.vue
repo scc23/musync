@@ -5,13 +5,14 @@
                 <button class='clear-button' @click="updateClearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
-                    <li class="list-group-item list-group-item-action" v-for="(playlistTrack, index) in playlistTracks"
+                    <li class="list-group-item list-group-item-action" v-for="(playlistTrack, playlistTrackIndex) in playlistTracks"
                                                                        v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
-                                                                       @click="updateTrackToPlay(index)">
+                                                                       @click="updateTrackToPlay(playlistTrackIndex)">
                         <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
                                                     v-bind:playlist-track="playlistTrack"
                                                     v-bind:playlist-id="playlistId"
-                                                    @update="onPlaylistListingUpdate">
+                                                    v-bind:playlist-track-index="playlistTrackIndex"
+                                                    @getTrackToRemove="updatePlaylistRemoveTrack">
                         </playlist-listing-component>
                     </li>
                 </span>
@@ -50,43 +51,23 @@
                 this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
                 this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
                 console.log("Currently playing track: " + this.currentTrack["name"]);
+            },
+            "playlistTracks": function(newState, oldState) {
+                this.playlistTracks = newState;
             }
         },
         methods: {
             updateClearPlaylist() {
-                // Get the track uris from playlistTracks
-                var tracks = [];
-                for (var i = 0; i < this.playlistTracks.length; i++) {
-                    tracks.push(this.playlistTracks[i].trackUri);
-                }
-                // Remove all the tracks from the MuSync playlist
-                spotifyApi.removeTracksFromPlaylist(this.playlistId, tracks)
-                    .then(function(data) {
-                        console.log("Playlist cleared.");
-                        this.playlistTracks = [];
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.error(error);
-                        // axios.post("/api/token/refresh")
-                        // .then((res) => {
-                        //     spotifyApi.setAccessToken(res.data.api_token);
-                        //     axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
-                        //     console.log("Access token refreshed.");
-                        // })
-                        // .catch((err) => {
-                        //     console.error(err);
-                        // });
-                    });
-
-                this.$emit('change')
+                // Call parent function to clear the entire playlist
+                this.$emit("change");
+            },
+            updatePlaylistRemoveTrack(index, uri) {
+                // Call parent function to remove track from playlist
+                this.$emit("removeTrack", index, uri);
             },
             updateTrackToPlay(value) {
-                // console.log("Clicked on track: " + value);
-                this.$emit('update', value);
-            },
-            onPlaylistListingUpdate(newData) {
-                this.playlistTracks = newData;
-                console.log("Playlist updated to remove a track.");
+                // Pass the playlist index of the track to be played
+                this.$emit("getTrack", value);
             }
         }
     }

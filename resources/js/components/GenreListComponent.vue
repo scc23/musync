@@ -44,43 +44,24 @@
             "playlistId": String,
             "playlistTracks": Array
         },
-
+        watch: {
+            "playlistTracks": function(newState, oldState) {
+                this.playlistTracks = newState;
+            }
+        },
         methods: {
             // Fetch tracks from a genre and add them to the room's playlist
             fetchTracks(e) {
                 var genre = e.target.value;
-                this.trackUris = [];
-                console.log("Genre selected: " + genre);
-                console.log("Playlist id: " + this.playlistId);
-
                 spotifyApi.getRecommendations({seed_genres: genre})
                     .then(function(data) {
-                        return data.tracks.map(function(t) { return t.uri });
-                    })
-                    .then(function(trackUris) {
-                        // Add a single track to the playlist
-                        spotifyApi.addTracksToPlaylist(this.playlistId, [trackUris[0]])
-                            .then(function(data) {
-                                console.log("Added a track to the playlist.");
-                            })
-                            .catch(function(error) {
-                                console.error(error);
-                            })
+                        this.$emit("addTrack", data.tracks[0]);
                     }.bind(this))
-                    .catch(function(error) {
-                        axios.post("/api/token/refresh")
-                        .then((res) => {
-                            spotifyApi.setAccessToken(res.data.api_token);
-                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
-                            console.log("Access token refreshed.");
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                        });
+                    .catch((err) => {
+                        console.error(err);
                     });
             }
         },
-        
         mounted() {
             spotifyApi.setAccessToken(this.accessToken);
             axios.defaults.headers.common["Authorization"] = "Bearer " + this.accessToken;

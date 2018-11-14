@@ -32,13 +32,13 @@
                                 <div class="btn-group">
                                     <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
                                         <div v-if="isPaused">
-                                            <font-awesome-icon icon="play-circle"/>
+                                            <font-awesome-icon class="player-icons" icon="play-circle"/>
                                         </div>
                                         <div v-if="!isPaused">
-                                            <font-awesome-icon icon="pause-circle"/>
+                                            <font-awesome-icon class="player-icons" icon="pause-circle"/>
                                         </div>
                                     </button>
-                                    <button class="step-forward-btn" type="button" v-on:click="nextTrack">
+                                    <button class="player-icons step-forward-btn" type="button" v-on:click="nextTrack">
                                         <font-awesome-icon icon="step-forward"/>
                                     </button>
                                 </div>
@@ -173,6 +173,9 @@
             "trackToPlay": function(newState, oldState) {
                 this.trackToPlay = newState;
                 console.log("trackToPlay updated to " + this.trackToPlay + " in SpotifyPlayerComponent.");
+            },
+            "playlistTracks": function(newState, oldState) {
+                this.playlistTracks = newState;
             }
         },
         computed: {
@@ -188,6 +191,16 @@
 
 <style lang="scss" scoped>
 
+.player-icons {
+    opacity: 1;
+    transition: opacity .2s ease-out;
+    -moz-transition: opacity .2s ease-out;
+    -webkit-transition: opacity .2s ease-out;
+    -o-transition: opacity .2s ease-out;
+}
+.player-icons:hover {
+    opacity: 0.5;
+}
 .progress-bar {
     height: 10px;
     width: 71%;

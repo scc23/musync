@@ -21,7 +21,6 @@
     
     export default {
         props: {
-            "accessToken": String,
             "spotifyId": String,
             "playlistId": String,
             "playlistTracks": Array
@@ -73,10 +72,6 @@
                         console.error(err);
                     });
             }
-        },
-        mounted() {
-            spotifyApi.setAccessToken(this.accessToken);
-            axios.defaults.headers.common["Authorization"] = "Bearer " + this.accessToken;
         }
     }
 </script>

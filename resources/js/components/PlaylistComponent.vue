@@ -21,15 +21,11 @@
 </template>
 
 <script>
-    var SpotifyWebApi = require('spotify-web-api-js');
-    var spotifyApi = new SpotifyWebApi();
-
     export default {
         components: {
             'playlist-listing-component': require('./PlaylistListingComponent.vue')
         },
         props: {
-            "accessToken": String,
             "spotifyId": String,
             "spotifyPlayerState": Object,
             "trackToPlay": Number,

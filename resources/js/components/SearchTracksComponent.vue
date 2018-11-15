@@ -23,6 +23,12 @@
         components: {
             'search-tracks-listing-component': require('./searchTracksListingComponent.vue')
         },
+        props: {
+            "accessToken": String,
+            "spotifyId": String,
+            "playlistId": String,
+            "playlistTracks": Array
+        },
         data() {
         	return {
         		"searchInput": "",

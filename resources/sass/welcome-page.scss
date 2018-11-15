@@ -5,17 +5,23 @@ html {
     font-family: $font-family-sans-serif;
 }
 
-body {
+body background{
     font-family: $font-family-sans-serif;
-    background: linear-gradient(147deg, #33ccff, #ff99cc);
+    //background: linear-gradient(147deg, #33ccff, #ff99cc);
+    background: //linear-gradient(217deg, #33ccff, #9966ff 40%, #33ccff),
+                //linear-gradient(127deg, #9966ff, #ff99cc 40%, #9966ff),
+                repeating-linear-gradient(336deg, #ff99cc,#33ccff 40%, #ff99cc);
     background-size: 200% 200%;
-    animation: BackgroundGradient 5s ease infinite;
+   //animation: BackgroundGradient 3s ease infinite;
+    animation: BackgroundGradient 5s infinite linear forwards;
 }
-
+//https://www.useragentman.com/blog/2013/03/03/animating-circular-paths-using-css3-transitions/
 @keyframes BackgroundGradient {
-    0% {background-position: 0% 50%}
-    50% {background-position: 100% 50%}
-    100% {background-position: 0% 50%}
+    //0% {background-position: 0% 50%}
+    //50% {background-position: 100% 50%}
+    //100% {background-position: 0% 50%}
+    from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
 }
 
 .full-height {

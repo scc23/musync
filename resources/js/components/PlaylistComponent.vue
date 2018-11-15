@@ -34,7 +34,8 @@
             "spotifyId": String,
             "spotifyPlayerState": Object,
             "trackToPlay": Number,
-            "playlistTracks": Array
+            "playlistTracks": Array,
+            "hasBroadcaster": Boolean
         },
         data() {
             return {
@@ -66,8 +67,14 @@
                 this.$emit("removeTrack", index, uri);
             },
             updateTrackToPlay(value) {
-                // Pass the playlist index of the track to be played
-                this.$emit("getTrack", value);
+                // Only the broadcaster can click on a track from the playlist to play
+                if (this.hasBroadcaster == true) {
+                    // Pass the playlist index of the track to be played
+                    this.$emit("getTrack", value);
+                }
+                else {
+                    console.log("Cannot play track, only the broadcaster can play a track.");
+                }
             }
         }
     }

@@ -20,7 +20,6 @@
                             </div>
                             <div class="col-4">
                                 <spotify-player-component v-bind:csrf-token="csrfToken"
-                                                          v-bind:access-token="accessToken"
                                                           v-bind:spotify-id="spotifyId"
                                                           v-bind:spotify-device-id="spotifyDeviceId"
                                                           v-bind:spotify-player-state="spotifyPlayerState"

@@ -128,10 +128,18 @@ class LoginController extends Controller
             $user->api_token = $spotifyUser->token;
             $user->save();
         } else {
+            // Use default image if no profile picture exists
+            if ($spotifyUser->getAvatar() === NULL) {
+                $avatar = "avatar/default.jpg";
+            }
+            else {
+                $avatar = $spotifyUser->getAvatar();
+            }
+
             $user = User::create([
                 'spotify_id' => $spotifyUser->getId(),
                 'name' => $spotifyUser->getName(),
-                'avatar' => $spotifyUser->getAvatar(),
+                'avatar' => $avatar,
                 'api_token' => $spotifyUser->token,
                 'refresh_token' => $spotifyUser->refreshToken,
             ]);

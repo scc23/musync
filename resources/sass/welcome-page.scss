@@ -5,23 +5,17 @@ html {
     font-family: $font-family-sans-serif;
 }
 
-body background{
-    font-family: $font-family-sans-serif;
-    //background: linear-gradient(147deg, #33ccff, #ff99cc);
-    background: //linear-gradient(217deg, #33ccff, #9966ff 40%, #33ccff),
-                //linear-gradient(127deg, #9966ff, #ff99cc 40%, #9966ff),
-                repeating-linear-gradient(336deg, #ff99cc,#33ccff 40%, #ff99cc);
+body {
+    background: linear-gradient(137deg, #191414,#1bf968fa);
     background-size: 200% 200%;
-   //animation: BackgroundGradient 3s ease infinite;
-    animation: BackgroundGradient 5s infinite linear forwards;
+    animation: BackgroundGradient 10s linear infinite;
 }
-//https://www.useragentman.com/blog/2013/03/03/animating-circular-paths-using-css3-transitions/
 @keyframes BackgroundGradient {
-    //0% {background-position: 0% 50%}
-    //50% {background-position: 100% 50%}
-    //100% {background-position: 0% 50%}
-    from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+    0%   {background-position: center top}
+    25%  {background-position: right center}
+    50%  {background-position: center bottom}
+    75%  {background-position: left center}
+    100% {background-position: center top}
 }
 
 .full-height {
@@ -50,8 +44,14 @@ body background{
 
 .title {
     font-size: 84px;
-}
+    animation: ColorChange 10s infinite;
 
+}
+@keyframes ColorChange {
+    0% { color: white; }
+    50% { color: black; }
+    100% { color: white; }
+}
 .links > a {
     color: #636b6f;
     padding: 0 25px;

@@ -8,19 +8,15 @@
         </div>
 
         <div class="card-footer">
-            <chat-form-component v-bind:user-name="userName"
-                                 v-bind:room-id="roomId"
-                                 v-on:message-created="addMessage">
+            <chat-form-component v-bind:room-id="roomId">
             </chat-form-component>
         </div>
     </div>
 </template>
 
-
 <script>
     export default {
         props: {
-            "userName": String,
             "roomId": String
         },
         data() {
@@ -34,15 +30,10 @@
         },
         created() {
             Echo.private(`room.${this.roomId}`)
-                .listenForWhisper("MessageSent", (message) => {
-                    this.addMessage(message);
+                .listen("MessageSent", (message) => {
+                    this.messages.push(message);
                 });
         },
-        methods: {
-            addMessage(message) {
-                this.messages.push(message);
-            }
-        }
     }
 </script>
 

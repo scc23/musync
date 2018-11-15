@@ -8,7 +8,7 @@
                 <div class="chat-body clearfix">
                     <div class="header">
                         <strong class="primary-font">
-                            {{message.user}}
+                            {{message.username}}
                         </strong>
                     </div>
                     <p>
@@ -20,7 +20,6 @@
     </div>
 </template>
 
-
 <script>
     export default {
         props: {
@@ -28,7 +27,6 @@
         },
     }
 </script>
-
 
 <style lang="scss" scoped>
 

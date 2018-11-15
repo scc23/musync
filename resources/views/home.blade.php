@@ -2,10 +2,6 @@
 @section('title', 'Home')
 @section('content')
 
-<!--  -->
-<link href="{{ asset('css/home.css') }}" rel="stylesheet" type="text/css">
-<!--  -->
-
 
 <script src="{{ asset('js/home.js') }}" defer></script>
 <div id="home-app">

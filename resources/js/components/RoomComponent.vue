@@ -38,6 +38,7 @@
                                                     v-bind:spotify-player-state="spotifyPlayerState"
                                                     v-bind:track-to-play="trackToPlay"
                                                     v-bind:playlist-tracks="playlistTracks"
+                                                    v-bind:has-broadcaster="hasBroadcaster"
                                                     @getTrack="getTrackToPlay"
                                                     @change="clearPlaylist"
                                                     @removeTrack="removeTrackFromPlaylist">

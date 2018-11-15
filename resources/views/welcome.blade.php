@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
+<<<<<<< HEAD
         <link href="{{ asset('css/welcome-page.css') }}" rel="stylesheet" type="text/css">
 
         <!-- Javascript -->
@@ -23,6 +24,11 @@
             })(jQuery);
             
         </script>
+=======
+        <!-- <link href="{{ asset('css/welcome.css') }}" rel="stylesheet" type=t"ext/css"> -->
+        <link href="{{ asset('css/welcome-page.css') }}" rel="stylesheet" type="text/css">
+
+>>>>>>> Removed home.css and room.css files and replaced with central app.scss
     </head>
     <body>
         <div class="flex-center position-ref full-height">

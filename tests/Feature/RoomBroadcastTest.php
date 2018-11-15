@@ -15,13 +15,6 @@ class RoomBroadcastTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function createMembership($room, $user)
-    {
-        return factory(RoomMembership::class)->create([
-            'room_id' => $room->id, 'user_id' => $user->id
-        ]);
-    }
-
     private function createBroadcaster($room, $user)
     {
         return factory(RoomBroadcaster::class)->create([
@@ -36,7 +29,7 @@ class RoomBroadcastTest extends TestCase
     {
         $room = factory(Room::class)->create();
         $user = factory(User::class)->create();
-        $room_membership = $this->createMembership($room, $user);
+        $room_membership = TestHelper::createMembership($room, $user);
 
         $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$user->api_token
@@ -52,7 +45,7 @@ class RoomBroadcastTest extends TestCase
     {
         $room = factory(Room::class)->create();
         $user = factory(User::class)->create();
-        $room_membership = $this->createMembership($room, $user);
+        $room_membership = TestHelper::createMembership($room, $user);
         $room_broadcaster = $this->createBroadcaster($room, $user);
 
         $response = $this->actingAs($user)->withHeaders([
@@ -73,7 +66,7 @@ class RoomBroadcastTest extends TestCase
     {
         $room = factory(Room::class)->create();
         $user = factory(User::class)->create();
-        $this->createMembership($room, $user);
+        TestHelper::createMembership($room, $user);
 
         $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$user->api_token
@@ -95,11 +88,11 @@ class RoomBroadcastTest extends TestCase
     {
       $room = factory(Room::class)->create();
       $user1 = factory(User::class)->create();
-      $this->createMembership($room, $user1);
+      TestHelper::createMembership($room, $user1);
       $this->createBroadcaster($room, $user1);
 
       $user2 = factory(User::class)->create();
-      $this->createMembership($room, $user2);
+      TestHelper::createMembership($room, $user2);
 
       $response = $this->actingAs($user2)->withHeaders([
           'Authorization' => 'Bearer '.$user2->api_token
@@ -117,7 +110,7 @@ class RoomBroadcastTest extends TestCase
     {
         $room = factory(Room::class)->create();
         $user = factory(User::class)->create();
-        $this->createMembership($room, $user);
+        TestHelper::createMembership($room, $user);
         $this->createBroadcaster($room, $user);
 
         $response = $this->actingAs($user)->withHeaders([
@@ -136,7 +129,7 @@ class RoomBroadcastTest extends TestCase
     {
         $room = factory(Room::class)->create();
         $user = factory(User::class)->create();
-        $this->createMembership($room, $user);
+        TestHelper::createMembership($room, $user);
 
         $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$user->api_token
@@ -154,11 +147,11 @@ class RoomBroadcastTest extends TestCase
     {
         $room = factory(Room::class)->create();
         $user1 = factory(User::class)->create();
-        $this->createMembership($room, $user1);
+        TestHelper::createMembership($room, $user1);
         $this->createBroadcaster($room, $user1);
 
         $user2 = factory(User::class)->create();
-        $this->createMembership($room, $user2);
+        TestHelper::createMembership($room, $user2);
 
         $response = $this->actingAs($user2)->withHeaders([
             'Authorization' => 'Bearer '.$user2->api_token

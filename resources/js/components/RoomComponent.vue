@@ -24,6 +24,7 @@
                                                           v-bind:playlist-id="playlistId"
                                                           v-bind:room-id="roomId"
                                                           v-bind:has-broadcaster="hasBroadcaster"
+                                                          v-on:become-broadcaster="becomeBroadcaster"
                                                           v-on:disconnect-session="disconnectSession"
                                                           v-bind:track-to-play="trackToPlay"
                                                           v-bind:playlist-tracks="playlistTracks"
@@ -83,6 +84,7 @@
                 "spotifyPlayerState": null,
                 "playlistId": "",
                 "hasBroadcaster": false,
+                "broadcasterName": "",
                 "trackToPlay": undefined,
                 "playlistTracks": [],
                 "userState": "idle"
@@ -156,10 +158,15 @@
                 Echo.private(`room.${this.roomId}`)
                     .listen("BroadcasterConnected", (data) => {
                         this.hasBroadcaster = true;
+                        this.broadcasterName = data.user.name;                    
                     })
                     .listen("BroadcasterDisconnected", (data) => {
                         this.hasBroadcaster = false;
+                        this.broadcasterName = "";
                     });
+            },
+            becomeBroadcaster(){
+                this.broadcasterName = this.userName;
             },
             initializeSpotifyPlayer(token) {
                 window.onSpotifyWebPlaybackSDKReady = () => {
@@ -200,6 +207,7 @@
                 .catch((err) => {
                     if (err.response.status == 404) {
                         this.hasBroadcaster = false;
+                        broadcasterName = "";
                     }
                 });
             },
@@ -216,6 +224,7 @@
                 if (isBroadcaster) {
                     axios.delete('/api/room/' + this.roomId + '/broadcast');
                     this.hasBroadcaster = false;
+                    this.broadcasterName = "";
                 }
             },
             abruptlyCloseSession() {

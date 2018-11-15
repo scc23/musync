@@ -220,6 +220,7 @@
                 axios.post('/api/room/' + this.roomId + '/broadcast')
                 .then((res) => {
                     this.$emit("set-user-state", "broadcasting")
+                    this.$emit("become-broadcaster");
                 })
             },
             stopBroadcasting() {

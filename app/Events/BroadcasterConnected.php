@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\User;
+use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -14,20 +16,20 @@ class BroadcasterConnected implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $room_id;
+    public $room;
 
-    public $user_id;
+    public $user;
 
     /**
-     * @param String $room_id
-     * @param Int    $user_id
+     * @param Room $room
+     * @param User $user
      *
      * @return void
      */
-    public function __construct($room_id, $user_id)
+    public function __construct(Room $room, User $user)
     {
-        $this->room_id = $room_id;
-        $this->user_id = $user_id;
+        $this->room = $room;
+        $this->user = $user;
     }
 
     /**
@@ -37,6 +39,25 @@ class BroadcasterConnected implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('room.'.$this->room_id);
+        return new PrivateChannel('room.'.$this->room->id);
+    }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array
+     */   
+    public function broadcastWith()
+    {
+        return [
+            'room' => [ 
+                'id' => $this->room->id,
+            ],
+
+            'user' => [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+            ]
+        ];
     }
 }

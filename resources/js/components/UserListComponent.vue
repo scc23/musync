@@ -1,15 +1,16 @@
 <template>
     <div class="user-list">
         <div class="user-list card">
-            <div class="card-header">Online Listeners
+            <div class=" user-list card-header">Online Listeners
             </div>
-            <div class="card-body">  
+            <div class="user-list card-body">  
                 <div v-for="user in onlineUsers">
-                    <p>{{user.name}}  <font-awesome-icon icon="music" />
-                    </p>
+                    <transition name="fade">
+                        <p>{{user.name}}  <font-awesome-icon icon="music" />
+                        </p>
+                    </transition>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -47,6 +48,7 @@
 </script>
 
 <style lang="scss" scoped>
+
     .card-body {
         overflow-y: scroll;  
         height: 150px;
@@ -54,5 +56,14 @@
 
     .user-list.card {
         margin-bottom: 20px;
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+
     }
 </style>

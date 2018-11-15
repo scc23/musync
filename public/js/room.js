@@ -18055,7 +18055,7 @@ window.Pusher = __webpack_require__(40);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "da3b69cf2735d6719fc2",
+  key: "209a3d8d4b03069a4079",
   cluster: "us2",
   encrypted: true
 });
@@ -64442,6 +64442,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 var SpotifyWebApi = __webpack_require__(16);
@@ -64470,6 +64471,7 @@ var spotifyApi = new SpotifyWebApi();
             "spotifyPlayerState": null,
             "playlistId": "",
             "hasBroadcaster": false,
+            "broadcasterName": "",
             "trackToPlay": undefined,
             "playlistTracks": [],
             "userState": "idle"
@@ -64540,9 +64542,14 @@ var spotifyApi = new SpotifyWebApi();
 
             Echo.private("room." + this.roomId).listen("BroadcasterConnected", function (data) {
                 _this2.hasBroadcaster = true;
+                _this2.broadcasterName = data.user.name;
             }).listen("BroadcasterDisconnected", function (data) {
                 _this2.hasBroadcaster = false;
+                _this2.broadcasterName = "";
             });
+        },
+        becomeBroadcaster: function becomeBroadcaster() {
+            this.broadcasterName = this.userName;
         },
         initializeSpotifyPlayer: function initializeSpotifyPlayer(token) {
             var _this3 = this;
@@ -64591,6 +64598,7 @@ var spotifyApi = new SpotifyWebApi();
             }).catch(function (err) {
                 if (err.response.status == 404) {
                     _this4.hasBroadcaster = false;
+                    broadcasterName = "";
                 }
             });
         },
@@ -64607,6 +64615,7 @@ var spotifyApi = new SpotifyWebApi();
             if (isBroadcaster) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/room/' + this.roomId + '/broadcast');
                 this.hasBroadcaster = false;
+                this.broadcasterName = "";
             }
         },
         abruptlyCloseSession: function abruptlyCloseSession() {
@@ -65630,6 +65639,7 @@ var spotifyApi = new SpotifyWebApi();
 
             axios.post('/api/room/' + this.roomId + '/broadcast').then(function (res) {
                 _this.$emit("set-user-state", "broadcasting");
+                _this.$emit("become-broadcaster");
             });
         },
         stopBroadcasting: function stopBroadcasting() {
@@ -66443,7 +66453,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.card-body[data-v-22f71719] {\n  overflow-y: scroll;\n  height: 150px;\n}\n.user-list.card[data-v-22f71719] {\n  margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.card-body[data-v-22f71719] {\n  overflow-y: scroll;\n  height: 150px;\n}\n.user-list.card[data-v-22f71719] {\n  margin-bottom: 20px;\n}\n.fade-enter-active[data-v-22f71719], .fade-leave-active[data-v-22f71719] {\n  -webkit-transition: opacity .5s;\n  transition: opacity .5s;\n}\n.fade-enter[data-v-22f71719], .fade-leave-to[data-v-22f71719] {\n  opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -66454,6 +66464,7 @@ exports.push([module.i, "\n.card-body[data-v-22f71719] {\n  overflow-y: scroll;\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -66510,24 +66521,30 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "user-list" }, [
     _c("div", { staticClass: "user-list card" }, [
-      _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: " user-list card-header" }, [
         _vm._v("Online Listeners\n        ")
       ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "card-body" },
+        { staticClass: "user-list card-body" },
         _vm._l(_vm.onlineUsers, function(user) {
-          return _c("div", [
-            _c(
-              "p",
-              [
-                _vm._v(_vm._s(user.name) + "  "),
-                _c("font-awesome-icon", { attrs: { icon: "music" } })
-              ],
-              1
-            )
-          ])
+          return _c(
+            "div",
+            [
+              _c("transition", { attrs: { name: "fade" } }, [
+                _c(
+                  "p",
+                  [
+                    _vm._v(_vm._s(user.name) + "  "),
+                    _c("font-awesome-icon", { attrs: { icon: "music" } })
+                  ],
+                  1
+                )
+              ])
+            ],
+            1
+          )
         })
       )
     ])
@@ -67173,6 +67190,7 @@ var render = function() {
                       "user-state": _vm.userState
                     },
                     on: {
+                      "become-broadcaster": _vm.becomeBroadcaster,
                       "disconnect-session": _vm.disconnectSession,
                       "set-user-state": _vm.setUserState,
                       refreshToken: _vm.refreshAccessToken

@@ -5,7 +5,8 @@
             <button class="btn btn-default btn-primary" type="submit">Search</button>
         </form>
         <ul class='list-group border'>
-            <li class="list-group-item list-group-item-action" v-for="track in searchResults">
+            <li class="list-group-item list-group-item-action" v-for="track in searchResults"
+                                                               @click="getTrackToAdd(track)">
                 <search-tracks-listing-component v-bind:track="track">
                 </search-tracks-listing-component>
                 <span class="add-icon">+</span>
@@ -52,6 +53,9 @@
                         console.error(error);
                         // Refresh access token if 401 error
                     }.bind(this));
+            },
+            getTrackToAdd(track) {
+                this.$emit("addTrack", track);
             }
         }
     }

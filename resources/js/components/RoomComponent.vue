@@ -245,17 +245,18 @@
                         console.error(error);
                     });
             },
-            addTrackToPlaylist(trackData) {
-                console.log(trackData);
-                spotifyApi.addTracksToPlaylist(this.playlistId, [trackData.uri])
+            addTrackToPlaylist(track) {
+                console.log(track);
+                spotifyApi.addTracksToPlaylist(this.playlistId, [track.trackUri])
                     .then(function(data) {
-                        this.playlistTracks.push({
-                            trackName: trackData.name,
-                            trackArtist: trackData.artists[0].name,
-                            trackAlbumArt: trackData.album.images[0].url,
-                            trackDuration: trackData.duration_ms,
-                            trackUri: trackData.uri
-                        });
+                        // this.playlistTracks.push({
+                        //     trackName: trackData.name,
+                        //     trackArtist: trackData.artists[0].name,
+                        //     trackAlbumArt: trackData.album.images[0].url,
+                        //     trackDuration: trackData.duration_ms,
+                        //     trackUri: trackData.uri
+                        // });
+                        this.playlistTracks.push(track);
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);

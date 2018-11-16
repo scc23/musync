@@ -55,7 +55,14 @@
                 var genre = e.target.value;
                 spotifyApi.getRecommendations({seed_genres: genre})
                     .then(function(data) {
-                        this.$emit("addTrack", data.tracks[0]);
+                        var track = {
+                            trackName: data.tracks[0].name,
+                            trackArtist: data.tracks[0].artists[0].name,
+                            trackAlbumArt: data.tracks[0].album.images[0].url,
+                            trackDuration: data.tracks[0].duration_ms,
+                            trackUri: data.tracks[0].uri
+                        };
+                        this.$emit("addTrack", track);
                     }.bind(this))
                     .catch((err) => {
                         console.error(err);

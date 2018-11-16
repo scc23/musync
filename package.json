@@ -25,6 +25,8 @@
         "@fortawesome/vue-fontawesome": "^0.1.2",
         "laravel-echo": "^1.4.1",
         "pusher-js": "^4.3.1",
-        "spotify-web-api-js": "^1.1.1"
+        "spotify-web-api-js": "^1.1.1",
+        "vue-slider": "^1.1.1",
+        "vue-slider-component": "^2.8.1"
     }
 }

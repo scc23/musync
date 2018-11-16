@@ -35,7 +35,7 @@
             "spotifyPlayerState": Object,
             "trackToPlay": Number,
             "playlistTracks": Array,
-            "hasBroadcaster": Boolean
+            "userState": String
         },
         data() {
             return {
@@ -46,12 +46,14 @@
         watch: {
             "spotifyPlayerState": function(newState, oldState) {
                 this.spotifyPlayerState = newState;
-                this.isPaused = this.spotifyPlayerState["paused"];
-                this.currentTrack["name"] = this.spotifyPlayerState["track_window"]["current_track"]["name"];
-                this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
-                this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
-                this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
-                console.log("Currently playing track: " + this.currentTrack["name"]);
+                if (this.spotifyPlayerState !== null) {
+                    this.isPaused = this.spotifyPlayerState["paused"];
+                    this.currentTrack["name"] = this.spotifyPlayerState["track_window"]["current_track"]["name"];
+                    this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
+                    this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
+                    this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+                    console.log("Currently playing track: " + this.currentTrack["name"]);
+                }
             },
             "playlistTracks": function(newState, oldState) {
                 this.playlistTracks = newState;
@@ -68,7 +70,7 @@
             },
             updateTrackToPlay(value) {
                 // Only the broadcaster can click on a track from the playlist to play
-                if (this.hasBroadcaster == true) {
+                if (this.userState == "broadcasting") {
                     // Pass the playlist index of the track to be played
                     this.$emit("getTrack", value);
                 }

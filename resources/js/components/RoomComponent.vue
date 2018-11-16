@@ -273,7 +273,7 @@
                         console.error(error);
                         // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                         if (error.status === 401) {
-                            $this.emit("refreshToken");
+                            this.refreshAccessToken();
                         }
                     }.bind(this));
             },

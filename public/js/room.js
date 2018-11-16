@@ -64658,7 +64658,7 @@ var spotifyApi = new SpotifyWebApi();
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {
-                    $this.emit("refreshToken");
+                    this.refreshAccessToken();
                 }
             }.bind(this));
         },
@@ -64817,6 +64817,7 @@ var spotifyApi = new SpotifyWebApi();
                     }
                 }.bind(this)).catch(function (error) {
                     console.error(error);
+                    console.log("Response status: " + error.status);
                     // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                     if (error.status === 401) {
                         $this.emit("refreshToken");
@@ -65238,9 +65239,10 @@ var spotifyApi = new SpotifyWebApi();
                 this.$emit("addTrack", track);
             }.bind(this)).catch(function (error) {
                 console.error(error);
+                console.log("Response status: " + error.status);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {
-                    $this.emit("refreshToken");
+                    this.$emit("refreshToken");
                 }
             }.bind(this));
         }

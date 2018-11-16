@@ -5,8 +5,7 @@
                 <div class="card">
                     <div class="card-header" v-text="header"></div>
                     <div class="card-body">
-                        <div csrf-token="csrfToken"
-                             v-bind:rooms="rooms"
+                        <div v-bind:rooms="rooms"
                              v-bind:is="bodyComponent"
                              v-on:set-body-component="setBodyComponent">
                         </div>
@@ -28,7 +27,6 @@
         },
         props: {
             "userId": String,
-            "csrfToken": String,
             "accessToken": String
         },
         data() {

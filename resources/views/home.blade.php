@@ -8,7 +8,6 @@
 <div id="home-app">
     <home-component
         user-id="{{Auth::id()}}"
-        csrf-token="{{csrf_token()}}"
         access-token="{{Auth::user()->api_token}}">
     </home-component>
 </div>

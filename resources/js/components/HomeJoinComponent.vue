@@ -1,7 +1,6 @@
 <template>
     <div>
         <form method="POST" @submit.prevent="submitJoin">
-            <input type="hidden" name="_token" :value="csrfToken">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="join-room-id" class="mb-1 control-label">Room ID</label>
@@ -18,8 +17,7 @@
                     <span class="help-block">{{joinPasswordError}}</span>
                 </div>
             </div>
-            <room-list-component csrf-token="csrfToken"
-                                 v-bind:rooms="rooms"
+            <room-list-component v-bind:rooms="rooms"
                                  v-on:join-room="setIdAndSubmit">
             </room-list-component>
             <div class="row justify-content-center mb-2">
@@ -44,7 +42,6 @@
             'room-list-component': require('./RoomListComponent.vue')
         },
         props: {
-            "csrfToken": String,
             "rooms": Array
         },
         data() {

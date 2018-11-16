@@ -62588,7 +62588,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -62600,7 +62599,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     props: {
         "userId": String,
-        "csrfToken": String,
         "accessToken": String
     },
     data: function data() {
@@ -62720,9 +62718,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        "csrfToken": String
-    },
     methods: {
         promptCreate: function promptCreate() {
             this.$emit("set-body-component", "home-create-component");
@@ -63250,15 +63245,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         'room-list-component': __webpack_require__(59)
     },
     props: {
-        "csrfToken": String,
         "rooms": Array
     },
     data: function data() {
@@ -63459,7 +63451,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'room-listing-component': __webpack_require__(63)
     },
     props: {
-        "csrfToken": String,
         "rooms": Array
     },
     methods: {
@@ -63695,11 +63686,6 @@ var render = function() {
         }
       },
       [
-        _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: _vm.csrfToken }
-        }),
-        _vm._v(" "),
         _c("div", { staticClass: "row justify-content-center" }, [
           _c("div", { staticClass: "col-12 col-sm-6 form-group" }, [
             _c(
@@ -63792,7 +63778,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("room-list-component", {
-          attrs: { "csrf-token": "csrfToken", rooms: _vm.rooms },
+          attrs: { rooms: _vm.rooms },
           on: { "join-room": _vm.setIdAndSubmit }
         }),
         _vm._v(" "),
@@ -63860,7 +63846,7 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _c(_vm.bodyComponent, {
               tag: "div",
-              attrs: { "csrf-token": "csrfToken", rooms: _vm.rooms },
+              attrs: { rooms: _vm.rooms },
               on: { "set-body-component": _vm.setBodyComponent }
             })
           ])

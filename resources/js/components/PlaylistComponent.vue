@@ -9,11 +9,9 @@
                                                                    v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
                                                                    @click="updateTrackToPlay(playlistTrackIndex)">
                     <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
-                                                v-bind:playlist-track="playlistTrack"
-                                                v-bind:playlist-id="playlistId"
-                                                v-bind:playlist-track-index="playlistTrackIndex"
-                                                @getTrackToRemove="updatePlaylistRemoveTrack">
+                                                v-bind:playlist-track="playlistTrack">
                     </playlist-listing-component>
+                    <span class="remove-icon" v-on:click.stop="updatePlaylistRemoveTrack(playlistTrackIndex, playlistTrack.trackUri)">X</span>
                 </li>
             </ul>
         </div>
@@ -109,8 +107,20 @@
         border-right: 0;
     }
 
-    .list-group-item:hover {
+    .remove-icon {
+        font-size: 18px;
+        position: absolute;
+        top: 23px;
+        right: 15px;
+        display: none;
+        background: none;
+        border: none;
         cursor: pointer;
+    }
+
+    .list-group-item:hover .remove-icon{
+        cursor: pointer;
+        display: inline-block;
     }
 
     .list-group-item:first-child {

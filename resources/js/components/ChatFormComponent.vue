@@ -14,7 +14,6 @@
 <script>
     export default {
         props: {
-            "userName": String,
             "roomId": String
         },
         data() {
@@ -31,15 +30,12 @@
             },
             sendMessage: function() {
                 if (this.isValidMessage()) {
-                    var message = {
-                        user: this.userName,
+                    axios.post("/api/room/" + this.roomId + "/message", {
                         message: this.newMessage
-                    }
-                    Echo.private(`room.${this.roomId}`)
-                        .whisper("MessageSent", message);
-                    this.newMessage = '';
-
-                    this.$emit("message-created", message);
+                    })
+                    .then((res) => {
+                        this.newMessage = "";
+                    })
                 }
             }
         },

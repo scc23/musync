@@ -66215,6 +66215,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         removeTrack: function removeTrack(e) {
+            e.stopPropagation();
             // Call parent function to call another parent function to remove track from playlist
             this.$emit("getTrackToRemove", this.playlistTrackIndex, this.playlistTrack.trackUri);
         },

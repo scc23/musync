@@ -27,6 +27,7 @@
         },
         methods: {
             removeTrack(e) {
+                e.stopPropagation();
                 // Call parent function to call another parent function to remove track from playlist
                 this.$emit("getTrackToRemove", this.playlistTrackIndex, this.playlistTrack.trackUri);
             },

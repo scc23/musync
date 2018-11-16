@@ -49,9 +49,6 @@
                     this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
                     console.log("Currently playing track: " + this.currentTrack["name"]);
                 }
-            },
-            "playlistTracks": function(newState, oldState) {
-                this.playlistTracks = newState;
             }
         },
         methods: {
@@ -103,7 +100,6 @@
 
     .list-group {
         height: 535px;
-        /*overflow: scroll;*/
         overflow-y:scroll;
     }
 

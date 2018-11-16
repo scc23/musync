@@ -106,7 +106,6 @@
                 .then((res) => {
                     // Call Spotify API to set the new access token
                     spotifyApi.setAccessToken(res.data.api_token);
-                    axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
                     // Set the new access token in this component and it's child components
                     this.setAccessToken(res.data.api_token);
                     console.log("Access token refreshed.");
@@ -141,7 +140,6 @@
                                         trackUri: data.items[i].track.uri
                                     });
                                 }
-                                // console.log(this.playlistTracks);
                             }.bind(this))
                             .catch(function(error) {
                                 console.error(error);

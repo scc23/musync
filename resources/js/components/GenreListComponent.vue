@@ -49,11 +49,6 @@
                             ]
             };
         },
-        watch: {
-            "playlistTracks": function(newState, oldState) {
-                this.playlistTracks = newState;
-            }
-        },
         methods: {
             // Fetch tracks from a genre and add them to the room's playlist
             fetchGenreTracks(genre) {

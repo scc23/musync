@@ -255,9 +255,6 @@
                 this.currentTrack["trackPosition"] = 0;
                 this.play();
             },
-            "playlistTracks": function(newState, oldState) {
-                this.playlistTracks = newState;
-            },
             "isPaused": function(newValue, oldValue) {
                 this.updateProgress();
             },

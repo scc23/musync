@@ -47,7 +47,15 @@
                                 <div class="track-progress">
                                     {{ msToMinSec(currentTrack["trackPosition"]) }}
                                 </div>
-                                <div class="progress-bar">
+                                <div class="track-progress-bar">
+                                    <vue-slider
+                                        v-model="currentTrack.trackPosition"
+                                        v-on:drag-start="onDragStart"
+                                        v-on:drag-end="onDragEnd"
+                                        v-on:callback="onProgressChange"
+                                        :max='currentTrack["duration"]'
+                                        :tooltip="false">
+                                    </vue-slider>
                                 </div>
                                 <div class="track-duration">
                                     {{ msToMinSec(currentTrack["duration"]) }}
@@ -74,10 +82,15 @@
 </template>
 
 <script>
+    import vueSlider from 'vue-slider-component'
+
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
 
     export default {
+        components: {
+            vueSlider
+        },
         props: {
             "accessToken": String,
             "csrfToken": String,
@@ -95,7 +108,8 @@
             return {
                 userState: "idle",
                 isPaused: true,
-                interval: null,
+                progressInterval: null,
+                isDragStart: false,
                 currentTrack: {name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0}
             }
         },
@@ -113,12 +127,10 @@
             },
             play() {
                 // Play the room creator's playlist associated with the room if current song doesn't exist
-                if (Object.keys(this.spotifyPlayerState).length === 0) {
+                if (this.spotifyPlayerState == null) {
                     spotifyApi.play({
                         "device_id": this.spotifyDeviceId,
                         "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId})
-                        .then(function() {
-                        }.bind(this))
                         .catch(function(error) {
                             console.error(error);
                         })
@@ -129,43 +141,54 @@
                         "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId,
                         "offset": {"position": this.currentTrack["trackIndex"]},
                         "position_ms": this.currentTrack["trackPosition"]})
-                        .then(function() {
-                        }.bind(this))
                         .catch(function(error) {
                             console.error(error);
                         })
                 }
             },
             pause() {
-                spotifyApi.setAccessToken(this.accessToken);
                 spotifyApi.pause({
                     "device_id": this.spotifyDeviceId})
-                    .then(function() {
-                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                     })
             },
             nextTrack() {
-                spotifyApi.setAccessToken(this.accessToken);
                 console.log("step forward is pressed");
                 spotifyApi.skipToNext({
                     "device_id": this.spotifyDeviceId})
-                    .then(function() {
-                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                     })
             },
-            toggleProgressTimer() {
-                if (this.isPaused) {
-                    clearInterval(this.interval);
-                } else {
-                    this.interval = setInterval(this.incrementProgressTime, 10);
+            seekToPosition(position_ms) {
+                spotifyApi.seek(position_ms, {"device_id": this.spotifyDeviceId})
+                    .catch(function(error) {
+                        console.error(error);
+                    })
+            },
+            updateProgress() {
+                clearInterval(this.progressInterval);
+                if (!this.isPaused) {
+                    this.progressInterval = setInterval(this.incrementProgressTime, 1000)
                 }
             },
             incrementProgressTime() {
-                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 10;
+                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 1000;
+            },
+            onDragStart({currentValue}) {
+                this.isDragStart = true;
+            },
+            onDragEnd({currentValue}) {
+                this.isDragStart = false;
+                console.log(currentValue);
+                this.seekToPosition(currentValue);
+            },
+            onProgressChange(currentValue) {
+                if (!this.isDragStart) {
+                    this.isDragStart = false;
+                    this.seekToPosition(currentValue);
+                }
             },
             setCurrentTrackIndex() {
                 for (var i = 0; i < this.playlistTracks.length; i++) {
@@ -200,13 +223,15 @@
         watch: {
             "spotifyPlayerState": function(newState, oldState) {
                 this.spotifyPlayerState = newState;
-                this.isPaused = this.spotifyPlayerState["paused"];
-                this.currentTrack["name"] = this.spotifyPlayerState["track_window"]["current_track"]["name"];
-                this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
-                this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
-                this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
-                this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
-                this.currentTrack["trackPosition"] = this.spotifyPlayerState["position"];
+                if (this.spotifyPlayerState != null) {
+                    this.isPaused = this.spotifyPlayerState["paused"];
+                    this.currentTrack["name"] = this.spotifyPlayerState["track_window"]["current_track"]["name"];
+                    this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
+                    this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
+                    this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+                    this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
+                    this.currentTrack["trackPosition"] = this.spotifyPlayerState["position"];
+                }
             },
             "trackToPlay": function(newState, oldState) {
                 this.trackToPlay = newState;
@@ -219,7 +244,7 @@
                 this.playlistTracks = newState;
             },
             "isPaused": function(newValue, oldValue) {
-                this.toggleProgressTimer();
+                this.updateProgress();
             },
             "currentTrack.name": function(newValue, oldValue) {
                 this.setCurrentTrackIndex();
@@ -240,10 +265,8 @@
 .player-icons:hover {
     opacity: 0.5;
 }
-.progress-bar {
-    height: 10px;
+.track-progress-bar {
     width: 71%;
-    border-radius: 6px;
     display: inline-block;
 }
 .track-progress {

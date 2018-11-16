@@ -83,7 +83,7 @@
             return {
                 "currentAccessToken": "",
                 "spotifyDeviceId": "",
-                "spotifyPlayerState": {},
+                "spotifyPlayerState": null,
                 "playlistId": "",
                 "hasBroadcaster": false,
                 "trackToPlay": undefined,

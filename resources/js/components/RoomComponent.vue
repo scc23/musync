@@ -1,6 +1,8 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
+            <notification-component v-bind:broadcast-notification-text="broadcastNotificationText">
+            </notification-component>
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -25,6 +27,7 @@
                                                           v-bind:room-id="roomId"
                                                           v-bind:has-broadcaster="hasBroadcaster"
                                                           v-on:become-broadcaster="becomeBroadcaster"
+                                                          v-on:stop-being-broadcaster="stopBeingBroadcaster"
                                                           v-on:disconnect-session="disconnectSession"
                                                           v-bind:track-to-play="trackToPlay"
                                                           v-bind:playlist-tracks="playlistTracks"
@@ -69,6 +72,7 @@
             "playlist-component": require("./PlaylistComponent.vue"),
             "user-list-component": require("./UserListComponent.vue"),
             "chat-component": require("./ChatComponent.vue"),
+            "notification-component": require("./NotificationComponent.vue"),
         },
         props: {
             "roomName": String,
@@ -84,7 +88,7 @@
                 "spotifyPlayerState": null,
                 "playlistId": "",
                 "hasBroadcaster": false,
-                "broadcasterName": "",
+                "broadcastNotificationText": "",
                 "trackToPlay": undefined,
                 "playlistTracks": [],
                 "userState": "idle"
@@ -158,15 +162,18 @@
                 Echo.private(`room.${this.roomId}`)
                     .listen("BroadcasterConnected", (data) => {
                         this.hasBroadcaster = true;
-                        this.broadcasterName = data.user.name;                    
+                        this.broadcastNotificationText = data.user.name + " is broadcasting.";
                     })
                     .listen("BroadcasterDisconnected", (data) => {
                         this.hasBroadcaster = false;
-                        this.broadcasterName = "";
+                        this.broadcastNotificationText = data.user.name + " stopped broadcasting.";
                     });
             },
             becomeBroadcaster(){
-                this.broadcasterName = this.userName;
+                this.broadcastNotificationText = "You are broadcasting.";
+            },
+            stopBeingBroadcaster(){
+                this.broadcastNotificationText = "You stopped broadcasting.";  
             },
             initializeSpotifyPlayer(token) {
                 window.onSpotifyWebPlaybackSDKReady = () => {
@@ -207,7 +214,6 @@
                 .catch((err) => {
                     if (err.response.status == 404) {
                         this.hasBroadcaster = false;
-                        broadcasterName = "";
                     }
                 });
             },
@@ -224,7 +230,6 @@
                 if (isBroadcaster) {
                     axios.delete('/api/room/' + this.roomId + '/broadcast');
                     this.hasBroadcaster = false;
-                    this.broadcasterName = "";
                 }
             },
             abruptlyCloseSession() {

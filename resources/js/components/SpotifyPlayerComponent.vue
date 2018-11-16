@@ -225,7 +225,9 @@
             },
             stopBroadcasting() {
                 this.$emit("disconnect-session", true);
-                this.$emit("set-user-state", "idle")
+                this.$emit("set-user-state", "idle")                
+                this.$emit("stop-being-broadcaster");
+
             },
             beginListening() {
                 this.userState = "listening";

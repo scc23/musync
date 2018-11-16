@@ -35,7 +35,7 @@
             "spotifyPlayerState": Object,
             "trackToPlay": Number,
             "playlistTracks": Array,
-            "hasState": String
+            "userState": String
         },
         data() {
             return {
@@ -70,7 +70,7 @@
             },
             updateTrackToPlay(value) {
                 // Only the broadcaster can click on a track from the playlist to play
-                if (this.userState != "broadcasting") {
+                if (this.userState == "broadcasting") {
                     // Pass the playlist index of the track to be played
                     this.$emit("getTrack", value);
                 }

@@ -32,7 +32,8 @@
                                                           v-on:disconnect-session="disconnectSession"
                                                           v-bind:track-to-play="trackToPlay"
                                                           v-bind:playlist-tracks="playlistTracks"
-                                                          v-on:user-state="setUserState"g>
+                                                          v-bind:user-state="userState"
+                                                          v-on:set-user-state="setUserState"g>
                                 </spotify-player-component>
                                 <playlist-component v-bind:access-token="accessToken"
                                                     v-bind:spotify-id="spotifyId"

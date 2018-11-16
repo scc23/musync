@@ -101,12 +101,12 @@
             "roomId": String,
             "hasBroadcaster": Boolean,
             "trackToPlay": Number,
-            "playlistTracks": Array
+            "playlistTracks": Array,
+            "userState": String
         },
 
         data() {
             return {
-                userState: "idle",
                 isPaused: true,
                 progressInterval: null,
                 isDragStart: false,
@@ -204,23 +204,20 @@
             beginBroadcasting() {
                 axios.post('/api/room/' + this.roomId + '/broadcast')
                 .then((res) => {
-                    this.userState = "broadcasting";
-                    this.$emit("user-state", this.userState);
+                    this.$emit("set-user-state", "broadcasting")
                 })
             },
             stopBroadcasting() {
                 this.$emit("disconnect-session", true);
-                this.userState = "idle";
-                this.$emit("user-state", this.userState);
+                this.$emit("set-user-state", "idle")
             },
             beginListening() {
                 this.userState = "listening";
-                this.$emit("user-state", this.userState);
+                this.$emit("set-user-state", "listening")
             },
             stopListening() {
               this.$emit("disconnect-session", false);
-              this.userState = "idle";
-              this.$emit("user-state", this.userState);
+              this.$emit("set-user-state", "idle")
             }
         },
         watch: {

@@ -11,6 +11,18 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/welcome-page.css') }}" rel="stylesheet" type="text/css">
+
+        <!-- Javascript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script type="text/javascript">
+            
+            (function($) {
+                setTimeout(function() {
+                    $('.title').removeClass('hidden');
+                }, 500);
+            })(jQuery);
+            
+        </script>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -23,9 +35,14 @@
             </div>
 
             <div class="content">
-                <div class="title m-b-md">
-                    MuSync
-                </div>
+                <ul class="title hidden m-b-md">
+                    <li>M</li>
+                    <li>u</li>
+                    <li>S</li>
+                    <li>y</li>
+                    <li>n</li>
+                    <li>c</li>
+                </ul>
             </div>
         </div>
     </body>

@@ -20,11 +20,6 @@
     var spotifyApi = new SpotifyWebApi();
     
     export default {
-        props: {
-            "spotifyId": String,
-            "playlistId": String,
-            "playlistTracks": Array
-        },
         data() {
             return {
                 "genreList": [
@@ -40,7 +35,7 @@
                                 {name: "Hip-Hop", value: "hip-hop"},
                                 {name: "Heavy Metal", value: "heavy-metal"},
                                 {name: "Jazz", value: "jazz"},
-                                {name: "K-pop", value: "k-pop"},
+                                {name: "Indie", value: "indie"},
                                 {name: "Opera", value: "opera"},
                                 {name: "Pop", value: "pop"},
                                 {name: "R&B", value: "r-n-b"},

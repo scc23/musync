@@ -11,10 +11,7 @@
                             <div class="col-4">
                                 <search-tracks-component @addTrack="addTrackToPlaylist">
                                 </search-tracks-component>
-                                <genre-list-component v-bind:spotify-id="spotifyId"
-                                                      v-bind:playlist-id="playlistId"
-                                                      v-bind:playlist-tracks="playlistTracks"
-                                                      @addGenreTrack="addGenreTrackToPlaylist"
+                                <genre-list-component @addTrack="addTrackToPlaylist"
                                                       @refreshToken="refreshAccessToken">
                                 </genre-list-component>
                             </div>

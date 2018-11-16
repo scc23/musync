@@ -65925,6 +65925,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 var SpotifyWebApi = __webpack_require__(16);
 var spotifyApi = new SpotifyWebApi();
@@ -65971,6 +65973,18 @@ var spotifyApi = new SpotifyWebApi();
         getTrackToAdd: function getTrackToAdd(track) {
             this.$emit("addTrack", track);
         }
+    },
+    watch: {
+        searchInput: function searchInput() {
+            if (this.isValidInput()) {
+                $('#btn-search').prop('disabled', false);
+            } else {
+                $('#btn-search').prop('disabled', true);
+            }
+        }
+    },
+    mounted: function mounted() {
+        $('#btn-search').prop('disabled', true);
     }
 });
 
@@ -66198,14 +66212,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-default btn-primary",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Search")]
-        )
+        _vm._m(0)
       ]
     ),
     _vm._v(" "),
@@ -66234,7 +66241,23 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default btn-primary",
+          attrs: { id: "btn-search", type: "submit" }
+        },
+        [_vm._v("Search")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

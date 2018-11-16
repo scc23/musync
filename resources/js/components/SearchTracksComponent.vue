@@ -2,7 +2,9 @@
     <div>
         <form class="input-group" v-on:submit.prevent="fetchTracks">
             <input class="form-control" type="text" v-model="searchInput" placeholder="Search for a song" width="100%">
-            <button class="btn btn-default btn-primary" type="submit">Search</button>
+            <span class="input-group-append">
+                <button class="btn btn-default btn-primary" id="btn-search" type="submit">Search</button>
+            </span>
         </form>
         <ul class='list-group border'>
             <li class="list-group-item list-group-item-action" v-for="track in searchResults"
@@ -62,6 +64,18 @@
             getTrackToAdd(track) {
                 this.$emit("addTrack", track);
             }
+        },
+        watch: {
+            searchInput: function() {
+                if (this.isValidInput()) {
+                    $('#btn-search').prop('disabled', false);
+                } else {
+                    $('#btn-search').prop('disabled', true);
+                }
+            }
+        },
+        mounted() {
+            $('#btn-search').prop('disabled', true);
         }
     }
 </script>

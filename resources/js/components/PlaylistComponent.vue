@@ -5,17 +5,16 @@
                 <button class='clear-button' @click="updateClearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
-                    <li class="list-group-item list-group-item-action" v-for="(playlistTrack, playlistTrackIndex) in playlistTracks"
-                                                                       v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
-                                                                       @click="updateTrackToPlay(playlistTrackIndex)">
-                        <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
-                                                    v-bind:playlist-track="playlistTrack"
-                                                    v-bind:playlist-id="playlistId"
-                                                    v-bind:playlist-track-index="playlistTrackIndex"
-                                                    @getTrackToRemove="updatePlaylistRemoveTrack">
-                        </playlist-listing-component>
-                    </li>
-                </span>
+                <li class="list-group-item list-group-item-action" v-for="(playlistTrack, playlistTrackIndex) in playlistTracks"
+                                                                   v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
+                                                                   @click="updateTrackToPlay(playlistTrackIndex)">
+                    <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
+                                                v-bind:playlist-track="playlistTrack"
+                                                v-bind:playlist-id="playlistId"
+                                                v-bind:playlist-track-index="playlistTrackIndex"
+                                                @getTrackToRemove="updatePlaylistRemoveTrack">
+                    </playlist-listing-component>
+                </li>
             </ul>
         </div>
     </div>
@@ -116,6 +115,10 @@
         padding: 5px 10px;
         border-left: 0;
         border-right: 0;
+    }
+
+    .list-group-item:hover {
+        cursor: pointer;
     }
 
     .list-group-item:first-child {

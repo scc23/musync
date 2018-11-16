@@ -9,10 +9,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <!-- <search-tracks-component v-bind:access-token="accessToken"
-                                                         v-bind:spotify-id="spotifyId"
-                                                         v-bind:playlist-id="playlistId">
-                                </search-tracks-component> -->
+                                <search-tracks-component @addTrack="addTrackToPlaylist">
+                                </search-tracks-component>
                                 <genre-list-component v-bind:access-token="accessToken"
                                                       v-bind:spotify-id="spotifyId"
                                                       v-bind:playlist-id="playlistId"
@@ -247,17 +245,11 @@
                         console.error(error);
                     });
             },
-            addTrackToPlaylist(trackData) {
-                console.log(trackData);
-                spotifyApi.addTracksToPlaylist(this.playlistId, [trackData.uri])
+            addTrackToPlaylist(track) {
+                console.log(track);
+                spotifyApi.addTracksToPlaylist(this.playlistId, [track.trackUri])
                     .then(function(data) {
-                        this.playlistTracks.push({
-                            trackName: trackData.name,
-                            trackArtist: trackData.artists[0].name,
-                            trackAlbumArt: trackData.album.images[0].url,
-                            trackDuration: trackData.duration_ms,
-                            trackUri: trackData.uri
-                        });
+                        this.playlistTracks.push(track);
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);

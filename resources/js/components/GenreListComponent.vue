@@ -2,32 +2,14 @@
     <div class="card">
         <div class="card-header">
             Genres
-            <div class="notes">Click on a genre to add a track to the playlist queue.</div>
+            <div class="notes">Click on a genre to add a song to your personal playlist.</div>
         </div>
-        <div class="card-body">
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="acoustic">Acoustic</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="anime">Anime</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="cantopop">Cantopop</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="chill">Chill</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="classical">Classical</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="country">Country</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="edm">EDM</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="hardstyle">Hardstyle</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="heavy-metal">Heavy-Metal</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="hip-hop">Hip-Hop</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="house">House</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="indie">Indie</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="indie-pop">Indie-Pop</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="j-pop">J-Pop</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="j-rock">J-Rock</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="jazz">Jazz</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="k-pop">K-Pop</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="mandopop">Mandopop</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="opera">Opera</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="pop">Pop</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="r-n-b">R&B</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="rock">Rock</button><br>
-            <button class="genre-type" v-on:click="fetchTracks($event)" value="techno">Techno</button><br>
+        <div class="card-body genre-div">
+            <ul class="genre-list" v-for="genre in genreList">
+                <li class="genre-item" @click="fetchGenreTracks(genre.value)">
+                    {{genre.name}}
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -44,6 +26,30 @@
             "playlistId": String,
             "playlistTracks": Array
         },
+        data() {
+            return {
+                "genreList": [
+                                {name: "Acoustic", value: "acoustic"},
+                                {name: "Classical", value: "classical"},
+                                {name: "Chill", value: "chill"},
+                                {name: "Country", value: "country"},
+                                {name: "Cantopop", value: "cantopop"},
+                                {name: "Mandopop", value: "mantopop"},
+                                {name: "K-Pop", value: "k-pop"},
+                                {name: "J-Pop", value: "j-pop"},
+                                {name: "EDM", value: "edm"},
+                                {name: "Hip-Hop", value: "hip-hop"},
+                                {name: "Heavy Metal", value: "heavy-metal"},
+                                {name: "Jazz", value: "jazz"},
+                                {name: "K-pop", value: "k-pop"},
+                                {name: "Opera", value: "opera"},
+                                {name: "Pop", value: "pop"},
+                                {name: "R&B", value: "r-n-b"},
+                                {name: "Rock", value: "rock"},
+                                {name: "Techno", value: "techno"}
+                            ]
+            };
+        },
         watch: {
             "playlistTracks": function(newState, oldState) {
                 this.playlistTracks = newState;
@@ -51,11 +57,17 @@
         },
         methods: {
             // Fetch tracks from a genre and add them to the room's playlist
-            fetchTracks(e) {
-                var genre = e.target.value;
-                spotifyApi.getRecommendations({seed_genres: genre})
+            fetchGenreTracks(genre) {
+                spotifyApi.getRecommendations({limit: 50, seed_genres: genre})
                     .then(function(data) {
-                        this.$emit("addTrack", data.tracks[0]);
+                        var track = {
+                            trackName: data.tracks[0].name,
+                            trackArtist: data.tracks[0].artists[0].name,
+                            trackAlbumArt: data.tracks[0].album.images[0].url,
+                            trackDuration: data.tracks[0].duration_ms,
+                            trackUri: data.tracks[0].uri
+                        };
+                        this.$emit("addTrack", track);
                     }.bind(this))
                     .catch((err) => {
                         console.error(err);
@@ -70,13 +82,22 @@
 </script>
 
 <style lang="scss" scoped>
-    .notes {
+    .genre-div {
         font-size: 12px;
+        -moz-column-count: 2;
+        -moz-column-gap: 20px;
+        -webkit-column-count: 2;
+        -webkit-column-gap: 20px;
+        column-count: 2;
     }
 
-    .genre-type {
-        background: none;
-        border: none;
+    .genre-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .genre-item {
         cursor: pointer;
         opacity: 1;
         transition: opacity .2s ease-out;
@@ -85,7 +106,21 @@
         -o-transition: opacity .2s ease-out;
     }
 
-    .genre-type:hover {
+    .genre-item:hover {
         opacity: 0.5;
+    }
+
+    .list-group-item {
+        padding: 5px 10px;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .list-group-item {
+        cursor: pointer;
+    }
+
+    .notes {
+        font-size: 12px;
     }
 </style>

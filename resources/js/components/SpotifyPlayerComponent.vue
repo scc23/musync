@@ -181,7 +181,6 @@
             },
             onDragEnd({currentValue}) {
                 this.isDragStart = false;
-                console.log(currentValue);
                 this.seekToPosition(currentValue);
             },
             onProgressChange(currentValue) {
@@ -206,18 +205,22 @@
                 axios.post('/api/room/' + this.roomId + '/broadcast')
                 .then((res) => {
                     this.userState = "broadcasting";
+                    this.$emit("user-state", this.userState);
                 })
             },
             stopBroadcasting() {
                 this.$emit("disconnect-session", true);
                 this.userState = "idle";
+                this.$emit("user-state", this.userState);
             },
             beginListening() {
                 this.userState = "listening";
+                this.$emit("user-state", this.userState);
             },
             stopListening() {
               this.$emit("disconnect-session", false);
               this.userState = "idle";
+              this.$emit("user-state", this.userState);
             }
         },
         watch: {

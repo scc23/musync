@@ -31,14 +31,15 @@
                                                           v-bind:has-broadcaster="hasBroadcaster"
                                                           v-on:disconnect-session="disconnectSession"
                                                           v-bind:track-to-play="trackToPlay"
-                                                          v-bind:playlist-tracks="playlistTracks">
+                                                          v-bind:playlist-tracks="playlistTracks"
+                                                          v-on:user-state="setUserState"g>
                                 </spotify-player-component>
                                 <playlist-component v-bind:access-token="accessToken"
                                                     v-bind:spotify-id="spotifyId"
                                                     v-bind:spotify-player-state="spotifyPlayerState"
                                                     v-bind:track-to-play="trackToPlay"
                                                     v-bind:playlist-tracks="playlistTracks"
-                                                    v-bind:has-broadcaster="hasBroadcaster"
+                                                    v-bind:user-state="userState"
                                                     @getTrack="getTrackToPlay"
                                                     @change="clearPlaylist"
                                                     @removeTrack="removeTrackFromPlaylist">
@@ -87,7 +88,8 @@
                 "playlistId": "",
                 "hasBroadcaster": false,
                 "trackToPlay": undefined,
-                "playlistTracks": []
+                "playlistTracks": [],
+                "userState": "idle"
             };
         },
         created() {
@@ -259,6 +261,9 @@
                     .catch(function(error) {
                         console.error(error);
                     });
+            },
+            setUserState(userState) {
+                this.userState = userState;
             }
         }
     }

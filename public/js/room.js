@@ -64443,6 +64443,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 var SpotifyWebApi = __webpack_require__(7);
@@ -64472,7 +64473,8 @@ var spotifyApi = new SpotifyWebApi();
             "playlistId": "",
             "hasBroadcaster": false,
             "trackToPlay": undefined,
-            "playlistTracks": []
+            "playlistTracks": [],
+            "userState": "idle"
         };
     },
     created: function created() {
@@ -64640,6 +64642,9 @@ var spotifyApi = new SpotifyWebApi();
             }.bind(this)).catch(function (error) {
                 console.error(error);
             });
+        },
+        setUserState: function setUserState(userState) {
+            this.userState = userState;
         }
     }
 });
@@ -65688,7 +65693,6 @@ var spotifyApi = new SpotifyWebApi();
             var currentValue = _ref2.currentValue;
 
             this.isDragStart = false;
-            console.log(currentValue);
             this.seekToPosition(currentValue);
         },
         onProgressChange: function onProgressChange(currentValue) {
@@ -65714,18 +65718,22 @@ var spotifyApi = new SpotifyWebApi();
 
             axios.post('/api/room/' + this.roomId + '/broadcast').then(function (res) {
                 _this.userState = "broadcasting";
+                _this.$emit("user-state", _this.userState);
             });
         },
         stopBroadcasting: function stopBroadcasting() {
             this.$emit("disconnect-session", true);
             this.userState = "idle";
+            this.$emit("user-state", this.userState);
         },
         beginListening: function beginListening() {
             this.userState = "listening";
+            this.$emit("user-state", this.userState);
         },
         stopListening: function stopListening() {
             this.$emit("disconnect-session", false);
             this.userState = "idle";
+            this.$emit("user-state", this.userState);
         }
     },
     watch: {
@@ -66136,7 +66144,7 @@ var spotifyApi = new SpotifyWebApi();
         "spotifyPlayerState": Object,
         "trackToPlay": Number,
         "playlistTracks": Array,
-        "hasBroadcaster": Boolean
+        "hasState": String
     },
     data: function data() {
         return {
@@ -66172,7 +66180,7 @@ var spotifyApi = new SpotifyWebApi();
         },
         updateTrackToPlay: function updateTrackToPlay(value) {
             // Only the broadcaster can click on a track from the playlist to play
-            if (this.hasBroadcaster == true) {
+            if (this.userState != "broadcasting") {
                 // Pass the playlist index of the track to be played
                 this.$emit("getTrack", value);
             } else {
@@ -67268,9 +67276,13 @@ var render = function() {
                       "room-id": _vm.roomId,
                       "has-broadcaster": _vm.hasBroadcaster,
                       "track-to-play": _vm.trackToPlay,
-                      "playlist-tracks": _vm.playlistTracks
+                      "playlist-tracks": _vm.playlistTracks,
+                      g: ""
                     },
-                    on: { "disconnect-session": _vm.disconnectSession }
+                    on: {
+                      "disconnect-session": _vm.disconnectSession,
+                      "user-state": _vm.setUserState
+                    }
                   }),
                   _vm._v(" "),
                   _c("playlist-component", {
@@ -67280,7 +67292,7 @@ var render = function() {
                       "spotify-player-state": _vm.spotifyPlayerState,
                       "track-to-play": _vm.trackToPlay,
                       "playlist-tracks": _vm.playlistTracks,
-                      "has-broadcaster": _vm.hasBroadcaster
+                      "user-state": _vm.userState
                     },
                     on: {
                       getTrack: _vm.getTrackToPlay,

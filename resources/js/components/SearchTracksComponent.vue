@@ -51,7 +51,11 @@
                         }.bind(this))
                         .catch(function(error) {
                             console.error(error);
-                            // Refresh access token if 401 error
+                            console.log("Response status: " + error.status);
+                            // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                            if (error.status === 401) {
+                                $this.emit("refreshToken");
+                            }
                         }.bind(this));   
                 }
             },

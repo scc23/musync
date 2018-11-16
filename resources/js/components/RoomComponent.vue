@@ -9,18 +9,15 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <search-tracks-component @addTrack="addTrackToPlaylist">
+                                <search-tracks-component @addTrack="addTrackToPlaylist"
+                                                         @refreshToken="refreshAccessToken">
                                 </search-tracks-component>
-                                <genre-list-component v-bind:access-token="accessToken"
-                                                      v-bind:spotify-id="spotifyId"
-                                                      v-bind:playlist-id="playlistId"
-                                                      v-bind:playlist-tracks="playlistTracks"
-                                                      @addTrack="addTrackToPlaylist">
+                                <genre-list-component @addTrack="addTrackToPlaylist"
+                                                      @refreshToken="refreshAccessToken">
                                 </genre-list-component>
                             </div>
                             <div class="col-4">
                                 <spotify-player-component v-bind:csrf-token="csrfToken"
-                                                          v-bind:access-token="accessToken"
                                                           v-bind:spotify-id="spotifyId"
                                                           v-bind:spotify-device-id="spotifyDeviceId"
                                                           v-bind:spotify-player-state="spotifyPlayerState"
@@ -31,10 +28,10 @@
                                                           v-bind:track-to-play="trackToPlay"
                                                           v-bind:playlist-tracks="playlistTracks"
                                                           v-bind:user-state="userState"
-                                                          v-on:set-user-state="setUserState"g>
+                                                          v-on:set-user-state="setUserState"
+                                                          @refreshToken="refreshAccessToken">
                                 </spotify-player-component>
-                                <playlist-component v-bind:access-token="accessToken"
-                                                    v-bind:spotify-id="spotifyId"
+                                <playlist-component v-bind:spotify-id="spotifyId"
                                                     v-bind:spotify-player-state="spotifyPlayerState"
                                                     v-bind:track-to-play="trackToPlay"
                                                     v-bind:playlist-tracks="playlistTracks"
@@ -95,14 +92,29 @@
             this.currentAccessToken = this.accessToken;
             this.currentSpotifyId = this.spotifyId;
             this.setAccessToken(this.currentAccessToken);
-            this.initializePlaylist(this.currentAccessToken, this.currentSpotifyId);
+            this.initializePlaylist(this.currentSpotifyId);
             this.initializeEventListeners();
             this.initializeSpotifyPlayer(this.currentAccessToken);
             this.getRoomBroadcasterStatus();
             window.addEventListener("beforeunload", this.abruptlyCloseSession);
         },
         methods: {
-            initializePlaylist(token, id) {
+            refreshAccessToken() {
+                axios.post("/api/token/refresh")
+                .then((res) => {
+                    // Call Spotify API to set the new access token
+                    spotifyApi.setAccessToken(res.data.api_token);
+                    // Set the new access token in this component and it's child components
+                    this.setAccessToken(res.data.api_token);
+                    console.log("Access token refreshed.");
+                })
+                .catch((err) => {
+                    console.error(err);
+                    return false;
+                });
+                return true;
+            },
+            initializePlaylist(id) {
                 spotifyApi.getUserPlaylists(id)
                     .then(function(data) {
                         // Find MuSync playlist
@@ -113,12 +125,10 @@
                         }
                     }.bind(this))
                     .then(function(data) {
-                        // console.log("Playlist id: " + this.playlistId);
                         // Get the tracks in the MuSync playlist
                         spotifyApi.getPlaylistTracks(this.playlistId)
                             .then(function(data) {
                                 // Store the tracks in playlistTracks
-                                // console.log(data.items);
                                 for (var i = 0; i < data.items.length; i++) {
                                     this.playlistTracks.push({
                                         trackName: data.items[i].track.name,
@@ -128,23 +138,19 @@
                                         trackUri: data.items[i].track.uri
                                     });
                                 }
-                                // console.log(this.playlistTracks);
                             }.bind(this))
                             .catch(function(error) {
                                 console.error(error);
                             })
                     }.bind(this))
                     .catch(function(error) {
-                        axios.post("/api/token/refresh")
-                        .then((res) => {
-                            spotifyApi.setAccessToken(res.data.api_token);
-                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.api_token;
-                            console.log("Access token refreshed.");
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                        });
-                    });
+                        console.error(error);
+                        console.log("Response status: " + error.status);
+                        // If the response is 401 Unauthorized Error, refresh the access token
+                        if (error.status === 401) {
+                            this.refreshAccessToken();
+                        }
+                    }.bind(this));
             },
             initializeEventListeners() {
                 Echo.private(`room.${this.roomId}`)
@@ -201,8 +207,12 @@
                 spotifyApi.pause(function(err, data) {
                     if (err) {
                         console.error("Could not pause playback: " + err);
+                        // If the response is 401 Unauthorized Error, refresh the access token
+                        if (err.status === 401) {
+                            this.refreshAccessToken();
+                        }
                     }
-                });
+                }.bind(this));
                 if (isBroadcaster) {
                     axios.delete('/api/room/' + this.roomId + '/broadcast');
                     this.hasBroadcaster = false;
@@ -230,7 +240,11 @@
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
-                    });
+                        // If the response is 401 Unauthorized Error, refresh the access token
+                        if (error.status === 401) {
+                            this.refreshAccessToken();
+                        }
+                    }.bind(this));
                 this.playlistTracks = [];
             },
             removeTrackFromPlaylist(index, uri) {
@@ -243,7 +257,11 @@
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
-                    });
+                        // If the response is 401 Unauthorized Error, refresh the access token
+                        if (error.status === 401) {
+                            this.refreshAccessToken();
+                        }
+                    }.bind(this));
             },
             addTrackToPlaylist(track) {
                 console.log(track);
@@ -253,7 +271,11 @@
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
-                    });
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            this.refreshAccessToken();
+                        }
+                    }.bind(this));
             },
             setUserState(userState) {
                 this.userState = userState;

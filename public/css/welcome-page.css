@@ -1,1 +1,133 @@
-html{font-family:Nunito,sans-serif}body{background:linear-gradient(137deg,#191414,#1bf968fa);background-size:200% 200%;-webkit-animation:BackgroundGradient 10s linear infinite;animation:BackgroundGradient 10s linear infinite}@-webkit-keyframes BackgroundGradient{0%{background-position:top}25%{background-position:100%}50%{background-position:bottom}75%{background-position:0}to{background-position:top}}@keyframes BackgroundGradient{0%{background-position:top}25%{background-position:100%}50%{background-position:bottom}75%{background-position:0}to{background-position:top}}.full-height{height:100vh}.flex-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.position-ref{position:relative}.top-right{position:absolute;right:10px;top:18px}.content{text-align:center}.title{font-size:84px;-webkit-animation:ColorChange 10s infinite;animation:ColorChange 10s infinite}@-webkit-keyframes ColorChange{0%{color:#fff}50%{color:#000}to{color:#fff}}@keyframes ColorChange{0%{color:#fff}50%{color:#000}to{color:#fff}}.links>a{color:#636b6f;padding:0 25px;font-size:12px;font-weight:600;letter-spacing:.1rem;text-decoration:none;text-transform:uppercase}.m-b-md{margin-bottom:30px}
+html {
+  font-family: "Nunito", sans-serif;
+}
+
+body {
+  background: linear-gradient(137deg, #191414, #1bf968fa);
+  background-size: 200% 200%;
+  -webkit-animation: BackgroundGradient 10s linear infinite;
+          animation: BackgroundGradient 10s linear infinite;
+}
+
+@-webkit-keyframes BackgroundGradient {
+  0% {
+    background-position: center top;
+  }
+
+  25% {
+    background-position: right center;
+  }
+
+  50% {
+    background-position: center bottom;
+  }
+
+  75% {
+    background-position: left center;
+  }
+
+  100% {
+    background-position: center top;
+  }
+}
+
+@keyframes BackgroundGradient {
+  0% {
+    background-position: center top;
+  }
+
+  25% {
+    background-position: right center;
+  }
+
+  50% {
+    background-position: center bottom;
+  }
+
+  75% {
+    background-position: left center;
+  }
+
+  100% {
+    background-position: center top;
+  }
+}
+
+.full-height {
+  height: 100vh;
+}
+
+.flex-center {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.position-ref {
+  position: relative;
+}
+
+.top-right {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
+
+.content {
+  text-align: center;
+}
+
+.title {
+  font-size: 84px;
+  -webkit-animation: ColorChange 10s infinite;
+          animation: ColorChange 10s infinite;
+}
+
+@-webkit-keyframes ColorChange {
+  0% {
+    color: white;
+  }
+
+  50% {
+    color: black;
+  }
+
+  100% {
+    color: white;
+  }
+}
+
+@keyframes ColorChange {
+  0% {
+    color: white;
+  }
+
+  50% {
+    color: black;
+  }
+
+  100% {
+    color: white;
+  }
+}
+
+.links > a {
+  color: #636b6f;
+  padding: 0 25px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.m-b-md {
+  margin-bottom: 30px;
+}
+

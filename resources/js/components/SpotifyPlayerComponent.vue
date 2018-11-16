@@ -92,7 +92,6 @@
             vueSlider
         },
         props: {
-            "accessToken": String,
             "csrfToken": String,
             "spotifyId": String,
             "spotifyDeviceId": String,
@@ -133,7 +132,11 @@
                         "context_uri": "spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId})
                         .catch(function(error) {
                             console.error(error);
-                        })
+                            // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                            if (error.status === 401) {
+                                $this.emit("refreshToken");
+                            }
+                        }.bind(this))
                 // Play the room's current song
                 } else {
                     spotifyApi.play({
@@ -143,7 +146,11 @@
                         "position_ms": this.currentTrack["trackPosition"]})
                         .catch(function(error) {
                             console.error(error);
-                        })
+                            // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                            if (error.status === 401) {
+                                $this.emit("refreshToken");
+                            }
+                        }.bind(this))
                 }
             },
             pause() {
@@ -151,7 +158,11 @@
                     "device_id": this.spotifyDeviceId})
                     .catch(function(error) {
                         console.error(error);
-                    })
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            $this.emit("refreshToken");
+                        }
+                    }.bind(this))
             },
             nextTrack() {
                 console.log("step forward is pressed");
@@ -159,7 +170,11 @@
                     "device_id": this.spotifyDeviceId})
                     .catch(function(error) {
                         console.error(error);
-                    })
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            $this.emit("refreshToken");
+                        }
+                    }.bind(this))
             },
             seekToPosition(position_ms) {
                 spotifyApi.seek(position_ms, {"device_id": this.spotifyDeviceId})
@@ -239,9 +254,6 @@
                 this.currentTrack["trackIndex"] = this.trackToPlay;
                 this.currentTrack["trackPosition"] = 0;
                 this.play();
-            },
-            "playlistTracks": function(newState, oldState) {
-                this.playlistTracks = newState;
             },
             "isPaused": function(newValue, oldValue) {
                 this.updateProgress();

@@ -7,15 +7,10 @@
             <button class="remove-button" v-on:click="removeTrack($event)">X</button><br>
             <span class="track-duration">{{trackDuration}}</span>
         </div>
-
-        <!-- TODO: Click on a track to play it immediately -->
     </div>
 </template>
 
 <script>
-    var SpotifyWebApi = require('spotify-web-api-js');
-    var spotifyApi = new SpotifyWebApi();
-
     export default {
         props: {
             "playlistTrack": Object,
@@ -29,9 +24,6 @@
         },
         created() {
             this.convertMilliseconds();
-        },
-        watch: {
-            // 
         },
         methods: {
             removeTrack(e) {

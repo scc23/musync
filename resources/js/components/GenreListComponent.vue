@@ -15,17 +15,10 @@
 </template>
 
 <script>
-    import axios from "axios";
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
     
     export default {
-        props: {
-            "accessToken": String,
-            "spotifyId": String,
-            "playlistId": String,
-            "playlistTracks": Array
-        },
         data() {
             return {
                 "genreList": [
@@ -41,7 +34,7 @@
                                 {name: "Hip-Hop", value: "hip-hop"},
                                 {name: "Heavy Metal", value: "heavy-metal"},
                                 {name: "Jazz", value: "jazz"},
-                                {name: "K-pop", value: "k-pop"},
+                                {name: "Indie", value: "indie"},
                                 {name: "Opera", value: "opera"},
                                 {name: "Pop", value: "pop"},
                                 {name: "R&B", value: "r-n-b"},
@@ -49,11 +42,6 @@
                                 {name: "Techno", value: "techno"}
                             ]
             };
-        },
-        watch: {
-            "playlistTracks": function(newState, oldState) {
-                this.playlistTracks = newState;
-            }
         },
         methods: {
             // Fetch tracks from a genre and add them to the room's playlist
@@ -69,14 +57,15 @@
                         };
                         this.$emit("addTrack", track);
                     }.bind(this))
-                    .catch((err) => {
-                        console.error(err);
-                    });
+                    .catch(function(error) {
+                        console.error(error);
+                        console.log("Response status: " + error.status);
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            this.$emit("refreshToken");
+                        }
+                    }.bind(this));
             }
-        },
-        mounted() {
-            spotifyApi.setAccessToken(this.accessToken);
-            axios.defaults.headers.common["Authorization"] = "Bearer " + this.accessToken;
         }
     }
 </script>

@@ -29,30 +29,31 @@
                 "searchResults": []
         	};
         },
-        watch: {
-            //
-        },
         methods: {
+            isValidInput: function() {
+                return (this.searchInput.trim().length != 0);
+            },
             fetchTracks() {
-                this.searchResults = [];
-                console.log(this.searchInput);
-                spotifyApi.searchTracks(this.searchInput, {limit: 50})
-                    .then(function(data) {
-                        console.log(data.tracks.items);
-                        for (var i = 0; i < data.tracks.items.length; i++) {
-                            this.searchResults.push({
-                                trackName: data.tracks.items[i].name,
-                                trackArtist: data.tracks.items[i].artists[0].name,
-                                trackAlbumArt: data.tracks.items[i].album.images[0].url,
-                                trackDuration: data.tracks.items[i].duration_ms,
-                                trackUri: data.tracks.items[i].uri
-                            });
-                        }
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.error(error);
-                        // Refresh access token if 401 error
-                    }.bind(this));
+                if (this.isValidInput()) {
+                    console.log("Fetching tracks...");
+                    this.searchResults = [];
+                    spotifyApi.searchTracks(this.searchInput, {limit: 50})
+                        .then(function(data) {
+                            for (var i = 0; i < data.tracks.items.length; i++) {
+                                this.searchResults.push({
+                                    trackName: data.tracks.items[i].name,
+                                    trackArtist: data.tracks.items[i].artists[0].name,
+                                    trackAlbumArt: data.tracks.items[i].album.images[0].url,
+                                    trackDuration: data.tracks.items[i].duration_ms,
+                                    trackUri: data.tracks.items[i].uri
+                                });
+                            }
+                        }.bind(this))
+                        .catch(function(error) {
+                            console.error(error);
+                            // Refresh access token if 401 error
+                        }.bind(this));   
+                }
             },
             getTrackToAdd(track) {
                 this.$emit("addTrack", track);

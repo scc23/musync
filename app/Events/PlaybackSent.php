@@ -30,8 +30,8 @@ class PlaybackSent implements ShouldBroadcast
     public function __construct($room_id, $track_uri, $track_position, $is_paused)
     {
         $this->room_id = $room_id;
-        $this->$track_uri = $track_uri;
-        $this->$track_position = $track_position;
+        $this->track_uri = $track_uri;
+        $this->track_position = $track_position;
         $this->is_paused = $is_paused;
     }
 
@@ -43,5 +43,20 @@ class PlaybackSent implements ShouldBroadcast
     public function broadcastOn()
     {
         return new PrivateChannel('room.'.$this->room_id);
+    }
+
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array
+     */
+    public function broadcastWith()
+    {
+        return [
+            'trackUri' => $this->track_uri,
+            'trackPosition' => $this->track_position,
+            'isPaused' => $this->is_paused
+        ];
     }
 }

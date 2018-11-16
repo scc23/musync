@@ -9,10 +9,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <!-- <search-tracks-component v-bind:access-token="accessToken"
-                                                         v-bind:spotify-id="spotifyId"
-                                                         v-bind:playlist-id="playlistId">
-                                </search-tracks-component> -->
+                                <search-tracks-component @addTrack="addTrackToPlaylist">
+                                </search-tracks-component>
                                 <genre-list-component v-bind:access-token="accessToken"
                                                       v-bind:spotify-id="spotifyId"
                                                       v-bind:playlist-id="playlistId"

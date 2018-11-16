@@ -49,6 +49,10 @@
                         room["hasAccess"] = !room.isPrivate || (this.userId == data.user_id);
                         this.rooms.push(room);
                     });
+                Echo.private(`home.${this.userId}`)
+                    .listen("JoinedRoom", (data) => {
+                        this.unlockRoom(data.roomId);
+                    });
             },
             initializeRoomsList() {
               axios.get("/api/rooms")
@@ -65,6 +69,13 @@
                 } else if (component == "home-join-component") {
                     this.header = "Join Room"
                 }
+            },
+            unlockRoom(roomId) {
+                this.rooms.forEach((room) => {
+                    if (room.id == roomId) {
+                        room.hasAccess = true;
+                    }
+                });
             }
         }
     }

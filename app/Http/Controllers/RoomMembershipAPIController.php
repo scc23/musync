@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\JoinedRoom;
 use App\Room;
 use App\RoomHelper;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -38,6 +40,8 @@ class RoomMembershipAPIController extends Controller
             $error = 'Incorrect password provided.';
             return response()->json(['joinPasswordError' => $error], Response::HTTP_UNAUTHORIZED);
         }
+
+        broadcast(new JoinedRoom($room_id, Auth::id()));
 
         return response()->json($membership, Response::HTTP_OK);
     }

@@ -62623,6 +62623,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 room["hasAccess"] = !room.isPrivate || _this.userId == data.user_id;
                 _this.rooms.push(room);
             });
+            Echo.private('home.' + this.userId).listen("JoinedRoom", function (data) {
+                _this.unlockRoom(data.roomId);
+            });
         },
         initializeRoomsList: function initializeRoomsList() {
             var _this2 = this;
@@ -62640,6 +62643,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else if (component == "home-join-component") {
                 this.header = "Join Room";
             }
+        },
+        unlockRoom: function unlockRoom(roomId) {
+            this.rooms.forEach(function (room) {
+                if (room.id == roomId) {
+                    room.hasAccess = true;
+                }
+            });
         }
     }
 });
@@ -63258,7 +63268,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             joinId: "",
             joinPassword: "",
             joinIdError: "",
-            joinPasswordError: "Join password error",
+            joinPasswordError: "",
             joinHasPassword: false
         };
     },

@@ -49,7 +49,7 @@
               joinId: "",
               joinPassword: "",
               joinIdError: "",
-              joinPasswordError: "Join password error",
+              joinPasswordError: "",
               joinHasPassword: false
             };
         },

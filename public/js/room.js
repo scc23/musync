@@ -925,12 +925,6 @@ module.exports = defaults;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(21);
-
-/***/ }),
-/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3473,7 +3467,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -13844,6 +13838,12 @@ return jQuery;
 
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(21);
+
+/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18005,7 +18005,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 
 window._ = __webpack_require__(18);
-window.Popper = __webpack_require__(7).default;
+window.Popper = __webpack_require__(6).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -18014,7 +18014,7 @@ window.Popper = __webpack_require__(7).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(8);
+  window.$ = window.jQuery = __webpack_require__(7);
 
   __webpack_require__(20);
 } catch (e) {}
@@ -18025,7 +18025,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(6);
+window.axios = __webpack_require__(8);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -35213,7 +35213,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(8), __webpack_require__(7)) :
+   true ? factory(exports, __webpack_require__(7), __webpack_require__(6)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -64383,8 +64383,9 @@ exports.push([module.i, "", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
 //
 //
 //
@@ -64655,7 +64656,11 @@ var spotifyApi = new SpotifyWebApi();
                 this.playlistTracks.push(track);
             }.bind(this)).catch(function (error) {
                 console.error(error);
-            });
+                // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                if (error.status === 401) {
+                    $this.emit("refreshToken");
+                }
+            }.bind(this));
         },
         setUserState: function setUserState(userState) {
             this.userState = userState;
@@ -64785,12 +64790,6 @@ var spotifyApi = new SpotifyWebApi();
     components: {
         'search-tracks-listing-component': __webpack_require__(83)
     },
-    props: {
-        "accessToken": String,
-        "spotifyId": String,
-        "playlistId": String,
-        "playlistTracks": Array
-    },
     data: function data() {
         return {
             "searchInput": "",
@@ -64818,7 +64817,10 @@ var spotifyApi = new SpotifyWebApi();
                     }
                 }.bind(this)).catch(function (error) {
                     console.error(error);
-                    // Refresh access token if 401 error
+                    // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                    if (error.status === 401) {
+                        $this.emit("refreshToken");
+                    }
                 }.bind(this));
             }
         },
@@ -65195,8 +65197,6 @@ exports.push([module.i, "\n.genre-div[data-v-14e23ce7] {\n  font-size: 12px;\n  
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
 //
@@ -65213,7 +65213,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 var SpotifyWebApi = __webpack_require__(16);
 var spotifyApi = new SpotifyWebApi();
@@ -65237,9 +65236,13 @@ var spotifyApi = new SpotifyWebApi();
                     trackUri: data.tracks[0].uri
                 };
                 this.$emit("addTrack", track);
-            }.bind(this)).catch(function (err) {
-                console.error(err);
-            });
+            }.bind(this)).catch(function (error) {
+                console.error(error);
+                // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                if (error.status === 401) {
+                    $this.emit("refreshToken");
+                }
+            }.bind(this));
         }
     }
 });
@@ -67134,7 +67137,10 @@ var render = function() {
                 { staticClass: "col-4" },
                 [
                   _c("search-tracks-component", {
-                    on: { addTrack: _vm.addTrackToPlaylist }
+                    on: {
+                      addTrack: _vm.addTrackToPlaylist,
+                      refreshToken: _vm.refreshAccessToken
+                    }
                   }),
                   _vm._v(" "),
                   _c("genre-list-component", {

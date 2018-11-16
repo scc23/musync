@@ -15,7 +15,6 @@
 </template>
 
 <script>
-    import axios from "axios";
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
     
@@ -58,9 +57,13 @@
                         };
                         this.$emit("addTrack", track);
                     }.bind(this))
-                    .catch((err) => {
-                        console.error(err);
-                    });
+                    .catch(function(error) {
+                        console.error(error);
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            $this.emit("refreshToken");
+                        }
+                    }.bind(this));
             }
         }
     }

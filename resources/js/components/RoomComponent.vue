@@ -9,7 +9,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <search-tracks-component @addTrack="addTrackToPlaylist">
+                                <search-tracks-component @addTrack="addTrackToPlaylist"
+                                                         @refreshToken="refreshAccessToken">
                                 </search-tracks-component>
                                 <genre-list-component @addTrack="addTrackToPlaylist"
                                                       @refreshToken="refreshAccessToken">
@@ -270,7 +271,11 @@
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
-                    });
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            $this.emit("refreshToken");
+                        }
+                    }.bind(this));
             },
             setUserState(userState) {
                 this.userState = userState;

@@ -58,7 +58,7 @@
         },
         methods: {
             returnLanding(event) {
-                this.$emit("set-body-component", "landing");
+                this.$emit("set-body-component", "home-landing-component");
             },
             clearRoomErrors() {
                 this.joinIdError = "";

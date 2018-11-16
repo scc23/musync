@@ -62594,9 +62594,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        'landing': __webpack_require__(51),
-        'create': __webpack_require__(54),
-        'join': __webpack_require__(57)
+        'home-landing-component': __webpack_require__(51),
+        'home-create-component': __webpack_require__(54),
+        'home-join-component': __webpack_require__(57)
     },
     props: {
         "userId": String,
@@ -62606,7 +62606,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             header: "Dashboard",
-            bodyComponent: "landing",
+            bodyComponent: "home-landing-component",
             rooms: []
         };
     },
@@ -62635,11 +62635,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         setBodyComponent: function setBodyComponent(component) {
             this.bodyComponent = component;
-            if (component == "landing") {
+            if (component == "home-landing-component") {
                 this.header = "Dashboard";
-            } else if (component == "create") {
+            } else if (component == "home-create-component") {
                 this.header = "Create Room";
-            } else if (component == "join") {
+            } else if (component == "home-join-component") {
                 this.header = "Join Room";
             }
         }
@@ -62725,10 +62725,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         promptCreate: function promptCreate() {
-            this.$emit("set-body-component", "create");
+            this.$emit("set-body-component", "home-create-component");
         },
         promptJoin: function promptJoin() {
-            this.$emit("set-body-component", "join");
+            this.$emit("set-body-component", "home-join-component");
         }
     }
 });
@@ -62899,7 +62899,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isPrivate = false;
         },
         returnLanding: function returnLanding(event) {
-            this.$emit("set-body-component", "landing");
+            this.$emit("set-body-component", "home-landing-component");
             this.resetState();
         },
         clearPassword: function clearPassword() {
@@ -63273,7 +63273,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         returnLanding: function returnLanding(event) {
-            this.$emit("set-body-component", "landing");
+            this.$emit("set-body-component", "home-landing-component");
         },
         clearRoomErrors: function clearRoomErrors() {
             this.joinIdError = "";

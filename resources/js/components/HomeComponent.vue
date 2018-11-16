@@ -22,9 +22,9 @@
 
     export default {
         components: {
-            'landing': require('./HomeLandingComponent'),
-            'create': require('./HomeCreateComponent'),
-            'join': require('./HomeJoinComponent')
+            'home-landing-component': require('./HomeLandingComponent'),
+            'home-create-component': require('./HomeCreateComponent'),
+            'home-join-component': require('./HomeJoinComponent')
         },
         props: {
             "userId": String,
@@ -34,7 +34,7 @@
         data() {
             return {
                 header: "Dashboard",
-                bodyComponent: "landing",
+                bodyComponent: "home-landing-component",
                 rooms: []
             }
         },
@@ -60,11 +60,11 @@
             },
             setBodyComponent(component) {
                 this.bodyComponent = component;
-                if (component == "landing") {
+                if (component == "home-landing-component") {
                     this.header = "Dashboard"
-                } else if (component == "create") {
+                } else if (component == "home-create-component") {
                     this.header = "Create Room"
-                } else if (component == "join") {
+                } else if (component == "home-join-component") {
                     this.header = "Join Room"
                 }
             }

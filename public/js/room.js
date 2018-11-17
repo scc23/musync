@@ -65682,6 +65682,8 @@ var spotifyApi = new SpotifyWebApi();
                 _this2.broadcastNotificationText = data.user.name + " is broadcasting.";
             }).listen("BroadcasterDisconnected", function (data) {
                 _this2.hasBroadcaster = false;
+                _this2.disconnectSession(false);
+                _this2.userState = "idle";
                 _this2.broadcastNotificationText = data.user.name + " stopped broadcasting.";
             });
         },

@@ -170,6 +170,8 @@
                     })
                     .listen("BroadcasterDisconnected", (data) => {
                         this.hasBroadcaster = false;
+                        this.disconnectSession(false);
+                        this.userState = "idle";
                         this.broadcastNotificationText = data.user.name + " stopped broadcasting.";
                     });
             },

@@ -66724,7 +66724,32 @@ var spotifyApi = new SpotifyWebApi();
             }
         },
         sync: function sync() {
+            var _this = this;
+
             console.log("Syncing player with broadcaster.");
+            axios.get('/api/room/' + this.roomId + '/playback').then(function (res) {
+                var playback = res.data;
+
+                if (playback["trackUri"] == null) {
+                    console.log("The broadcaster is currently not listening to anything.");
+                } else {
+                    var currentTime = new Date();
+                    var rtt = (currentTime - playback["timestamp"]) * 2;
+                    spotifyApi.play({
+                        "device_id": _this.spotifyDeviceId,
+                        "uris": [playback["trackUri"]],
+                        "position_ms": playback["trackPosition"] + rtt
+                    }).catch(function (error) {
+                        console.error(error);
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            $this.emit("refreshToken");
+                        }
+                    }.bind(_this));
+                }
+            }).catch(function (err) {
+                console.log('Failed to sync with broadcaster: ' + err);
+            });
         },
         pause: function pause() {
             spotifyApi.pause({
@@ -66791,11 +66816,11 @@ var spotifyApi = new SpotifyWebApi();
             return Math.floor(minutes) + ":" + String("0" + Math.floor(seconds)).slice(-2);
         },
         beginBroadcasting: function beginBroadcasting() {
-            var _this = this;
+            var _this2 = this;
 
             axios.post('/api/room/' + this.roomId + '/broadcast').then(function (res) {
-                _this.$emit("set-user-state", "broadcasting");
-                _this.$emit("become-broadcaster");
+                _this2.$emit("set-user-state", "broadcasting");
+                _this2.$emit("become-broadcaster");
             });
         },
         stopBroadcasting: function stopBroadcasting() {

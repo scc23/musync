@@ -156,6 +156,33 @@
             },
             sync() {
                 console.log("Syncing player with broadcaster.");
+                axios.get(`/api/room/${this.roomId}/playback`)
+                    .then((res) => {
+                        var playback = res.data;
+
+                        if (playback["trackUri"] == null) {
+                            console.log("The broadcaster is currently not listening to anything.");
+                        } else {
+                            var currentTime = new Date();
+                            var rtt = (currentTime - playback["timestamp"]) * 2;
+                            spotifyApi.play({
+                                "device_id": this.spotifyDeviceId,
+                                "uris": [playback["trackUri"]],
+                                "position_ms": playback["trackPosition"] + rtt
+                            }).catch(function(error) {
+                                console.error(error);
+                                // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                                if (error.status === 401) {
+                                    $this.emit("refreshToken");
+                                }
+                            }.bind(this));
+                        }
+
+                    })
+                    .catch((err) => {
+                        console.log(`Failed to sync with broadcaster: ${err}`);
+                    })
+
             },
             pause() {
                 spotifyApi.pause({

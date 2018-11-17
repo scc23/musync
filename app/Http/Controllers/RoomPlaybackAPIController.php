@@ -44,12 +44,20 @@ class RoomPlaybackAPIController extends Controller
         } else {
             $broadcasting_user = User::find($broadcaster->user_id);
             $this->spotify_api->setAccessToken($broadcasting_user->api_token);
+
+            $start_time = $this->getTimeInMilliseconds();
             $playback = $this->spotify_api->getMyCurrentPlaybackInfo();
+            $end_time = $this->getTimeInMilliseconds();
+
+            // Estimate latency time taken from Spotify's server to here to offset playback time.
+            $half_roundtrip_time = intval(($end_time - $start_time)/2);
+            $playback['progress_ms'] = $playback['progress_ms'] + $half_roundtrip_time;
 
             return response()->json([
                 'trackUri' => $playback['item']['uri'],
                 'trackPosition' => $playback['progress_ms'],
-                'isPaused' => !$playback['is_playing']
+                'isPaused' => !$playback['is_playing'],
+                'timestamp' => $this->getTimeInMilliseconds()
             ], Response::HTTP_OK);
         }
     }
@@ -80,5 +88,10 @@ class RoomPlaybackAPIController extends Controller
         broadcast($playback_sent)->toOthers();
 
         return response()->json(null, Response::HTTP_OK);
+    }
+
+    private function getTimeInMilliseconds()
+    {
+        return round(microtime(true) * 1000);
     }
 }

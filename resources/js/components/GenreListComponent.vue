@@ -102,16 +102,9 @@
         methods: {
             // Fetch tracks from a genre and add them to the room's playlist
             fetchGenreTracks(genre) {
-                spotifyApi.getRecommendations({limit: 50, seed_genres: genre})
+                spotifyApi.getRecommendations({limit: 50, seed_genres: genre, min_popularity: 50})
                     .then(function(data) {
-                        var track = {
-                            trackName: data.tracks[0].name,
-                            trackArtist: data.tracks[0].artists[0].name,
-                            trackAlbumArt: data.tracks[0].album.images[0].url,
-                            trackDuration: data.tracks[0].duration_ms,
-                            trackUri: data.tracks[0].uri
-                        };
-                        this.$emit("addTrack", track);
+                        this.$emit("generateResults", data.tracks);
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);

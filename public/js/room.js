@@ -65575,6 +65575,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 var SpotifyWebApi = __webpack_require__(16);
@@ -65607,7 +65610,8 @@ var spotifyApi = new SpotifyWebApi();
             "broadcastNotificationText": "",
             "trackToPlay": undefined,
             "playlistTracks": [],
-            "userState": "idle"
+            "userState": "idle",
+            "searchResults": []
         };
     },
     created: function created() {
@@ -65805,6 +65809,19 @@ var spotifyApi = new SpotifyWebApi();
                 }
             }.bind(this));
         },
+        generateSearchResults: function generateSearchResults(results) {
+            this.searchResults = [];
+            // Populate searchResults with track data
+            for (var i = 0; i < results.length; i++) {
+                this.searchResults.push({
+                    trackName: results[i].name,
+                    trackArtist: results[i].artists[0].name,
+                    trackAlbumArt: results[i].album.images[0].url,
+                    trackDuration: results[i].duration_ms,
+                    trackUri: results[i].uri
+                });
+            }
+        },
         setUserState: function setUserState(userState) {
             this.userState = userState;
         }
@@ -65935,10 +65952,13 @@ var spotifyApi = new SpotifyWebApi();
     components: {
         'search-tracks-listing-component': __webpack_require__(84)
     },
+    props: {
+        "searchResults": Array
+    },
     data: function data() {
         return {
-            "searchInput": "",
-            "searchResults": []
+            "searchInput": ""
+            // "searchResults": []
         };
     },
 
@@ -65949,17 +65969,8 @@ var spotifyApi = new SpotifyWebApi();
         fetchTracks: function fetchTracks() {
             if (this.isValidInput()) {
                 console.log("Fetching tracks...");
-                this.searchResults = [];
                 spotifyApi.searchTracks(this.searchInput, { limit: 50 }).then(function (data) {
-                    for (var i = 0; i < data.tracks.items.length; i++) {
-                        this.searchResults.push({
-                            trackName: data.tracks.items[i].name,
-                            trackArtist: data.tracks.items[i].artists[0].name,
-                            trackAlbumArt: data.tracks.items[i].album.images[0].url,
-                            trackDuration: data.tracks.items[i].duration_ms,
-                            trackUri: data.tracks.items[i].uri
-                        });
-                    }
+                    this.$emit("generateResults", data.tracks.items);
                 }.bind(this)).catch(function (error) {
                     console.error(error);
                     console.log("Response status: " + error.status);
@@ -66394,15 +66405,8 @@ var spotifyApi = new SpotifyWebApi();
     methods: {
         // Fetch tracks from a genre and add them to the room's playlist
         fetchGenreTracks: function fetchGenreTracks(genre) {
-            spotifyApi.getRecommendations({ limit: 50, seed_genres: genre }).then(function (data) {
-                var track = {
-                    trackName: data.tracks[0].name,
-                    trackArtist: data.tracks[0].artists[0].name,
-                    trackAlbumArt: data.tracks[0].album.images[0].url,
-                    trackDuration: data.tracks[0].duration_ms,
-                    trackUri: data.tracks[0].uri
-                };
-                this.$emit("addTrack", track);
+            spotifyApi.getRecommendations({ limit: 50, seed_genres: genre, min_popularity: 50 }).then(function (data) {
+                this.$emit("generateResults", data.tracks);
             }.bind(this)).catch(function (error) {
                 console.error(error);
                 console.log("Response status: " + error.status);
@@ -68501,7 +68505,9 @@ var render = function() {
                   { staticClass: "col-4" },
                   [
                     _c("search-tracks-component", {
+                      attrs: { "search-results": _vm.searchResults },
                       on: {
+                        generateResults: _vm.generateSearchResults,
                         addTrack: _vm.addTrackToPlaylist,
                         refreshToken: _vm.refreshAccessToken
                       }
@@ -68509,6 +68515,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("genre-list-component", {
                       on: {
+                        generateResults: _vm.generateSearchResults,
                         addTrack: _vm.addTrackToPlaylist,
                         refreshToken: _vm.refreshAccessToken
                       }

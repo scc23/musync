@@ -25,10 +25,13 @@
         components: {
             'search-tracks-listing-component': require('./searchTracksListingComponent.vue')
         },
+        props: {
+            "searchResults": Array
+        },
         data() {
         	return {
         		"searchInput": "",
-                "searchResults": []
+                // "searchResults": []
         	};
         },
         methods: {
@@ -38,18 +41,9 @@
             fetchTracks() {
                 if (this.isValidInput()) {
                     console.log("Fetching tracks...");
-                    this.searchResults = [];
                     spotifyApi.searchTracks(this.searchInput, {limit: 50})
                         .then(function(data) {
-                            for (var i = 0; i < data.tracks.items.length; i++) {
-                                this.searchResults.push({
-                                    trackName: data.tracks.items[i].name,
-                                    trackArtist: data.tracks.items[i].artists[0].name,
-                                    trackAlbumArt: data.tracks.items[i].album.images[0].url,
-                                    trackDuration: data.tracks.items[i].duration_ms,
-                                    trackUri: data.tracks.items[i].uri
-                                });
-                            }
+                            this.$emit("generateResults", data.tracks.items);
                         }.bind(this))
                         .catch(function(error) {
                             console.error(error);

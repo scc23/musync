@@ -11,10 +11,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <search-tracks-component @addTrack="addTrackToPlaylist"
+                                <search-tracks-component v-bind:search-results="searchResults"
+                                                         @generateResults="generateSearchResults"
+                                                         @addTrack="addTrackToPlaylist"
                                                          @refreshToken="refreshAccessToken">
                                 </search-tracks-component>
-                                <genre-list-component @addTrack="addTrackToPlaylist"
+                                <genre-list-component @generateResults="generateSearchResults"
+                                                      @addTrack="addTrackToPlaylist"
                                                       @refreshToken="refreshAccessToken">
                                 </genre-list-component>
                             </div>
@@ -91,7 +94,8 @@
                 "broadcastNotificationText": "",
                 "trackToPlay": undefined,
                 "playlistTracks": [],
-                "userState": "idle"
+                "userState": "idle",
+                "searchResults": []
             };
         },
         created() {
@@ -290,6 +294,19 @@
                             this.refreshAccessToken();
                         }
                     }.bind(this));
+            },
+            generateSearchResults(results) {
+                this.searchResults = [];
+                // Populate searchResults with track data
+                for (var i = 0; i < results.length; i++) {
+                    this.searchResults.push({
+                        trackName: results[i].name,
+                        trackArtist: results[i].artists[0].name,
+                        trackAlbumArt: results[i].album.images[0].url,
+                        trackDuration: results[i].duration_ms,
+                        trackUri: results[i].uri
+                    });
+                }
             },
             setUserState(userState) {
                 this.userState = userState;

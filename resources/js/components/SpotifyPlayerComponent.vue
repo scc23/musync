@@ -50,6 +50,7 @@
                                     </div>
                                     <div class="track-progress-bar">
                                         <vue-slider
+                                            ref=slider
                                             v-model="currentTrack.trackPosition"
                                             v-on:drag-start="onDragStart"
                                             v-on:drag-end="onDragEnd"
@@ -135,7 +136,7 @@
                             console.error(error);
                             // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                             if (error.status === 401) {
-                                $this.emit("refreshToken");
+                                this.$emit("refreshToken");
                             }
                         }.bind(this))
                 // Play the room's current song
@@ -149,7 +150,7 @@
                             console.error(error);
                             // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                             if (error.status === 401) {
-                                $this.emit("refreshToken");
+                                this.$emit("refreshToken");
                             }
                         }.bind(this))
                 }
@@ -173,7 +174,7 @@
                                 console.error(error);
                                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                                 if (error.status === 401) {
-                                    $this.emit("refreshToken");
+                                    this.$emit("refreshToken");
                                 }
                             }.bind(this));
                         }
@@ -191,7 +192,7 @@
                         console.error(error);
                         // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                         if (error.status === 401) {
-                            $this.emit("refreshToken");
+                            this.$emit("refreshToken");
                         }
                     }.bind(this))
             },
@@ -203,7 +204,7 @@
                         console.error(error);
                         // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                         if (error.status === 401) {
-                            $this.emit("refreshToken");
+                            this.$emit("refreshToken");
                         }
                     }.bind(this))
             },
@@ -211,22 +212,31 @@
                 spotifyApi.seek(position_ms, {"device_id": this.spotifyDeviceId})
                     .catch(function(error) {
                         console.error(error);
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            this.$emit("refreshToken");
+                        }
                     })
             },
             updateProgress() {
                 clearInterval(this.progressInterval);
-                if (!this.isPaused) {
+                if (!this.isPaused && !this.isDragStart) {
                     this.progressInterval = setInterval(this.incrementProgressTime, 1000)
                 }
             },
             incrementProgressTime() {
-                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 1000;
+                if (this.currentTrack["trackPosition"] + 1000 <= this.currentTrack["duration"]) {
+                    this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 1000;
+                }
             },
             onDragStart({currentValue}) {
                 this.isDragStart = true;
             },
             onDragEnd({currentValue}) {
                 this.isDragStart = false;
+                if (currentValue >= this.currentTrack["duration"]) {
+                    currentValue = this.currentTrack["duration"] - 2000;
+                }
                 this.seekToPosition(currentValue);
             },
             onProgressChange(currentValue) {
@@ -279,6 +289,9 @@
                     this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
                     this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
                     this.currentTrack["trackPosition"] = this.spotifyPlayerState["position"];
+                    if (this.currentTrack["trackPosition"] > this.currentTrack["duration"]) {
+                        this.$refs.slider.setValue(0);
+                    }
                 }
             },
             "trackToPlay": function(newState, oldState) {
@@ -293,6 +306,9 @@
             },
             "currentTrack.name": function(newValue, oldValue) {
                 this.setCurrentTrackIndex();
+            },
+            "isDragStart": function(newValue, oldValue) {
+                this.updateProgress();
             }
         }
     }

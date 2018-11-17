@@ -170,6 +170,8 @@
                     })
                     .listen("BroadcasterDisconnected", (data) => {
                         this.hasBroadcaster = false;
+                        this.disconnectSession(false);
+                        this.userState = "idle";
                         this.broadcastNotificationText = data.user.name + " stopped broadcasting.";
                     });
             },
@@ -177,7 +179,7 @@
                 this.broadcastNotificationText = "You are broadcasting.";
             },
             stopBeingBroadcaster(){
-                this.broadcastNotificationText = "You stopped broadcasting.";  
+                this.broadcastNotificationText = "You stopped broadcasting.";
             },
             initializeSpotifyPlayer(token) {
                 window.onSpotifyWebPlaybackSDKReady = () => {

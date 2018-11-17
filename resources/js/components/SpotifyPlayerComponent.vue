@@ -187,14 +187,23 @@
             },
             pause() {
                 spotifyApi.pause({
-                    "device_id": this.spotifyDeviceId})
-                    .catch(function(error) {
-                        console.error(error);
-                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
-                        if (error.status === 401) {
-                            this.$emit("refreshToken");
-                        }
-                    }.bind(this))
+
+                    "device_id": this.spotifyDeviceId
+                }).then(function(data) {
+                    if (this.userState == "broadcasting") {
+                        axios.post(`/api/room/${this.roomId}/playback`, {
+                            trackUri: this.currentTrack["trackUri"],
+                            trackPosition: this.currentTrack["trackPosition"],
+                            isPaused: true
+                        });
+                    }
+                }.bind(this)).catch(function(error) {
+                    console.error(error);
+                    // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                    if (error.status === 401) {
+                        this.$emit("refreshToken");
+                    }
+                }.bind(this))
             },
             nextTrack() {
                 console.log("step forward is pressed");

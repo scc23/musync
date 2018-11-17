@@ -173,6 +173,9 @@
                         this.disconnectSession(false);
                         this.userState = "idle";
                         this.broadcastNotificationText = data.user.name + " stopped broadcasting.";
+                    })
+                    .listen("PlaybackSent", (data) => {
+                        this.syncPlayerState(data);
                     });
             },
             becomeBroadcaster(){
@@ -312,6 +315,23 @@
             },
             setUserState(userState) {
                 this.userState = userState;
+            },
+            syncPlayerState(playback) {
+                if (this.userState == "listening") {
+                    if (playback["isPaused"]) {
+                        spotifyApi. pause(function(err, data) {
+                            if (err) {
+                                console.error("Could not pause playback: " + err);
+                                // If the response is 401 Unauthorized Error, refresh the access token
+                                if (err.status === 401) {
+                                    this.refreshAccessToken();
+                                }
+                            }
+                        }.bind(this));
+                    } else {
+
+                    }
+                }
             }
         }
     }

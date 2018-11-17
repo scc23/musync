@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <span class="track-album-art"><img width="50" height="50" v-bind:src="track.trackAlbumArt"/></span>
+            <span class="track-album-art"><img width="57" height="57" v-bind:src="track.trackAlbumArt"/></span>
             <span class="track-name">{{ shortenString(track.trackName) }}</span><br>
             <span class="track-artist">{{ shortenString(track.trackArtist) }}</span><br>
             <span class="track-duration">{{trackDuration}}</span>

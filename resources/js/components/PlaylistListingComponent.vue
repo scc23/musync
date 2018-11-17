@@ -3,7 +3,7 @@
         <div>
             <span class="track-album-art"><img width="70" height="70" v-bind:src="playlistTrack.trackAlbumArt"/></span>
             <span class="track-name">{{ shortenString(playlistTrack.trackName) }}</span><br>
-            <span class="track-artist">{{ shortenString(playlistTrack.trackArtist) }}</span>
+            <span class="track-artist">{{ shortenString(playlistTrack.trackArtist) }}</span><br>
             <span class="track-duration">{{trackDuration}}</span>
         </div>
     </div>

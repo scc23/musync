@@ -3,10 +3,10 @@
         <div class="user-list card">
             <div class="user-list card-header">Online Listeners
             </div>
-            <div class="user-list card-body">  
+            <div class="user-list card-body">
                     <div v-for="user in onlineUsers">
                             <p>{{user.name}}  <font-awesome-icon icon="music" />
-                            </p>    
+                            </p>
                     </div>
             </div>
         </div>
@@ -19,13 +19,13 @@
             "roomId": String,
         },
 
-        data() {                                  
+        data() {
             return {
                 onlineUsers: []
             }
         },
 
-        mounted() {            
+        mounted() {
             Echo.join(`room-presence.${this.roomId}`)
                 .here((users) => {;
                     this.onlineUsers = users;
@@ -41,15 +41,15 @@
                             this.onlineUsers.splice(index, 1);
                         }
                 });
-        } 
+        }
     }
 </script>
 
 <style lang="scss" scoped>
-    
+
     .card-body {
-        overflow-y: scroll;  
-        height: 150px;
+        overflow-y: scroll;
+        height: 196px;
     }
 
     .user-list.card {

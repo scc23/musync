@@ -98,7 +98,7 @@
     }
 
     .list-group {
-        height: 568px;
+        height: 487px;
         overflow-y:scroll;
         border-bottom-left-radius: .25rem;
         border-bottom-right-radius: .25rem;

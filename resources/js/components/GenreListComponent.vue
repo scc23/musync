@@ -17,7 +17,7 @@
 <script>
     var SpotifyWebApi = require('spotify-web-api-js');
     var spotifyApi = new SpotifyWebApi();
-    
+
     export default {
         data() {
             return {
@@ -120,8 +120,14 @@
 </script>
 
 <style lang="scss" scoped>
+    .card {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-top-width: 0;
+    }
+
     .genre-div {
-        height: 250px;
+        height: 276px;
         overflow-y: scroll;
         font-size: 12px;
         -moz-column-count: 2;
@@ -154,9 +160,6 @@
         padding: 5px 10px;
         border-left: 0;
         border-right: 0;
-    }
-
-    .list-group-item {
         cursor: pointer;
     }
 

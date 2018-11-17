@@ -65914,7 +65914,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.list-group[data-v-54ebca9c] {\n  height: 250px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-54ebca9c] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.list-group-item[data-v-54ebca9c] {\n  cursor: pointer;\n}\n.add-icon[data-v-54ebca9c] {\n  font-size: 25px;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  display: none;\n}\n.list-group-item:hover .add-icon[data-v-54ebca9c] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-54ebca9c]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-54ebca9c]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n#text-search[data-v-54ebca9c] {\n  border-bottom-width: 0;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n#btn-search[data-v-54ebca9c] {\n  border-bottom-right-radius: 0;\n}\n.list-group[data-v-54ebca9c] {\n  height: 273px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-54ebca9c] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.add-icon[data-v-54ebca9c] {\n  font-size: 25px;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  display: none;\n}\n.list-group-item:hover .add-icon[data-v-54ebca9c] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-54ebca9c]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-54ebca9c]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -66208,6 +66208,7 @@ var render = function() {
           ],
           staticClass: "form-control",
           attrs: {
+            id: "text-search",
             type: "text",
             placeholder: "Search for a song",
             width: "100%"
@@ -66364,7 +66365,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.genre-div[data-v-14e23ce7] {\n  height: 250px;\n  overflow-y: scroll;\n  font-size: 12px;\n  -moz-column-count: 2;\n  -moz-column-gap: 20px;\n  -webkit-column-count: 2;\n  -webkit-column-gap: 20px;\n  column-count: 2;\n}\n.genre-list[data-v-14e23ce7] {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.genre-item[data-v-14e23ce7] {\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.genre-item[data-v-14e23ce7]:hover {\n  opacity: 0.5;\n}\n.list-group-item[data-v-14e23ce7] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.list-group-item[data-v-14e23ce7] {\n  cursor: pointer;\n}\n.notes[data-v-14e23ce7] {\n  font-size: 12px;\n}\n", ""]);
+exports.push([module.i, "\n.card[data-v-14e23ce7] {\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n  border-top-width: 0;\n}\n.genre-div[data-v-14e23ce7] {\n  height: 276px;\n  overflow-y: scroll;\n  font-size: 12px;\n  -moz-column-count: 2;\n  -moz-column-gap: 20px;\n  -webkit-column-count: 2;\n  -webkit-column-gap: 20px;\n  column-count: 2;\n}\n.genre-list[data-v-14e23ce7] {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.genre-item[data-v-14e23ce7] {\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.genre-item[data-v-14e23ce7]:hover {\n  opacity: 0.5;\n}\n.list-group-item[data-v-14e23ce7] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.notes[data-v-14e23ce7] {\n  font-size: 12px;\n}\n", ""]);
 
 // exports
 
@@ -66564,7 +66565,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.player-icons[data-v-71a96c2d] {\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.player-icons[data-v-71a96c2d]:hover {\n  opacity: 0.5;\n}\n.track-progress-bar[data-v-71a96c2d] {\n  width: 71%;\n  display: inline-block;\n}\n.track-progress[data-v-71a96c2d] {\n  display: inline-block;\n}\n.track-duration[data-v-71a96c2d] {\n  display: inline-block;\n}\n.play-pause-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.step-forward-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.track-container[data-v-71a96c2d] {\n  margin-left: 10px;\n}\n.track-name[data-v-71a96c2d] {\n  font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.card[data-v-71a96c2d] {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.player-icons[data-v-71a96c2d] {\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.player-icons[data-v-71a96c2d]:hover {\n  opacity: 0.5;\n}\n.track-progress-bar[data-v-71a96c2d] {\n  width: 71%;\n  display: inline-block;\n}\n.track-progress[data-v-71a96c2d] {\n  display: inline-block;\n}\n.track-duration[data-v-71a96c2d] {\n  display: inline-block;\n}\n.play-pause-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.step-forward-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.track-container[data-v-71a96c2d] {\n  margin-left: 10px;\n}\n.track-name[data-v-71a96c2d] {\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -67174,7 +67175,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 535px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n  cursor: pointer;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 568px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n  cursor: pointer;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -67445,7 +67446,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-12" }, [
-      _c("div", { staticClass: "clear-block border" }, [
+      _c("div", { staticClass: "clear-block border-left border-right" }, [
         _c(
           "button",
           {
@@ -67791,7 +67792,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.card-body[data-v-80d584ac] {\n  overflow-y: scroll;\n  height: 300px;\n}\n", ""]);
+exports.push([module.i, "\n.card-body[data-v-80d584ac] {\n  overflow-y: scroll;\n  height: 348px;\n}\n", ""]);
 
 // exports
 

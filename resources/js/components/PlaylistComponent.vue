@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-12">
-            <div class='clear-block border'>
+            <div class='clear-block border-left border-right'>
                 <button class='clear-button' @click="updateClearPlaylist()">Clear all</button>
             </div>
             <ul class='list-group border'>
@@ -79,6 +79,7 @@
 
     .clear-block {
         padding-left: 5px;
+        border-bottom-width: 0;
     }
 
     .clear-button {
@@ -97,8 +98,10 @@
     }
 
     .list-group {
-        height: 535px;
+        height: 568px;
         overflow-y:scroll;
+        border-bottom-left-radius: .25rem;
+        border-bottom-right-radius: .25rem;
     }
 
     .list-group-item {

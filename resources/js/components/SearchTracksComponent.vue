@@ -1,7 +1,7 @@
 <template>
     <div>
         <form class="input-group" v-on:submit.prevent="fetchTracks">
-            <input class="form-control" type="text" v-model="searchInput" placeholder="Search for a song" width="100%">
+            <input id="text-search" class="form-control" type="text" v-model="searchInput" placeholder="Search for a song" width="100%">
             <span class="input-group-append">
                 <button class="btn btn-default btn-primary" id="btn-search" type="submit">Search</button>
             </span>
@@ -52,7 +52,7 @@
                             if (error.status === 401) {
                                 $this.emit("refreshToken");
                             }
-                        }.bind(this));   
+                        }.bind(this));
                 }
             },
             getTrackToAdd(track) {
@@ -75,8 +75,18 @@
 </script>
 
 <style lang="scss" scoped>
+    #text-search {
+        border-bottom-width: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    #btn-search {
+        border-bottom-right-radius: 0;
+    }
+
     .list-group {
-        height: 250px;
+        height: 273px;
         overflow-y:scroll;
     }
 
@@ -84,9 +94,6 @@
         padding: 5px 10px;
         border-left: 0;
         border-right: 0;
-    }
-
-    .list-group-item {
         cursor: pointer;
     }
 

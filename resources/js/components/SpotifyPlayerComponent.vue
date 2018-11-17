@@ -65,7 +65,7 @@
                     </form>
                     <button class="home-btn btn btn-primary btn-block" @click="stopBroadcasting">
                         Stop Broadcasting
-                    </button> 
+                    </button>
                 </div>
             </div>
         </div>
@@ -225,7 +225,7 @@
             },
             stopBroadcasting() {
                 this.$emit("disconnect-session", true);
-                this.$emit("set-user-state", "idle")                
+                this.$emit("set-user-state", "idle")
                 this.$emit("stop-being-broadcaster");
 
             },
@@ -269,6 +269,11 @@
 </script>
 
 <style lang="scss" scoped>
+
+.card {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
 
 .player-icons {
     opacity: 1;

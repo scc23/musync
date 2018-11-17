@@ -66648,11 +66648,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -66691,7 +66686,11 @@ var spotifyApi = new SpotifyWebApi();
             if (this.isPaused) {
                 console.log("spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId);
                 console.log("Play button is pressed");
-                this.play();
+                if (this.userState == "broadcasting") {
+                    this.play();
+                } else if (this.userState == "listening") {
+                    this.sync();
+                }
                 return;
             }
             console.log("Pause button is pressed");
@@ -66723,6 +66722,9 @@ var spotifyApi = new SpotifyWebApi();
                     }
                 }.bind(this));
             }
+        },
+        sync: function sync() {
+            console.log("Syncing player with broadcaster.");
         },
         pause: function pause() {
             spotifyApi.pause({
@@ -66802,7 +66804,6 @@ var spotifyApi = new SpotifyWebApi();
             this.$emit("stop-being-broadcaster");
         },
         beginListening: function beginListening() {
-            this.userState = "listening";
             this.$emit("set-user-state", "listening");
         },
         stopListening: function stopListening() {
@@ -66891,7 +66892,7 @@ var render = function() {
             ]
           )
         ])
-      : _vm.userState == "broadcasting"
+      : _vm.userState == "broadcasting" || _vm.userState == "listening"
         ? _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row justify-content-center" }, [
               _c("div", { staticClass: "col-12" }, [
@@ -66978,20 +66979,23 @@ var render = function() {
                                 ]
                               ),
                               _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "player-icons step-forward-btn",
-                                  attrs: { type: "button" },
-                                  on: { click: _vm.nextTrack }
-                                },
-                                [
-                                  _c("font-awesome-icon", {
-                                    attrs: { icon: "step-forward" }
-                                  })
-                                ],
-                                1
-                              )
+                              _vm.userState == "broadcasting"
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "player-icons step-forward-btn",
+                                      attrs: { type: "button" },
+                                      on: { click: _vm.nextTrack }
+                                    },
+                                    [
+                                      _c("font-awesome-icon", {
+                                        attrs: { icon: "step-forward" }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                : _vm._e()
                             ])
                           ]),
                           _vm._v(" "),
@@ -67015,7 +67019,8 @@ var render = function() {
                                 _c("vue-slider", {
                                   attrs: {
                                     max: _vm.currentTrack["duration"],
-                                    tooltip: false
+                                    tooltip: false,
+                                    clickable: _vm.userState == "broadcasting"
                                   },
                                   on: {
                                     "drag-start": _vm.onDragStart,
@@ -67054,41 +67059,39 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "home-btn btn btn-primary btn-block",
-                    on: { click: _vm.stopBroadcasting }
-                  },
-                  [
-                    _vm._v(
-                      "\n                    Stop Broadcasting\n                "
+                _vm.userState == "broadcasting"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "home-btn btn btn-primary btn-block",
+                        on: { click: _vm.stopBroadcasting }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Stop Broadcasting\n                "
+                        )
+                      ]
                     )
-                  ]
-                )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.userState == "listening"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "home-btn btn btn-primary btn-block",
+                        on: { click: _vm.stopListening }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Stop Listening\n                "
+                        )
+                      ]
+                    )
+                  : _vm._e()
               ])
             ])
           ])
-        : _vm.userState == "listening"
-          ? _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row justify-content-center" }, [
-                _c("div", { staticClass: "col-12 col-sm-8" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "home-btn btn btn-primary btn-block",
-                      on: { click: _vm.stopListening }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Stop Listening\n                "
-                      )
-                    ]
-                  )
-                ])
-              ])
-            ])
-          : _vm._e()
+        : _vm._e()
   ])
 }
 var staticRenderFns = []

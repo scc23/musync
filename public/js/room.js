@@ -66706,7 +66706,7 @@ var spotifyApi = new SpotifyWebApi();
                     console.error(error);
                     // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                     if (error.status === 401) {
-                        $this.emit("refreshToken");
+                        this.$emit("refreshToken");
                     }
                 }.bind(this));
                 // Play the room's current song
@@ -66719,7 +66719,7 @@ var spotifyApi = new SpotifyWebApi();
                     console.error(error);
                     // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                     if (error.status === 401) {
-                        $this.emit("refreshToken");
+                        this.$emit("refreshToken");
                     }
                 }.bind(this));
             }
@@ -66744,7 +66744,7 @@ var spotifyApi = new SpotifyWebApi();
                         console.error(error);
                         // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                         if (error.status === 401) {
-                            $this.emit("refreshToken");
+                            this.$emit("refreshToken");
                         }
                     }.bind(_this));
                 }
@@ -66758,7 +66758,7 @@ var spotifyApi = new SpotifyWebApi();
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {
-                    $this.emit("refreshToken");
+                    this.$emit("refreshToken");
                 }
             }.bind(this));
         },
@@ -66769,7 +66769,7 @@ var spotifyApi = new SpotifyWebApi();
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {
-                    $this.emit("refreshToken");
+                    this.$emit("refreshToken");
                 }
             }.bind(this));
         },
@@ -66778,7 +66778,7 @@ var spotifyApi = new SpotifyWebApi();
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {
-                    $this.emit("refreshToken");
+                    this.$emit("refreshToken");
                 }
             });
         },

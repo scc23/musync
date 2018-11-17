@@ -212,6 +212,10 @@
                 spotifyApi.seek(position_ms, {"device_id": this.spotifyDeviceId})
                     .catch(function(error) {
                         console.error(error);
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            $this.emit("refreshToken");
+                        }
                     })
             },
             updateProgress() {

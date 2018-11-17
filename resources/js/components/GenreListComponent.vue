@@ -2,7 +2,6 @@
     <div class="card">
         <div class="card-header">
             Genres
-            <div class="notes">Click on a genre to add a song to your personal playlist.</div>
         </div>
         <div class="card-body genre-div">
             <ul class="genre-list" v-for="genre in genreList">
@@ -33,7 +32,6 @@
                                 {name: "Blues", value: "blues"},
                                 {name: "Bossanova", value: "bossanova"},
                                 {name: "Brazil", value: "brazil"},
-                                {name: "Breakbeat", value: "breakbeat"},
                                 {name: "British", value: "british"},
                                 {name: "Cantopop", value: "cantopop"},
                                 {name: "Chicago House", value: "chicago-house"},
@@ -55,7 +53,6 @@
                                 {name: "Folk", value: "folk"},
                                 {name: "French", value: "french"},
                                 {name: "Funk", value: "funk"},
-                                {name: "Garage", value: "garage"},
                                 {name: "German", value: "german"},
                                 {name: "Gospel", value: "gospel"},
                                 {name: "Goth", value: "goth"},
@@ -70,15 +67,13 @@
                                 {name: "Indian", value: "indian"},
                                 {name: "Indie", value: "indie"},
                                 {name: "Indie-Pop", value: "indie-pop"},
-                                {name: "Industrial", value: "industrial"},
                                 {name: "Iranian", value: "iranian"},
-                                {name: "Indie", value: "indie"},
                                 {name: "J-Pop", value: "j-pop"},
                                 {name: "J-Rock", value: "j-rock"},
                                 {name: "Jazz", value: "jazz"},
                                 {name: "K-Pop", value: "k-pop"},
                                 {name: "Latin", value: "latin"},
-                                {name: "Mandopop", value: "mantopop"},
+                                {name: "Mandopop", value: "mandopop"},
                                 {name: "Opera", value: "opera"},
                                 {name: "Party", value: "party"},
                                 {name: "Piano", value: "piano"},
@@ -102,7 +97,7 @@
         methods: {
             // Fetch tracks from a genre and add them to the room's playlist
             fetchGenreTracks(genre) {
-                spotifyApi.getRecommendations({limit: 50, seed_genres: genre, min_popularity: 50})
+                spotifyApi.getRecommendations({limit: 50, seed_genres: genre, min_popularity: 20, market: "US"})
                     .then(function(data) {
                         this.$emit("generateResults", data.tracks);
                     }.bind(this))
@@ -127,8 +122,8 @@
     }
 
     .genre-div {
-        height: 276px;
-        overflow-y: scroll;
+        height: 250px;
+        overflow-x: scroll;
         font-size: 12px;
         -moz-column-count: 2;
         -moz-column-gap: 20px;

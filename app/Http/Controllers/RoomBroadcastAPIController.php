@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\BroadcasterConnected;
 use App\Events\BroadcasterDisconnected;
 use App\Room;
+use App\User;
 use App\RoomBroadcaster;
 use Auth;
 use Illuminate\Http\Request;
@@ -55,13 +56,15 @@ class RoomBroadcastAPIController extends Controller
                 'error' => 'This room already currently has a broadcaster.'
             ], Response::HTTP_BAD_REQUEST);
         }
+        
+        $user = Auth::user();
+        $user_id = $user->id;
 
-        $user_id = Auth::user()->id;
         $broadcaster = RoomBroadcaster::create([
             'room_id' => $room_id,
             'user_id' => $user_id
         ]);
-        broadcast(new BroadcasterConnected($room_id, $user_id))->toOthers();
+        broadcast(new BroadcasterConnected($room, $user))->toOthers();
 
         return response()->json($broadcaster, Response::HTTP_OK);
     }
@@ -83,7 +86,8 @@ class RoomBroadcastAPIController extends Controller
         }
 
         $user_id = $broadcaster->user_id;
-        broadcast(new BroadcasterDisconnected($room_id, $user_id))->toOthers();
+        $user = User::find($user_id);
+        broadcast(new BroadcasterDisconnected($room, $user))->toOthers();
         $broadcaster->delete();
 
         return response()->json($broadcaster, Response::HTTP_OK);

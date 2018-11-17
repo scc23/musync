@@ -220,11 +220,14 @@
                 axios.post('/api/room/' + this.roomId + '/broadcast')
                 .then((res) => {
                     this.$emit("set-user-state", "broadcasting")
+                    this.$emit("become-broadcaster");
                 })
             },
             stopBroadcasting() {
                 this.$emit("disconnect-session", true);
-                this.$emit("set-user-state", "idle")
+                this.$emit("set-user-state", "idle")                
+                this.$emit("stop-being-broadcaster");
+
             },
             beginListening() {
                 this.userState = "listening";

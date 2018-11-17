@@ -50,6 +50,7 @@
                                     </div>
                                     <div class="track-progress-bar">
                                         <vue-slider
+                                            ref=slider
                                             v-model="currentTrack.trackPosition"
                                             v-on:drag-start="onDragStart"
                                             v-on:drag-end="onDragEnd"
@@ -215,18 +216,23 @@
             },
             updateProgress() {
                 clearInterval(this.progressInterval);
-                if (!this.isPaused) {
+                if (!this.isPaused && !this.isDragStart) {
                     this.progressInterval = setInterval(this.incrementProgressTime, 1000)
                 }
             },
             incrementProgressTime() {
-                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 1000;
+                if (this.currentTrack["trackPosition"] + 1000 <= this.currentTrack["duration"]) {
+                    this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 1000;
+                }
             },
             onDragStart({currentValue}) {
                 this.isDragStart = true;
             },
             onDragEnd({currentValue}) {
                 this.isDragStart = false;
+                if (currentValue >= this.currentTrack["duration"]) {
+                    currentValue = this.currentTrack["duration"] - 2000;
+                }
                 this.seekToPosition(currentValue);
             },
             onProgressChange(currentValue) {
@@ -279,6 +285,9 @@
                     this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
                     this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
                     this.currentTrack["trackPosition"] = this.spotifyPlayerState["position"];
+                    if (this.currentTrack["trackPosition"] > this.currentTrack["duration"]) {
+                        this.$refs.slider.setValue(0);
+                    }
                 }
             },
             "trackToPlay": function(newState, oldState) {
@@ -293,6 +302,9 @@
             },
             "currentTrack.name": function(newValue, oldValue) {
                 this.setCurrentTrackIndex();
+            },
+            "isDragStart": function(newValue, oldValue) {
+                this.updateProgress();
             }
         }
     }

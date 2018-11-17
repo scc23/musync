@@ -29021,7 +29021,7 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "b326ab907c10272f2237",
+  key: "a74b0d3ba19c7e3a0369",
   cluster: "us2",
   encrypted: true
 });
@@ -66648,6 +66648,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -66779,12 +66780,14 @@ var spotifyApi = new SpotifyWebApi();
         },
         updateProgress: function updateProgress() {
             clearInterval(this.progressInterval);
-            if (!this.isPaused) {
+            if (!this.isPaused && !this.isDragStart) {
                 this.progressInterval = setInterval(this.incrementProgressTime, 1000);
             }
         },
         incrementProgressTime: function incrementProgressTime() {
-            this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 1000;
+            if (this.currentTrack["trackPosition"] + 1000 <= this.currentTrack["duration"]) {
+                this.currentTrack["trackPosition"] = this.currentTrack["trackPosition"] + 1000;
+            }
         },
         onDragStart: function onDragStart(_ref) {
             var currentValue = _ref.currentValue;
@@ -66795,6 +66798,9 @@ var spotifyApi = new SpotifyWebApi();
             var currentValue = _ref2.currentValue;
 
             this.isDragStart = false;
+            if (currentValue >= this.currentTrack["duration"]) {
+                currentValue = this.currentTrack["duration"] - 2000;
+            }
             this.seekToPosition(currentValue);
         },
         onProgressChange: function onProgressChange(currentValue) {
@@ -66847,6 +66853,9 @@ var spotifyApi = new SpotifyWebApi();
                 this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
                 this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
                 this.currentTrack["trackPosition"] = this.spotifyPlayerState["position"];
+                if (this.currentTrack["trackPosition"] > this.currentTrack["duration"]) {
+                    this.$refs.slider.setValue(0);
+                }
             }
         },
         "trackToPlay": function trackToPlay(newState, oldState) {
@@ -66861,6 +66870,9 @@ var spotifyApi = new SpotifyWebApi();
         },
         "currentTrack.name": function currentTrackName(newValue, oldValue) {
             this.setCurrentTrackIndex();
+        },
+        "isDragStart": function isDragStart(newValue, oldValue) {
+            this.updateProgress();
         }
     }
 });
@@ -67042,6 +67054,7 @@ var render = function() {
                               { staticClass: "track-progress-bar" },
                               [
                                 _c("vue-slider", {
+                                  ref: "slider",
                                   attrs: {
                                     max: _vm.currentTrack["duration"],
                                     tooltip: false,

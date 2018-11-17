@@ -85,7 +85,7 @@
     }
 
     .list-group {
-        height: 273px;
+        height: 337px;
         overflow-y:scroll;
     }
 

@@ -122,7 +122,7 @@
     }
 
     .genre-div {
-        height: 250px;
+        height: 295px;
         overflow-x: scroll;
         font-size: 12px;
         -moz-column-count: 2;

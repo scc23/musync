@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-body" v-if="userState == 'idle'">
-            <div class="row justify-content-center">
+            <div id="landing-btn-container" class="row justify-content-center">
                 <div class="col-12 col-sm-8">
                     <button class="home-btn btn btn-primary btn-block" v-if="hasBroadcaster" @click="beginListening">
                         Listen
@@ -15,54 +15,56 @@
         <div class="card-body" v-else-if="userState == 'broadcasting'">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <div class="row justify-content-center">
-                        <div class="col-sm-4">
-                            <div v-if="currentTrack.albumArt != ''">
-                                <span><img width="90" height="90" v-bind:src="currentTrack.albumArt"/></span>
+                    <div id="player-container">
+                        <div id="song-metadata-container" class="row justify-content-center">
+                            <div class="col-sm-4">
+                                <div v-if="currentTrack.albumArt != ''">
+                                    <span><img width="90" height="90" v-bind:src="currentTrack.albumArt"/></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <span class="track-name">{{ currentTrack["name"] }}</span><br>
+                                <span>{{ currentTrack["artists"] }}</span>
                             </div>
                         </div>
-                        <div class="col-sm-8">
-                            <span class="track-name">{{ currentTrack["name"] }}</span><br>
-                            <span>{{ currentTrack["artists"] }}</span>
-                        </div>
+                        <form method="POST" action="/updateState">
+                            <div class="row justify-content-start form-group">
+                                <div class="col-sm-2">
+                                    <div class="btn-group">
+                                        <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
+                                            <div v-if="isPaused">
+                                                <font-awesome-icon class="player-icons" icon="play-circle"/>
+                                            </div>
+                                            <div v-if="!isPaused">
+                                                <font-awesome-icon class="player-icons" icon="pause-circle"/>
+                                            </div>
+                                        </button>
+                                        <button class="player-icons step-forward-btn" type="button" v-on:click="nextTrack">
+                                            <font-awesome-icon icon="step-forward"/>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col track-container">
+                                    <div class="track-progress">
+                                        {{ msToMinSec(currentTrack["trackPosition"]) }}
+                                    </div>
+                                    <div class="track-progress-bar">
+                                        <vue-slider
+                                            v-model="currentTrack.trackPosition"
+                                            v-on:drag-start="onDragStart"
+                                            v-on:drag-end="onDragEnd"
+                                            v-on:callback="onProgressChange"
+                                            :max='currentTrack["duration"]'
+                                            :tooltip="false">
+                                        </vue-slider>
+                                    </div>
+                                    <div class="track-duration">
+                                        {{ msToMinSec(currentTrack["duration"]) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <form method="POST" action="/updateState">
-                        <div class="row justify-content-start form-group">
-                            <div class="col-sm-2">
-                                <div class="btn-group">
-                                    <button class="play-pause-btn" type="button" v-on:click="togglePlayPauseBtn">
-                                        <div v-if="isPaused">
-                                            <font-awesome-icon class="player-icons" icon="play-circle"/>
-                                        </div>
-                                        <div v-if="!isPaused">
-                                            <font-awesome-icon class="player-icons" icon="pause-circle"/>
-                                        </div>
-                                    </button>
-                                    <button class="player-icons step-forward-btn" type="button" v-on:click="nextTrack">
-                                        <font-awesome-icon icon="step-forward"/>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col track-container">
-                                <div class="track-progress">
-                                    {{ msToMinSec(currentTrack["trackPosition"]) }}
-                                </div>
-                                <div class="track-progress-bar">
-                                    <vue-slider
-                                        v-model="currentTrack.trackPosition"
-                                        v-on:drag-start="onDragStart"
-                                        v-on:drag-end="onDragEnd"
-                                        v-on:callback="onProgressChange"
-                                        :max='currentTrack["duration"]'
-                                        :tooltip="false">
-                                    </vue-slider>
-                                </div>
-                                <div class="track-duration">
-                                    {{ msToMinSec(currentTrack["duration"]) }}
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                     <button class="home-btn btn btn-primary btn-block" @click="stopBroadcasting">
                         Stop Broadcasting
                     </button>
@@ -270,9 +272,22 @@
 
 <style lang="scss" scoped>
 
+#landing-btn-container {
+    margin-top: 67.5px;
+}
+
+#player-container {
+    min-height: 115px;
+}
+
+#song-metadata-container {
+    min-height: 90px;
+}
+
 .card {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    height: 205px;
 }
 
 .player-icons {

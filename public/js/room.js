@@ -29021,7 +29021,7 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "e94fc434b5c8f713fc4b",
+  key: "da3b69cf2735d6719fc2",
   cluster: "us2",
   encrypted: true
 });
@@ -65914,7 +65914,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n#text-search[data-v-54ebca9c] {\n  border-bottom-width: 0;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n#btn-search[data-v-54ebca9c] {\n  border-bottom-right-radius: 0;\n}\n.list-group[data-v-54ebca9c] {\n  height: 273px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-54ebca9c] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.add-icon[data-v-54ebca9c] {\n  font-size: 25px;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  display: none;\n}\n.list-group-item:hover .add-icon[data-v-54ebca9c] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-54ebca9c]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-54ebca9c]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n#text-search[data-v-54ebca9c] {\n  border-bottom-width: 0;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n#btn-search[data-v-54ebca9c] {\n  border-bottom-right-radius: 0;\n}\n.list-group[data-v-54ebca9c] {\n  height: 337px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-54ebca9c] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.add-icon[data-v-54ebca9c] {\n  font-size: 25px;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  display: none;\n}\n.list-group-item:hover .add-icon[data-v-54ebca9c] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-54ebca9c]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-54ebca9c]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -66364,7 +66364,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.card[data-v-14e23ce7] {\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n  border-top-width: 0;\n}\n.genre-div[data-v-14e23ce7] {\n  height: 250px;\n  overflow-x: scroll;\n  font-size: 12px;\n  -moz-column-count: 2;\n  -moz-column-gap: 20px;\n  -webkit-column-count: 2;\n  -webkit-column-gap: 20px;\n  column-count: 2;\n}\n.genre-list[data-v-14e23ce7] {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.genre-item[data-v-14e23ce7] {\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.genre-item[data-v-14e23ce7]:hover {\n  opacity: 0.5;\n}\n.list-group-item[data-v-14e23ce7] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.notes[data-v-14e23ce7] {\n  font-size: 12px;\n}\n", ""]);
+exports.push([module.i, "\n.card[data-v-14e23ce7] {\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n  border-top-width: 0;\n}\n.genre-div[data-v-14e23ce7] {\n  height: 295px;\n  overflow-x: scroll;\n  font-size: 12px;\n  -moz-column-count: 2;\n  -moz-column-gap: 20px;\n  -webkit-column-count: 2;\n  -webkit-column-gap: 20px;\n  column-count: 2;\n}\n.genre-list[data-v-14e23ce7] {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.genre-item[data-v-14e23ce7] {\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.genre-item[data-v-14e23ce7]:hover {\n  opacity: 0.5;\n}\n.list-group-item[data-v-14e23ce7] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.notes[data-v-14e23ce7] {\n  font-size: 12px;\n}\n", ""]);
 
 // exports
 
@@ -66553,7 +66553,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.card[data-v-71a96c2d] {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.player-icons[data-v-71a96c2d] {\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.player-icons[data-v-71a96c2d]:hover {\n  opacity: 0.5;\n}\n.track-progress-bar[data-v-71a96c2d] {\n  width: 71%;\n  display: inline-block;\n}\n.track-progress[data-v-71a96c2d] {\n  display: inline-block;\n}\n.track-duration[data-v-71a96c2d] {\n  display: inline-block;\n}\n.play-pause-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.step-forward-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.track-container[data-v-71a96c2d] {\n  margin-left: 10px;\n}\n.track-name[data-v-71a96c2d] {\n  font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n#landing-btn-container[data-v-71a96c2d] {\n  margin-top: 67.5px;\n}\n#player-container[data-v-71a96c2d] {\n  min-height: 115px;\n}\n#song-metadata-container[data-v-71a96c2d] {\n  min-height: 90px;\n}\n.card[data-v-71a96c2d] {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  height: 205px;\n}\n.player-icons[data-v-71a96c2d] {\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.player-icons[data-v-71a96c2d]:hover {\n  opacity: 0.5;\n}\n.track-progress-bar[data-v-71a96c2d] {\n  width: 71%;\n  display: inline-block;\n}\n.track-progress[data-v-71a96c2d] {\n  display: inline-block;\n}\n.track-duration[data-v-71a96c2d] {\n  display: inline-block;\n}\n.play-pause-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.step-forward-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.track-container[data-v-71a96c2d] {\n  margin-left: 10px;\n}\n.track-name[data-v-71a96c2d] {\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -66566,6 +66566,8 @@ exports.push([module.i, "\n.card[data-v-71a96c2d] {\n  border-bottom-left-radius
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_slider_component__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_slider_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_slider_component__);
+//
+//
 //
 //
 //
@@ -66852,183 +66854,201 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _vm.userState == "idle"
       ? _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row justify-content-center" }, [
-            _c("div", { staticClass: "col-12 col-sm-8" }, [
-              _vm.hasBroadcaster
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "home-btn btn btn-primary btn-block",
-                      on: { click: _vm.beginListening }
-                    },
-                    [_vm._v("\n                    Listen\n                ")]
-                  )
-                : _c(
-                    "button",
-                    {
-                      staticClass: "home-btn btn btn-primary btn-block",
-                      on: { click: _vm.beginBroadcasting }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Broadcast\n                "
-                      )
-                    ]
-                  )
-            ])
-          ])
+          _c(
+            "div",
+            {
+              staticClass: "row justify-content-center",
+              attrs: { id: "landing-btn-container" }
+            },
+            [
+              _c("div", { staticClass: "col-12 col-sm-8" }, [
+                _vm.hasBroadcaster
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "home-btn btn btn-primary btn-block",
+                        on: { click: _vm.beginListening }
+                      },
+                      [_vm._v("\n                    Listen\n                ")]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "home-btn btn btn-primary btn-block",
+                        on: { click: _vm.beginBroadcasting }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Broadcast\n                "
+                        )
+                      ]
+                    )
+              ])
+            ]
+          )
         ])
       : _vm.userState == "broadcasting"
         ? _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row justify-content-center" }, [
               _c("div", { staticClass: "col-12" }, [
-                _c("div", { staticClass: "row justify-content-center" }, [
-                  _c("div", { staticClass: "col-sm-4" }, [
-                    _vm.currentTrack.albumArt != ""
-                      ? _c("div", [
-                          _c("span", [
-                            _c("img", {
-                              attrs: {
-                                width: "90",
-                                height: "90",
-                                src: _vm.currentTrack.albumArt
-                              }
-                            })
-                          ])
+                _c("div", { attrs: { id: "player-container" } }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "row justify-content-center",
+                      attrs: { id: "song-metadata-container" }
+                    },
+                    [
+                      _c("div", { staticClass: "col-sm-4" }, [
+                        _vm.currentTrack.albumArt != ""
+                          ? _c("div", [
+                              _c("span", [
+                                _c("img", {
+                                  attrs: {
+                                    width: "90",
+                                    height: "90",
+                                    src: _vm.currentTrack.albumArt
+                                  }
+                                })
+                              ])
+                            ])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("span", { staticClass: "track-name" }, [
+                          _vm._v(_vm._s(_vm.currentTrack["name"]))
+                        ]),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("span", [
+                          _vm._v(_vm._s(_vm.currentTrack["artists"]))
                         ])
-                      : _vm._e()
-                  ]),
+                      ])
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-8" }, [
-                    _c("span", { staticClass: "track-name" }, [
-                      _vm._v(_vm._s(_vm.currentTrack["name"]))
-                    ]),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c("span", [_vm._v(_vm._s(_vm.currentTrack["artists"]))])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "form",
-                  { attrs: { method: "POST", action: "/updateState" } },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "row justify-content-start form-group" },
-                      [
-                        _c("div", { staticClass: "col-sm-2" }, [
-                          _c("div", { staticClass: "btn-group" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "play-pause-btn",
-                                attrs: { type: "button" },
-                                on: { click: _vm.togglePlayPauseBtn }
-                              },
-                              [
-                                _vm.isPaused
-                                  ? _c(
-                                      "div",
-                                      [
-                                        _c("font-awesome-icon", {
-                                          staticClass: "player-icons",
-                                          attrs: { icon: "play-circle" }
-                                        })
-                                      ],
-                                      1
+                  _c(
+                    "form",
+                    { attrs: { method: "POST", action: "/updateState" } },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "row justify-content-start form-group" },
+                        [
+                          _c("div", { staticClass: "col-sm-2" }, [
+                            _c("div", { staticClass: "btn-group" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "play-pause-btn",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.togglePlayPauseBtn }
+                                },
+                                [
+                                  _vm.isPaused
+                                    ? _c(
+                                        "div",
+                                        [
+                                          _c("font-awesome-icon", {
+                                            staticClass: "player-icons",
+                                            attrs: { icon: "play-circle" }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !_vm.isPaused
+                                    ? _c(
+                                        "div",
+                                        [
+                                          _c("font-awesome-icon", {
+                                            staticClass: "player-icons",
+                                            attrs: { icon: "pause-circle" }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e()
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "player-icons step-forward-btn",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.nextTrack }
+                                },
+                                [
+                                  _c("font-awesome-icon", {
+                                    attrs: { icon: "step-forward" }
+                                  })
+                                ],
+                                1
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col track-container" }, [
+                            _c("div", { staticClass: "track-progress" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(
+                                    _vm.msToMinSec(
+                                      _vm.currentTrack["trackPosition"]
                                     )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                !_vm.isPaused
-                                  ? _c(
-                                      "div",
-                                      [
-                                        _c("font-awesome-icon", {
-                                          staticClass: "player-icons",
-                                          attrs: { icon: "pause-circle" }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _vm._e()
-                              ]
-                            ),
+                                  ) +
+                                  "\n                                "
+                              )
+                            ]),
                             _vm._v(" "),
                             _c(
-                              "button",
-                              {
-                                staticClass: "player-icons step-forward-btn",
-                                attrs: { type: "button" },
-                                on: { click: _vm.nextTrack }
-                              },
+                              "div",
+                              { staticClass: "track-progress-bar" },
                               [
-                                _c("font-awesome-icon", {
-                                  attrs: { icon: "step-forward" }
+                                _c("vue-slider", {
+                                  attrs: {
+                                    max: _vm.currentTrack["duration"],
+                                    tooltip: false
+                                  },
+                                  on: {
+                                    "drag-start": _vm.onDragStart,
+                                    "drag-end": _vm.onDragEnd,
+                                    callback: _vm.onProgressChange
+                                  },
+                                  model: {
+                                    value: _vm.currentTrack.trackPosition,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.currentTrack,
+                                        "trackPosition",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "currentTrack.trackPosition"
+                                  }
                                 })
                               ],
                               1
-                            )
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "track-duration" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(
+                                    _vm.msToMinSec(_vm.currentTrack["duration"])
+                                  ) +
+                                  "\n                                "
+                              )
+                            ])
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col track-container" }, [
-                          _c("div", { staticClass: "track-progress" }, [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(
-                                  _vm.msToMinSec(
-                                    _vm.currentTrack["trackPosition"]
-                                  )
-                                ) +
-                                "\n                            "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "track-progress-bar" },
-                            [
-                              _c("vue-slider", {
-                                attrs: {
-                                  max: _vm.currentTrack["duration"],
-                                  tooltip: false
-                                },
-                                on: {
-                                  "drag-start": _vm.onDragStart,
-                                  "drag-end": _vm.onDragEnd,
-                                  callback: _vm.onProgressChange
-                                },
-                                model: {
-                                  value: _vm.currentTrack.trackPosition,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.currentTrack,
-                                      "trackPosition",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "currentTrack.trackPosition"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "track-duration" }, [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(
-                                  _vm.msToMinSec(_vm.currentTrack["duration"])
-                                ) +
-                                "\n                            "
-                            )
-                          ])
-                        ])
-                      ]
-                    )
-                  ]
-                ),
+                        ]
+                      )
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -67163,7 +67183,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 568px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n  cursor: pointer;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n  cursor: pointer;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -67595,7 +67615,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.card-body[data-v-22f71719] {\n  overflow-y: scroll;\n  height: 150px;\n}\n.user-list.card[data-v-22f71719] {\n  margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.card-body[data-v-22f71719] {\n  overflow-y: scroll;\n  height: 196px;\n}\n.user-list.card[data-v-22f71719] {\n  margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 

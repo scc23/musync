@@ -57,7 +57,7 @@
                                             v-on:callback="onProgressChange"
                                             :max='currentTrack["duration"]'
                                             :tooltip="false"
-                                            :clickable="userState == 'broadcasting'">
+                                            :disabled="userState == 'listening'">
                                         </vue-slider>
                                     </div>
                                     <div class="track-duration">

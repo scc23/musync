@@ -3,10 +3,10 @@
         <div class="card-body" v-if="userState == 'idle'">
             <div id="landing-btn-container" class="row justify-content-center">
                 <div class="col-12 col-sm-8">
-                    <button class="home-btn btn btn-primary btn-block" v-if="hasBroadcaster" @click="beginListening">
+                    <button class="home-btn btn btn-primary btn-block" v-if="hasBroadcaster == true" @click="beginListening">
                         Listen
                     </button>
-                    <button class="home-btn btn btn-primary btn-block" v-else @click="beginBroadcasting">
+                    <button class="home-btn btn btn-primary btn-block" v-else-if="hasBroadcaster == false" @click="beginBroadcasting">
                         Broadcast
                     </button>
                 </div>

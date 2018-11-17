@@ -90,7 +90,7 @@
                 "spotifyDeviceId": "",
                 "spotifyPlayerState": null,
                 "playlistId": "",
-                "hasBroadcaster": false,
+                "hasBroadcaster": null,
                 "broadcastNotificationText": "",
                 "trackToPlay": undefined,
                 "playlistTracks": [],
@@ -177,7 +177,7 @@
                 this.broadcastNotificationText = "You are broadcasting.";
             },
             stopBeingBroadcaster(){
-                this.broadcastNotificationText = "You stopped broadcasting.";  
+                this.broadcastNotificationText = "You stopped broadcasting.";
             },
             initializeSpotifyPlayer(token) {
                 window.onSpotifyWebPlaybackSDKReady = () => {

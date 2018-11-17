@@ -65606,7 +65606,7 @@ var spotifyApi = new SpotifyWebApi();
             "spotifyDeviceId": "",
             "spotifyPlayerState": null,
             "playlistId": "",
-            "hasBroadcaster": false,
+            "hasBroadcaster": null,
             "broadcastNotificationText": "",
             "trackToPlay": undefined,
             "playlistTracks": [],
@@ -66862,7 +66862,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "col-12 col-sm-8" }, [
-                _vm.hasBroadcaster
+                _vm.hasBroadcaster == true
                   ? _c(
                       "button",
                       {
@@ -66871,18 +66871,20 @@ var render = function() {
                       },
                       [_vm._v("\n                    Listen\n                ")]
                     )
-                  : _c(
-                      "button",
-                      {
-                        staticClass: "home-btn btn btn-primary btn-block",
-                        on: { click: _vm.beginBroadcasting }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    Broadcast\n                "
-                        )
-                      ]
-                    )
+                  : _vm.hasBroadcaster == false
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "home-btn btn btn-primary btn-block",
+                          on: { click: _vm.beginBroadcasting }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Broadcast\n                "
+                          )
+                        ]
+                      )
+                    : _vm._e()
               ])
             ]
           )

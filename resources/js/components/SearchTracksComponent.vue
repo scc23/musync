@@ -2,7 +2,9 @@
     <div>
         <form class="input-group" v-on:submit.prevent="fetchTracks">
             <input class="form-control" type="text" v-model="searchInput" placeholder="Search for a song" width="100%">
-            <button class="btn btn-default btn-primary" type="submit">Search</button>
+            <span class="input-group-append">
+                <button class="btn btn-default btn-primary" id="btn-search" type="submit">Search</button>
+            </span>
         </form>
         <ul class='list-group border'>
             <li class="list-group-item list-group-item-action" v-for="track in searchResults"
@@ -23,10 +25,13 @@
         components: {
             'search-tracks-listing-component': require('./searchTracksListingComponent.vue')
         },
+        props: {
+            "searchResults": Array
+        },
         data() {
         	return {
         		"searchInput": "",
-                "searchResults": []
+                // "searchResults": []
         	};
         },
         methods: {
@@ -36,18 +41,9 @@
             fetchTracks() {
                 if (this.isValidInput()) {
                     console.log("Fetching tracks...");
-                    this.searchResults = [];
                     spotifyApi.searchTracks(this.searchInput, {limit: 50})
                         .then(function(data) {
-                            for (var i = 0; i < data.tracks.items.length; i++) {
-                                this.searchResults.push({
-                                    trackName: data.tracks.items[i].name,
-                                    trackArtist: data.tracks.items[i].artists[0].name,
-                                    trackAlbumArt: data.tracks.items[i].album.images[0].url,
-                                    trackDuration: data.tracks.items[i].duration_ms,
-                                    trackUri: data.tracks.items[i].uri
-                                });
-                            }
+                            this.$emit("generateResults", data.tracks.items);
                         }.bind(this))
                         .catch(function(error) {
                             console.error(error);
@@ -62,6 +58,18 @@
             getTrackToAdd(track) {
                 this.$emit("addTrack", track);
             }
+        },
+        watch: {
+            searchInput: function() {
+                if (this.isValidInput()) {
+                    $('#btn-search').prop('disabled', false);
+                } else {
+                    $('#btn-search').prop('disabled', true);
+                }
+            }
+        },
+        mounted() {
+            $('#btn-search').prop('disabled', true);
         }
     }
 </script>

@@ -22,40 +22,89 @@
         data() {
             return {
                 "genreList": [
+                                {name: "New Release", value: "new-release"},
                                 {name: "Acoustic", value: "acoustic"},
-                                {name: "Classical", value: "classical"},
-                                {name: "Chill", value: "chill"},
-                                {name: "Country", value: "country"},
+                                {name: "Afrobeat", value: "afrobeat"},
+                                {name: "Alternative Rock", value: "alt-rock"},
+                                {name: "Ambient", value: "ambient"},
+                                {name: "Anime", value: "anime"},
+                                {name: "Black Metal", value: "black-metal"},
+                                {name: "Bluegrass", value: "bluegrass"},
+                                {name: "Blues", value: "blues"},
+                                {name: "Bossanova", value: "bossanova"},
+                                {name: "Brazil", value: "brazil"},
+                                {name: "Breakbeat", value: "breakbeat"},
+                                {name: "British", value: "british"},
                                 {name: "Cantopop", value: "cantopop"},
-                                {name: "Mandopop", value: "mantopop"},
-                                {name: "K-Pop", value: "k-pop"},
-                                {name: "J-Pop", value: "j-pop"},
+                                {name: "Chicago House", value: "chicago-house"},
+                                {name: "Children", value: "children"},
+                                {name: "Chill", value: "chill"},
+                                {name: "Classical", value: "classical"},
+                                {name: "Club", value: "club"},
+                                {name: "Comedy", value: "comedy"},
+                                {name: "Country", value: "country"},
+                                {name: "Dance", value: "dance"},
+                                {name: "Death Metal", value: "death-metal"},
+                                {name: "Deep House", value: "deep-house"},
+                                {name: "Detroit Techno", value: "detroit-techno"},
+                                {name: "Disco", value: "disco"},
+                                {name: "Dubstep", value: "dubstep"},
                                 {name: "EDM", value: "edm"},
-                                {name: "Hip-Hop", value: "hip-hop"},
+                                {name: "Electronic", value: "electronic"},
+                                {name: "Emo", value: "emo"},
+                                {name: "Folk", value: "folk"},
+                                {name: "French", value: "french"},
+                                {name: "Funk", value: "funk"},
+                                {name: "Garage", value: "garage"},
+                                {name: "German", value: "german"},
+                                {name: "Gospel", value: "gospel"},
+                                {name: "Goth", value: "goth"},
+                                {name: "Groove", value: "groove"},
+                                {name: "Guitar", value: "guitar"},
+                                {name: "Hard Rock", value: "hard-rock"},
+                                {name: "Hardstyle", value: "hardstyle"},
                                 {name: "Heavy Metal", value: "heavy-metal"},
-                                {name: "Jazz", value: "jazz"},
+                                {name: "Hip-Hop", value: "hip-hop"},
+                                {name: "Holidays", value: "holidays"},
+                                {name: "House", value: "house"},
+                                {name: "Indian", value: "indian"},
                                 {name: "Indie", value: "indie"},
+                                {name: "Indie-Pop", value: "indie-pop"},
+                                {name: "Industrial", value: "industrial"},
+                                {name: "Iranian", value: "iranian"},
+                                {name: "Indie", value: "indie"},
+                                {name: "J-Pop", value: "j-pop"},
+                                {name: "J-Rock", value: "j-rock"},
+                                {name: "Jazz", value: "jazz"},
+                                {name: "K-Pop", value: "k-pop"},
+                                {name: "Latin", value: "latin"},
+                                {name: "Mandopop", value: "mantopop"},
                                 {name: "Opera", value: "opera"},
+                                {name: "Party", value: "party"},
+                                {name: "Piano", value: "piano"},
                                 {name: "Pop", value: "pop"},
+                                {name: "Punk", value: "punk"},
+                                {name: "Punk Rock", value: "punk-rock"},
                                 {name: "R&B", value: "r-n-b"},
                                 {name: "Rock", value: "rock"},
-                                {name: "Techno", value: "techno"}
+                                {name: "Romance", value: "romance"},
+                                {name: "Sad", value: "sad"},
+                                {name: "Sleep", value: "sleep"},
+                                {name: "Spanish", value: "spanish"},
+                                {name: "Study", value: "study"},
+                                {name: "Summer", value: "summer"},
+                                {name: "Techno", value: "techno"},
+                                {name: "Trance", value: "trance"},
+                                {name: "Work Out", value: "work-out"}
                             ]
             };
         },
         methods: {
             // Fetch tracks from a genre and add them to the room's playlist
             fetchGenreTracks(genre) {
-                spotifyApi.getRecommendations({limit: 50, seed_genres: genre})
+                spotifyApi.getRecommendations({limit: 50, seed_genres: genre, min_popularity: 50})
                     .then(function(data) {
-                        var track = {
-                            trackName: data.tracks[0].name,
-                            trackArtist: data.tracks[0].artists[0].name,
-                            trackAlbumArt: data.tracks[0].album.images[0].url,
-                            trackDuration: data.tracks[0].duration_ms,
-                            trackUri: data.tracks[0].uri
-                        };
-                        this.$emit("addTrack", track);
+                        this.$emit("generateResults", data.tracks);
                     }.bind(this))
                     .catch(function(error) {
                         console.error(error);
@@ -72,6 +121,8 @@
 
 <style lang="scss" scoped>
     .genre-div {
+        height: 250px;
+        overflow-y: scroll;
         font-size: 12px;
         -moz-column-count: 2;
         -moz-column-gap: 20px;

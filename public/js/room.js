@@ -65575,6 +65575,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 var SpotifyWebApi = __webpack_require__(16);
@@ -65607,7 +65610,8 @@ var spotifyApi = new SpotifyWebApi();
             "broadcastNotificationText": "",
             "trackToPlay": undefined,
             "playlistTracks": [],
-            "userState": "idle"
+            "userState": "idle",
+            "searchResults": []
         };
     },
     created: function created() {
@@ -65805,6 +65809,19 @@ var spotifyApi = new SpotifyWebApi();
                 }
             }.bind(this));
         },
+        generateSearchResults: function generateSearchResults(results) {
+            this.searchResults = [];
+            // Populate searchResults with track data
+            for (var i = 0; i < results.length; i++) {
+                this.searchResults.push({
+                    trackName: results[i].name,
+                    trackArtist: results[i].artists[0].name,
+                    trackAlbumArt: results[i].album.images[0].url,
+                    trackDuration: results[i].duration_ms,
+                    trackUri: results[i].uri
+                });
+            }
+        },
         setUserState: function setUserState(userState) {
             this.userState = userState;
         }
@@ -65925,6 +65942,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 var SpotifyWebApi = __webpack_require__(16);
 var spotifyApi = new SpotifyWebApi();
@@ -65933,10 +65952,13 @@ var spotifyApi = new SpotifyWebApi();
     components: {
         'search-tracks-listing-component': __webpack_require__(84)
     },
+    props: {
+        "searchResults": Array
+    },
     data: function data() {
         return {
-            "searchInput": "",
-            "searchResults": []
+            "searchInput": ""
+            // "searchResults": []
         };
     },
 
@@ -65947,17 +65969,8 @@ var spotifyApi = new SpotifyWebApi();
         fetchTracks: function fetchTracks() {
             if (this.isValidInput()) {
                 console.log("Fetching tracks...");
-                this.searchResults = [];
                 spotifyApi.searchTracks(this.searchInput, { limit: 50 }).then(function (data) {
-                    for (var i = 0; i < data.tracks.items.length; i++) {
-                        this.searchResults.push({
-                            trackName: data.tracks.items[i].name,
-                            trackArtist: data.tracks.items[i].artists[0].name,
-                            trackAlbumArt: data.tracks.items[i].album.images[0].url,
-                            trackDuration: data.tracks.items[i].duration_ms,
-                            trackUri: data.tracks.items[i].uri
-                        });
-                    }
+                    this.$emit("generateResults", data.tracks.items);
                 }.bind(this)).catch(function (error) {
                     console.error(error);
                     console.log("Response status: " + error.status);
@@ -65971,6 +65984,18 @@ var spotifyApi = new SpotifyWebApi();
         getTrackToAdd: function getTrackToAdd(track) {
             this.$emit("addTrack", track);
         }
+    },
+    watch: {
+        searchInput: function searchInput() {
+            if (this.isValidInput()) {
+                $('#btn-search').prop('disabled', false);
+            } else {
+                $('#btn-search').prop('disabled', true);
+            }
+        }
+    },
+    mounted: function mounted() {
+        $('#btn-search').prop('disabled', true);
     }
 });
 
@@ -66198,14 +66223,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-default btn-primary",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Search")]
-        )
+        _vm._m(0)
       ]
     ),
     _vm._v(" "),
@@ -66234,7 +66252,23 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default btn-primary",
+          attrs: { id: "btn-search", type: "submit" }
+        },
+        [_vm._v("Search")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -66330,7 +66364,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.genre-div[data-v-14e23ce7] {\n  font-size: 12px;\n  -moz-column-count: 2;\n  -moz-column-gap: 20px;\n  -webkit-column-count: 2;\n  -webkit-column-gap: 20px;\n  column-count: 2;\n}\n.genre-list[data-v-14e23ce7] {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.genre-item[data-v-14e23ce7] {\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.genre-item[data-v-14e23ce7]:hover {\n  opacity: 0.5;\n}\n.list-group-item[data-v-14e23ce7] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.list-group-item[data-v-14e23ce7] {\n  cursor: pointer;\n}\n.notes[data-v-14e23ce7] {\n  font-size: 12px;\n}\n", ""]);
+exports.push([module.i, "\n.genre-div[data-v-14e23ce7] {\n  height: 250px;\n  overflow-y: scroll;\n  font-size: 12px;\n  -moz-column-count: 2;\n  -moz-column-gap: 20px;\n  -webkit-column-count: 2;\n  -webkit-column-gap: 20px;\n  column-count: 2;\n}\n.genre-list[data-v-14e23ce7] {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n.genre-item[data-v-14e23ce7] {\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.genre-item[data-v-14e23ce7]:hover {\n  opacity: 0.5;\n}\n.list-group-item[data-v-14e23ce7] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.list-group-item[data-v-14e23ce7] {\n  cursor: pointer;\n}\n.notes[data-v-14e23ce7] {\n  font-size: 12px;\n}\n", ""]);
 
 // exports
 
@@ -66364,22 +66398,15 @@ var spotifyApi = new SpotifyWebApi();
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            "genreList": [{ name: "Acoustic", value: "acoustic" }, { name: "Classical", value: "classical" }, { name: "Chill", value: "chill" }, { name: "Country", value: "country" }, { name: "Cantopop", value: "cantopop" }, { name: "Mandopop", value: "mantopop" }, { name: "K-Pop", value: "k-pop" }, { name: "J-Pop", value: "j-pop" }, { name: "EDM", value: "edm" }, { name: "Hip-Hop", value: "hip-hop" }, { name: "Heavy Metal", value: "heavy-metal" }, { name: "Jazz", value: "jazz" }, { name: "Indie", value: "indie" }, { name: "Opera", value: "opera" }, { name: "Pop", value: "pop" }, { name: "R&B", value: "r-n-b" }, { name: "Rock", value: "rock" }, { name: "Techno", value: "techno" }]
+            "genreList": [{ name: "New Release", value: "new-release" }, { name: "Acoustic", value: "acoustic" }, { name: "Afrobeat", value: "afrobeat" }, { name: "Alternative Rock", value: "alt-rock" }, { name: "Ambient", value: "ambient" }, { name: "Anime", value: "anime" }, { name: "Black Metal", value: "black-metal" }, { name: "Bluegrass", value: "bluegrass" }, { name: "Blues", value: "blues" }, { name: "Bossanova", value: "bossanova" }, { name: "Brazil", value: "brazil" }, { name: "Breakbeat", value: "breakbeat" }, { name: "British", value: "british" }, { name: "Cantopop", value: "cantopop" }, { name: "Chicago House", value: "chicago-house" }, { name: "Children", value: "children" }, { name: "Chill", value: "chill" }, { name: "Classical", value: "classical" }, { name: "Club", value: "club" }, { name: "Comedy", value: "comedy" }, { name: "Country", value: "country" }, { name: "Dance", value: "dance" }, { name: "Death Metal", value: "death-metal" }, { name: "Deep House", value: "deep-house" }, { name: "Detroit Techno", value: "detroit-techno" }, { name: "Disco", value: "disco" }, { name: "Dubstep", value: "dubstep" }, { name: "EDM", value: "edm" }, { name: "Electronic", value: "electronic" }, { name: "Emo", value: "emo" }, { name: "Folk", value: "folk" }, { name: "French", value: "french" }, { name: "Funk", value: "funk" }, { name: "Garage", value: "garage" }, { name: "German", value: "german" }, { name: "Gospel", value: "gospel" }, { name: "Goth", value: "goth" }, { name: "Groove", value: "groove" }, { name: "Guitar", value: "guitar" }, { name: "Hard Rock", value: "hard-rock" }, { name: "Hardstyle", value: "hardstyle" }, { name: "Heavy Metal", value: "heavy-metal" }, { name: "Hip-Hop", value: "hip-hop" }, { name: "Holidays", value: "holidays" }, { name: "House", value: "house" }, { name: "Indian", value: "indian" }, { name: "Indie", value: "indie" }, { name: "Indie-Pop", value: "indie-pop" }, { name: "Industrial", value: "industrial" }, { name: "Iranian", value: "iranian" }, { name: "Indie", value: "indie" }, { name: "J-Pop", value: "j-pop" }, { name: "J-Rock", value: "j-rock" }, { name: "Jazz", value: "jazz" }, { name: "K-Pop", value: "k-pop" }, { name: "Latin", value: "latin" }, { name: "Mandopop", value: "mantopop" }, { name: "Opera", value: "opera" }, { name: "Party", value: "party" }, { name: "Piano", value: "piano" }, { name: "Pop", value: "pop" }, { name: "Punk", value: "punk" }, { name: "Punk Rock", value: "punk-rock" }, { name: "R&B", value: "r-n-b" }, { name: "Rock", value: "rock" }, { name: "Romance", value: "romance" }, { name: "Sad", value: "sad" }, { name: "Sleep", value: "sleep" }, { name: "Spanish", value: "spanish" }, { name: "Study", value: "study" }, { name: "Summer", value: "summer" }, { name: "Techno", value: "techno" }, { name: "Trance", value: "trance" }, { name: "Work Out", value: "work-out" }]
         };
     },
 
     methods: {
         // Fetch tracks from a genre and add them to the room's playlist
         fetchGenreTracks: function fetchGenreTracks(genre) {
-            spotifyApi.getRecommendations({ limit: 50, seed_genres: genre }).then(function (data) {
-                var track = {
-                    trackName: data.tracks[0].name,
-                    trackArtist: data.tracks[0].artists[0].name,
-                    trackAlbumArt: data.tracks[0].album.images[0].url,
-                    trackDuration: data.tracks[0].duration_ms,
-                    trackUri: data.tracks[0].uri
-                };
-                this.$emit("addTrack", track);
+            spotifyApi.getRecommendations({ limit: 50, seed_genres: genre, min_popularity: 50 }).then(function (data) {
+                this.$emit("generateResults", data.tracks);
             }.bind(this)).catch(function (error) {
                 console.error(error);
                 console.log("Response status: " + error.status);
@@ -68469,7 +68496,9 @@ var render = function() {
                   { staticClass: "col-4" },
                   [
                     _c("search-tracks-component", {
+                      attrs: { "search-results": _vm.searchResults },
                       on: {
+                        generateResults: _vm.generateSearchResults,
                         addTrack: _vm.addTrackToPlaylist,
                         refreshToken: _vm.refreshAccessToken
                       }
@@ -68477,6 +68506,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("genre-list-component", {
                       on: {
+                        generateResults: _vm.generateSearchResults,
                         addTrack: _vm.addTrackToPlaylist,
                         refreshToken: _vm.refreshAccessToken
                       }

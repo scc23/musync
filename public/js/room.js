@@ -29021,7 +29021,7 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "209a3d8d4b03069a4079",
+  key: "da3b69cf2735d6719fc2",
   cluster: "us2",
   encrypted: true
 });
@@ -67654,7 +67654,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "user-list" }, [
     _c("div", { staticClass: "user-list card" }, [
-      _c("div", { staticClass: " user-list card-header" }, [
+      _c("div", { staticClass: "user-list card-header" }, [
         _vm._v("Online Listeners\n        ")
       ]),
       _vm._v(" "),

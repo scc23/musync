@@ -2,8 +2,8 @@
     <div>
         <div>
             <span class="track-album-art"><img width="50" height="50" v-bind:src="track.trackAlbumArt"/></span>
-            <span class="track-name">{{track.trackName}}</span><br>
-            <span class="track-artist">{{track.trackArtist}}</span><br>
+            <span class="track-name">{{ shortenString(track.trackName) }}</span><br>
+            <span class="track-artist">{{ shortenString(track.trackArtist) }}</span><br>
             <span class="track-duration">{{trackDuration}}</span>
         </div>
     </div>
@@ -31,6 +31,15 @@
                 var min = Math.floor(this.track.trackDuration / 60000);
                 var sec = ((this.track.trackDuration % 60000) / 1000).toFixed(0);
                 this.trackDuration = min + ":" + (sec < 10 ? '0' : '') + sec;
+            },
+            shortenString(s) {
+                // Take substring if string is too long to display in one line
+                if (s.length > 45) {
+                    return (s.substring(0,45) + "...");
+                }
+                else {
+                    return s;
+                }
             }
         }
     }

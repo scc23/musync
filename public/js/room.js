@@ -67147,7 +67147,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 535px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.list-group-item[data-v-65c65220]:hover {\n  cursor: pointer;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 535px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n  cursor: pointer;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -67158,8 +67158,6 @@ exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -67319,7 +67317,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.remove-button[data-v-477eaab6] {\n  padding: 5px;\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  font-size: 12px;\n  display: none;\n}\n.track-block:hover .remove-button[data-v-477eaab6] {\n  display: inline-block;\n}\n.track-album-art[data-v-477eaab6] {\n  float: left;\n  vertical-align: text-top;\n  padding-right: 10px;\n}\n.track-name[data-v-477eaab6] {\n  float: left;\n  font-size: 12px;\n  font-weight: bold;\n}\n.track-artist[data-v-477eaab6] {\n  float: left;\n  font-size: 12px;\n}\n.track-duration[data-v-477eaab6] {\n  float: left;\n  font-size: 8px;\n}\n", ""]);
+exports.push([module.i, "\n.track-album-art[data-v-477eaab6] {\n  float: left;\n  vertical-align: text-top;\n  padding-right: 10px;\n}\n.track-name[data-v-477eaab6] {\n  float: left;\n  font-size: 12px;\n  font-weight: bold;\n}\n.track-artist[data-v-477eaab6] {\n  float: left;\n  font-size: 12px;\n}\n.track-duration[data-v-477eaab6] {\n  float: left;\n  font-size: 8px;\n}\n", ""]);
 
 // exports
 
@@ -67341,13 +67339,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        "playlistTrack": Object,
-        "playlistId": String,
-        "playlistTrackIndex": Number
+        "playlistTrack": Object
     },
     data: function data() {
         return {
@@ -67359,10 +67354,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        removeTrack: function removeTrack(e) {
-            // Call parent function to call another parent function to remove track from playlist
-            this.$emit("getTrackToRemove", this.playlistTrackIndex, this.playlistTrack.trackUri);
-        },
         convertMilliseconds: function convertMilliseconds() {
             // Convert track duration in milliseconds to minutes:seconds
             var min = Math.floor(this.playlistTrack.trackDuration / 60000);
@@ -67400,20 +67391,6 @@ var render = function() {
       _c("span", { staticClass: "track-artist" }, [
         _vm._v(_vm._s(_vm.playlistTrack.trackArtist))
       ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "remove-button",
-          on: {
-            click: function($event) {
-              _vm.removeTrack($event)
-            }
-          }
-        },
-        [_vm._v("X")]
-      ),
-      _c("br"),
       _vm._v(" "),
       _c("span", { staticClass: "track-duration" }, [
         _vm._v(_vm._s(_vm.trackDuration))
@@ -67478,12 +67455,26 @@ var render = function() {
               _c("playlist-listing-component", {
                 attrs: {
                   "playlist-tracks": _vm.playlistTracks,
-                  "playlist-track": playlistTrack,
-                  "playlist-id": _vm.playlistId,
-                  "playlist-track-index": playlistTrackIndex
+                  "playlist-track": playlistTrack
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "remove-icon",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      _vm.updatePlaylistRemoveTrack(
+                        playlistTrackIndex,
+                        playlistTrack.trackUri
+                      )
+                    }
+                  }
                 },
-                on: { getTrackToRemove: _vm.updatePlaylistRemoveTrack }
-              })
+                [_vm._v("X")]
+              )
             ],
             1
           )

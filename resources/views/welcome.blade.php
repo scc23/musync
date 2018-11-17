@@ -11,21 +11,37 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/welcome-page.css') }}" rel="stylesheet" type="text/css">
+
+        <!-- Javascript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script type="text/javascript">
+            
+            (function($) {
+                setTimeout(function() {
+                    $('.title').removeClass('hidden');
+                }, 500);
+            })(jQuery);
+            
+        </script>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            <div class="top-right links">
+            <div class="content">
+                <ul class="title hidden neon-heading first">
+                    <li><span class="flickering-3">M</span></li>
+                    <li>U</li>
+                    <li><span class="flickering-1">S</span></li>
+                    <li><span class="flickering-3">Y</span></li>                    
+                    <li>N</li>
+                    <li><span class="flickering-2">C</span></li>
+                </ul>
+            </div>
+            <div class="links">
                 @auth
                     <a href="{{ url('/home') }}">Home</a>
                 @else
-                    <a href="/login/spotify"  class="btn btn-success btn-md">Login with Spotify</a>
+                    <a href="/login/spotify"  class="neon-heading second">Login with Spotify</a>
                 @endauth
-            </div>
-
-            <div class="content">
-                <div class="title m-b-md">
-                    MuSync
-                </div>
             </div>
         </div>
     </body>

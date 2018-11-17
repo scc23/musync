@@ -5,8 +5,7 @@
                 <div class="card">
                     <div class="card-header" v-text="header"></div>
                     <div class="card-body">
-                        <div csrf-token="csrfToken"
-                             v-bind:rooms="rooms"
+                        <div v-bind:rooms="rooms"
                              v-bind:is="bodyComponent"
                              v-on:set-body-component="setBodyComponent">
                         </div>
@@ -22,19 +21,18 @@
 
     export default {
         components: {
-            'landing': require('./HomeLandingComponent'),
-            'create': require('./HomeCreateComponent'),
-            'join': require('./HomeJoinComponent')
+            'home-landing-component': require('./HomeLandingComponent'),
+            'home-create-component': require('./HomeCreateComponent'),
+            'home-join-component': require('./HomeJoinComponent')
         },
         props: {
             "userId": String,
-            "csrfToken": String,
             "accessToken": String
         },
         data() {
             return {
                 header: "Dashboard",
-                bodyComponent: "landing",
+                bodyComponent: "home-landing-component",
                 rooms: []
             }
         },
@@ -51,6 +49,10 @@
                         room["hasAccess"] = !room.isPrivate || (this.userId == data.user_id);
                         this.rooms.push(room);
                     });
+                Echo.private(`home.${this.userId}`)
+                    .listen("JoinedRoom", (data) => {
+                        this.unlockRoom(data.roomId);
+                    });
             },
             initializeRoomsList() {
               axios.get("/api/rooms")
@@ -60,13 +62,20 @@
             },
             setBodyComponent(component) {
                 this.bodyComponent = component;
-                if (component == "landing") {
+                if (component == "home-landing-component") {
                     this.header = "Dashboard"
-                } else if (component == "create") {
+                } else if (component == "home-create-component") {
                     this.header = "Create Room"
-                } else if (component == "join") {
+                } else if (component == "home-join-component") {
                     this.header = "Join Room"
                 }
+            },
+            unlockRoom(roomId) {
+                this.rooms.forEach((room) => {
+                    if (room.id == roomId) {
+                        room.hasAccess = true;
+                    }
+                });
             }
         }
     }

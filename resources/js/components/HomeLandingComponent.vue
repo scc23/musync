@@ -19,15 +19,12 @@
 
 <script>
     export default {
-        props: {
-            "csrfToken": String,
-        },
         methods: {
             promptCreate() {
-                this.$emit("set-body-component", "create");
+                this.$emit("set-body-component", "home-create-component");
             },
             promptJoin() {
-                this.$emit("set-body-component", "join");
+                this.$emit("set-body-component", "home-join-component");
             }
         }
     }

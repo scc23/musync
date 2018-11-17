@@ -20,7 +20,6 @@
             'room-listing-component': require('./RoomListingComponent.vue')
         },
         props: {
-            "csrfToken": String,
             "rooms": Array
         },
         methods: {

@@ -63,7 +63,7 @@
                 this.isPrivate = false
             },
             returnLanding(event) {
-                this.$emit("set-body-component", "landing");
+                this.$emit("set-body-component", "home-landing-component");
                 this.resetState();
             },
             clearPassword() {

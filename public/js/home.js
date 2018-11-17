@@ -62588,25 +62588,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        'landing': __webpack_require__(51),
-        'create': __webpack_require__(54),
-        'join': __webpack_require__(57)
+        'home-landing-component': __webpack_require__(51),
+        'home-create-component': __webpack_require__(54),
+        'home-join-component': __webpack_require__(57)
     },
     props: {
         "userId": String,
-        "csrfToken": String,
         "accessToken": String
     },
     data: function data() {
         return {
             header: "Dashboard",
-            bodyComponent: "landing",
+            bodyComponent: "home-landing-component",
             rooms: []
         };
     },
@@ -62625,6 +62623,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 room["hasAccess"] = !room.isPrivate || _this.userId == data.user_id;
                 _this.rooms.push(room);
             });
+            Echo.private('home.' + this.userId).listen("JoinedRoom", function (data) {
+                _this.unlockRoom(data.roomId);
+            });
         },
         initializeRoomsList: function initializeRoomsList() {
             var _this2 = this;
@@ -62635,13 +62636,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         setBodyComponent: function setBodyComponent(component) {
             this.bodyComponent = component;
-            if (component == "landing") {
+            if (component == "home-landing-component") {
                 this.header = "Dashboard";
-            } else if (component == "create") {
+            } else if (component == "home-create-component") {
                 this.header = "Create Room";
-            } else if (component == "join") {
+            } else if (component == "home-join-component") {
                 this.header = "Join Room";
             }
+        },
+        unlockRoom: function unlockRoom(roomId) {
+            this.rooms.forEach(function (room) {
+                if (room.id == roomId) {
+                    room.hasAccess = true;
+                }
+            });
         }
     }
 });
@@ -62720,15 +62728,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        "csrfToken": String
-    },
     methods: {
         promptCreate: function promptCreate() {
-            this.$emit("set-body-component", "create");
+            this.$emit("set-body-component", "home-create-component");
         },
         promptJoin: function promptJoin() {
-            this.$emit("set-body-component", "join");
+            this.$emit("set-body-component", "home-join-component");
         }
     }
 });
@@ -62899,7 +62904,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isPrivate = false;
         },
         returnLanding: function returnLanding(event) {
-            this.$emit("set-body-component", "landing");
+            this.$emit("set-body-component", "home-landing-component");
             this.resetState();
         },
         clearPassword: function clearPassword() {
@@ -63250,15 +63255,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         'room-list-component': __webpack_require__(59)
     },
     props: {
-        "csrfToken": String,
         "rooms": Array
     },
     data: function data() {
@@ -63266,14 +63268,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             joinId: "",
             joinPassword: "",
             joinIdError: "",
-            joinPasswordError: "Join password error",
+            joinPasswordError: "",
             joinHasPassword: false
         };
     },
 
     methods: {
         returnLanding: function returnLanding(event) {
-            this.$emit("set-body-component", "landing");
+            this.$emit("set-body-component", "home-landing-component");
         },
         clearRoomErrors: function clearRoomErrors() {
             this.joinIdError = "";
@@ -63459,7 +63461,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'room-listing-component': __webpack_require__(63)
     },
     props: {
-        "csrfToken": String,
         "rooms": Array
     },
     methods: {
@@ -63695,11 +63696,6 @@ var render = function() {
         }
       },
       [
-        _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: _vm.csrfToken }
-        }),
-        _vm._v(" "),
         _c("div", { staticClass: "row justify-content-center" }, [
           _c("div", { staticClass: "col-12 col-sm-6 form-group" }, [
             _c(
@@ -63792,7 +63788,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("room-list-component", {
-          attrs: { "csrf-token": "csrfToken", rooms: _vm.rooms },
+          attrs: { rooms: _vm.rooms },
           on: { "join-room": _vm.setIdAndSubmit }
         }),
         _vm._v(" "),
@@ -63860,7 +63856,7 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _c(_vm.bodyComponent, {
               tag: "div",
-              attrs: { "csrf-token": "csrfToken", rooms: _vm.rooms },
+              attrs: { rooms: _vm.rooms },
               on: { "set-body-component": _vm.setBodyComponent }
             })
           ])

@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-body" v-else-if="userState == 'broadcasting'">
+        <div class="card-body" v-else-if="userState == 'broadcasting' || userState == 'listening'">
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div id="player-container">
@@ -39,7 +39,7 @@
                                                 <font-awesome-icon class="player-icons" icon="pause-circle"/>
                                             </div>
                                         </button>
-                                        <button class="player-icons step-forward-btn" type="button" v-on:click="nextTrack">
+                                        <button class="player-icons step-forward-btn" type="button" v-if="userState == 'broadcasting'" v-on:click="nextTrack">
                                             <font-awesome-icon icon="step-forward"/>
                                         </button>
                                     </div>
@@ -55,7 +55,8 @@
                                             v-on:drag-end="onDragEnd"
                                             v-on:callback="onProgressChange"
                                             :max='currentTrack["duration"]'
-                                            :tooltip="false">
+                                            :tooltip="false"
+                                            :clickable="userState == 'broadcasting'">
                                         </vue-slider>
                                     </div>
                                     <div class="track-duration">
@@ -65,16 +66,10 @@
                             </div>
                         </form>
                     </div>
-                    <button class="home-btn btn btn-primary btn-block" @click="stopBroadcasting">
+                    <button class="home-btn btn btn-primary btn-block" v-if="userState == 'broadcasting'" @click="stopBroadcasting">
                         Stop Broadcasting
                     </button>
-                </div>
-            </div>
-        </div>
-        <div class="card-body" v-else-if="userState == 'listening'">
-            <div class="row justify-content-center">
-                <div class="col-12 col-sm-8">
-                    <button class="home-btn btn btn-primary btn-block" @click="stopListening">
+                    <button class="home-btn btn btn-primary btn-block" v-if="userState == 'listening'" @click="stopListening">
                         Stop Listening
                     </button>
                 </div>
@@ -120,7 +115,11 @@
                 if (this.isPaused) {
                     console.log("spotify:user:" + this.spotifyId + ":playlist:" + this.playlistId);
                     console.log("Play button is pressed");
-                    this.play();
+                    if (this.userState == "broadcasting") {
+                        this.play();
+                    } else if (this.userState == "listening") {
+                        this.sync();
+                    }
                     return;
                 }
                 console.log("Pause button is pressed");
@@ -154,6 +153,9 @@
                             }
                         }.bind(this))
                 }
+            },
+            sync() {
+                console.log("Syncing player with broadcaster.");
             },
             pause() {
                 spotifyApi.pause({
@@ -232,7 +234,6 @@
 
             },
             beginListening() {
-                this.userState = "listening";
                 this.$emit("set-user-state", "listening")
             },
             stopListening() {

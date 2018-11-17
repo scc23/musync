@@ -29021,7 +29021,7 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "a74b0d3ba19c7e3a0369",
+  key: "da3b69cf2735d6719fc2",
   cluster: "us2",
   encrypted: true
 });
@@ -65685,6 +65685,8 @@ var spotifyApi = new SpotifyWebApi();
                 _this2.disconnectSession(false);
                 _this2.userState = "idle";
                 _this2.broadcastNotificationText = data.user.name + " stopped broadcasting.";
+            }).listen("PlaybackSent", function (data) {
+                _this2.syncPlayerState(data);
             });
         },
         becomeBroadcaster: function becomeBroadcaster() {
@@ -65826,6 +65828,21 @@ var spotifyApi = new SpotifyWebApi();
         },
         setUserState: function setUserState(userState) {
             this.userState = userState;
+        },
+        syncPlayerState: function syncPlayerState(playback) {
+            if (this.userState == "listening") {
+                if (playback["isPaused"]) {
+                    spotifyApi.pause(function (err, data) {
+                        if (err) {
+                            console.error("Could not pause playback: " + err);
+                            // If the response is 401 Unauthorized Error, refresh the access token
+                            if (err.status === 401) {
+                                this.refreshAccessToken();
+                            }
+                        }
+                    }.bind(this));
+                } else {}
+            }
         }
     }
 });
@@ -66754,7 +66771,17 @@ var spotifyApi = new SpotifyWebApi();
         },
         pause: function pause() {
             spotifyApi.pause({
-                "device_id": this.spotifyDeviceId }).catch(function (error) {
+
+                "device_id": this.spotifyDeviceId
+            }).then(function (data) {
+                if (this.userState == "broadcasting") {
+                    axios.post('/api/room/' + this.roomId + '/playback', {
+                        trackUri: this.currentTrack["trackUri"],
+                        trackPosition: this.currentTrack["trackPosition"],
+                        isPaused: true
+                    });
+                }
+            }.bind(this)).catch(function (error) {
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {

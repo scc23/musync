@@ -51,11 +51,10 @@ class RoomPlaybackAPIController extends Controller
 
             // Estimate latency time taken from Spotify's server to here to offset playback time.
             $half_roundtrip_time = intval(($end_time - $start_time)/2);
-            $playback['progress_ms'] = $playback['progress_ms'] + $half_roundtrip_time;
 
             return response()->json([
                 'trackUri' => $playback['item']['uri'],
-                'trackPosition' => $playback['progress_ms'],
+                'trackPosition' => $playback['progress_ms'] + $half_roundtrip_time,
                 'isPaused' => !$playback['is_playing'],
                 'timestamp' => $this->getTimeInMilliseconds()
             ], Response::HTTP_OK);
@@ -75,7 +74,7 @@ class RoomPlaybackAPIController extends Controller
             $error = "The Spotfiy track URI (trackUri) must be provided.";
         } else if (empty($track_position)) {
             $error = "The track position (trackPosition) must be provided,  in milliseconds.";
-        } else if ($is_paused != null) {
+        } else if ($is_paused == null) {
             $error = "The pause state (isPaused) must be provided, as a boolean.";
         }
 

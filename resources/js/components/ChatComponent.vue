@@ -40,6 +40,6 @@
 <style lang="scss" scoped>
     .card-body {
         overflow-y: scroll;
-        height: 300px;
+        height: 348px;
     }
 </style>

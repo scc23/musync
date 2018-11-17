@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
-            <notification-component v-bind:broadcast-notification-text="broadcastNotificationText">
+            <notification-component v-bind:notification-text="notificationText">
             </notification-component>
             <div class="col-12">
                 <div class="card">
@@ -49,7 +49,11 @@
                                 </playlist-component>
                             </div>
                             <div class="col-4">
-                                <user-list-component v-bind:room-id="roomId">
+                                <user-list-component v-bind:room-id="roomId"
+                                                     v-bind:broadcaster-name="broadcasterName"
+                                                     v-bind:broadcaster-id="broadcasterId"
+                                                     v-on:user-join="userJoin"
+                                                     v-on:user-leave="userLeave">
                                 </user-list-component>
                                 <chat-component v-bind:room-id="roomId">
                                 </chat-component>
@@ -80,6 +84,8 @@
         props: {
             "roomName": String,
             "roomId": String,
+            "userName": String,
+            "userId": String,
             "csrfToken": String,
             "accessToken": String,
             "spotifyId": String
@@ -91,7 +97,9 @@
                 "spotifyPlayerState": null,
                 "playlistId": "",
                 "hasBroadcaster": null,
-                "broadcastNotificationText": "",
+                "notificationText": "",
+                "broadcasterName": "",
+                "broadcasterId": "",
                 "trackToPlay": undefined,
                 "playlistTracks": [],
                 "userState": "idle",
@@ -166,23 +174,37 @@
                 Echo.private(`room.${this.roomId}`)
                     .listen("BroadcasterConnected", (data) => {
                         this.hasBroadcaster = true;
-                        this.broadcastNotificationText = data.user.name + " is broadcasting.";
+                        this.notificationText = data.user.name + " is broadcasting.";
+                        this.broadcasterName = data.user.name;
+                        this.broadcasterId = data.user.id.toString();
                     })
                     .listen("BroadcasterDisconnected", (data) => {
                         this.hasBroadcaster = false;
                         this.disconnectSession(false);
                         this.userState = "idle";
-                        this.broadcastNotificationText = data.user.name + " stopped broadcasting.";
+                        this.notificationText = data.user.name + " stopped broadcasting.";
+                        this.broadcasterName = "";
+                        this.broadcasterId = "";
                     })
                     .listen("PlaybackSent", (data) => {
                         this.syncPlayerState(data);
                     });
             },
             becomeBroadcaster(){
-                this.broadcastNotificationText = "You are broadcasting.";
+                this.notificationText = "You are broadcasting.";
+                this.broadcasterName = this.userName;
+                this.broadcasterId = this.userId;
             },
             stopBeingBroadcaster(){
-                this.broadcastNotificationText = "You stopped broadcasting.";
+                this.notificationText = "You stopped broadcasting.";  
+                this.broadcasterName = "";
+                this.broadcasterId = "";
+            },
+            userJoin(userName){
+                this.notificationText = userName + " has joined the room.";
+            },
+            userLeave(userName){
+                this.notificationText = userName + " has left the room.";
             },
             initializeSpotifyPlayer(token) {
                 window.onSpotifyWebPlaybackSDKReady = () => {

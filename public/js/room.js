@@ -61904,7 +61904,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* unused harmony export faVolumeDown */
 /* unused harmony export faVolumeMute */
 /* unused harmony export faVolumeOff */
-/* unused harmony export faVolumeUp */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return faVolumeUp; });
 /* unused harmony export faVoteYea */
 /* unused harmony export faVrCardboard */
 /* unused harmony export faWalking */
@@ -64275,7 +64275,7 @@ window.Vue = __webpack_require__(17);
 
 
 
-__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__["c" /* library */].add(__WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["d" /* faPlayCircle */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["c" /* faPauseCircle */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["e" /* faStepForward */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["b" /* faMusic */]);
+__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__["c" /* library */].add(__WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["d" /* faPlayCircle */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["c" /* faPauseCircle */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["e" /* faStepForward */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["b" /* faMusic */], __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_solid_svg_icons__["f" /* faVolumeUp */]);
 Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_notification___default.a);
 Vue.component('font-awesome-icon', __WEBPACK_IMPORTED_MODULE_2__fortawesome_vue_fontawesome__["a" /* FontAwesomeIcon */]);
 Vue.config.productionTip = false;
@@ -65578,6 +65578,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 var SpotifyWebApi = __webpack_require__(16);
@@ -65596,6 +65600,8 @@ var spotifyApi = new SpotifyWebApi();
     props: {
         "roomName": String,
         "roomId": String,
+        "userName": String,
+        "userId": String,
         "csrfToken": String,
         "accessToken": String,
         "spotifyId": String
@@ -65607,7 +65613,9 @@ var spotifyApi = new SpotifyWebApi();
             "spotifyPlayerState": null,
             "playlistId": "",
             "hasBroadcaster": null,
-            "broadcastNotificationText": "",
+            "notificationText": "",
+            "broadcasterName": "",
+            "broadcasterId": "",
             "trackToPlay": undefined,
             "playlistTracks": [],
             "userState": "idle",
@@ -65679,21 +65687,35 @@ var spotifyApi = new SpotifyWebApi();
 
             Echo.private("room." + this.roomId).listen("BroadcasterConnected", function (data) {
                 _this2.hasBroadcaster = true;
-                _this2.broadcastNotificationText = data.user.name + " is broadcasting.";
+                _this2.notificationText = data.user.name + " is broadcasting.";
+                _this2.broadcasterName = data.user.name;
+                _this2.broadcasterId = data.user.id.toString();
             }).listen("BroadcasterDisconnected", function (data) {
                 _this2.hasBroadcaster = false;
                 _this2.disconnectSession(false);
                 _this2.userState = "idle";
-                _this2.broadcastNotificationText = data.user.name + " stopped broadcasting.";
+                _this2.notificationText = data.user.name + " stopped broadcasting.";
+                _this2.broadcasterName = "";
+                _this2.broadcasterId = "";
             }).listen("PlaybackSent", function (data) {
                 _this2.syncPlayerState(data);
             });
         },
         becomeBroadcaster: function becomeBroadcaster() {
-            this.broadcastNotificationText = "You are broadcasting.";
+            this.notificationText = "You are broadcasting.";
+            this.broadcasterName = this.userName;
+            this.broadcasterId = this.userId;
         },
         stopBeingBroadcaster: function stopBeingBroadcaster() {
-            this.broadcastNotificationText = "You stopped broadcasting.";
+            this.notificationText = "You stopped broadcasting.";
+            this.broadcasterName = "";
+            this.broadcasterId = "";
+        },
+        userJoin: function userJoin(userName) {
+            this.notificationText = userName + " has joined the room.";
+        },
+        userLeave: function userLeave(userName) {
+            this.notificationText = userName + " has left the room.";
         },
         initializeSpotifyPlayer: function initializeSpotifyPlayer(token) {
             var _this3 = this;
@@ -67691,7 +67713,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.card-body[data-v-22f71719] {\n  overflow-y: scroll;\n  height: 196px;\n}\n.user-list.card[data-v-22f71719] {\n  margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.fa-volume-up[data-v-22f71719] {\n  margin-left: 10px;\n}\n.card-body[data-v-22f71719] {\n  overflow-y: scroll;\n  height: 196px;\n}\n.user-list.card[data-v-22f71719] {\n  margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 
@@ -67717,9 +67739,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
+        "broadcasterName": String,
+        "broadcasterId": String,
         "roomId": String
     },
 
@@ -67736,11 +67762,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.onlineUsers = users;
         }).joining(function (user) {
             if (_this.onlineUsers.indexOf(user) == -1) {
+                _this.$emit("user-join", user.name);
                 _this.onlineUsers.push(user);
             }
         }).leaving(function (user) {
             var index = _this.onlineUsers.indexOf(user);
             if (index > -1) {
+                _this.$emit("user-leave", user.name);
                 _this.onlineUsers.splice(index, 1);
             }
         });
@@ -67758,7 +67786,7 @@ var render = function() {
   return _c("div", { staticClass: "user-list" }, [
     _c("div", { staticClass: "user-list card" }, [
       _c("div", { staticClass: "user-list card-header" }, [
-        _vm._v("Online Listeners\n        ")
+        _vm._v("Online Users\n        ")
       ]),
       _vm._v(" "),
       _c(
@@ -67769,8 +67797,11 @@ var render = function() {
             _c(
               "p",
               [
-                _vm._v(_vm._s(user.name) + "  "),
-                _c("font-awesome-icon", { attrs: { icon: "music" } })
+                _vm._v(_vm._s(user.name) + "\n                            "),
+                _vm.broadcasterName === user.name &&
+                _vm.broadcasterId == user.id
+                  ? _c("font-awesome-icon", { attrs: { icon: "volume-up" } })
+                  : _vm._e()
               ],
               1
             )
@@ -68469,18 +68500,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        "broadcastNotificationText": String
+        "notificationText": String
     },
 
     watch: {
-        broadcastNotificationText: function broadcastNotificationText() {
-            this.show('broadcast-notification', 'success');
+        notificationText: function notificationText() {
+            this.show('general-notification', 'success');
         }
     },
 
     data: function data() {
         return {
-            notificationText: "",
             animation: {
                 enter: {
                     opacity: [1, 0],
@@ -68500,10 +68530,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         show: function show(group) {
             var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
-            var text = this.broadcastNotificationText;
+            var text = this.notificationText;
             this.$notify({
                 group: group,
-                title: 'Musync',
+                title: 'MuSync',
                 text: text,
                 type: type
             });
@@ -68528,7 +68558,7 @@ var render = function() {
     [
       _c("notifications", {
         attrs: {
-          group: "broadcast-notification",
+          group: "general-notification",
           position: "top right",
           speed: 500
         }
@@ -68561,9 +68591,7 @@ var render = function() {
       { staticClass: "row justify-content-center" },
       [
         _c("notification-component", {
-          attrs: {
-            "broadcast-notification-text": _vm.broadcastNotificationText
-          }
+          attrs: { "notification-text": _vm.notificationText }
         }),
         _vm._v(" "),
         _c("div", { staticClass: "col-12" }, [
@@ -68649,7 +68677,15 @@ var render = function() {
                   { staticClass: "col-4" },
                   [
                     _c("user-list-component", {
-                      attrs: { "room-id": _vm.roomId }
+                      attrs: {
+                        "room-id": _vm.roomId,
+                        "broadcaster-name": _vm.broadcasterName,
+                        "broadcaster-id": _vm.broadcasterId
+                      },
+                      on: {
+                        "user-join": _vm.userJoin,
+                        "user-leave": _vm.userLeave
+                      }
                     }),
                     _vm._v(" "),
                     _c("chat-component", { attrs: { "room-id": _vm.roomId } })

@@ -8,6 +8,7 @@
 
 <div id="room-app">
     <room-component user-name="{{Auth::user()->name}}"
+                    user-id="{{Auth::user()->id}}"
                     room-name="{{$room->name}}"
                     room-id="{{$room->id}}"
                     csrf-token="{{csrf_token()}}"

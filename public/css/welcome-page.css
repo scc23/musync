@@ -3,10 +3,9 @@ html {
 }
 
 body {
-  background: linear-gradient(137deg, #191414, #1bf968fa);
+  background: -webkit-gradient(linear, left top, left bottom, from(#000000), to(#585555));
+  background: linear-gradient(#000000, #585555);
   background-size: 200% 200%;
-  -webkit-animation: BackgroundGradient 10s linear infinite;
-          animation: BackgroundGradient 10s linear infinite;
 }
 
 @-webkit-keyframes BackgroundGradient {
@@ -53,6 +52,265 @@ body {
   }
 }
 
+.neon-heading.first {
+  text-shadow: 0px 0px 10px #9D00FF, 0px 0px 20px #9D00FF, 0px 0px 30px #9D00FF, 0px 0px 40px #9D00FF, 0px 0px 50px #9D00FF, 0px 0px 60px #9D00FF;
+}
+
+.neon-heading.second {
+  text-shadow: 0px 0px 10px #33FF00, 0px 0px 20px #33FF00, 0px 0px 30px #33FF00, 0px 0px 40px #33FF00, 0px 0px 50px #33FF00, 0px 0px 60px #33FF00;
+  -webkit-animation: pulsating 3s infinite;
+          animation: pulsating 3s infinite;
+}
+
+/* FLICKERING */
+
+span.flickering-1 {
+  -webkit-animation: flickering-1 5s infinite;
+          animation: flickering-1 5s infinite;
+}
+
+span.flickering-2 {
+  -webkit-animation: flickering-2 2s infinite;
+          animation: flickering-2 2s infinite;
+}
+
+span.flickering-3 {
+  -webkit-animation: flickering-3 4s infinite;
+          animation: flickering-3 4s infinite;
+}
+
+/* ANIMATIONS */
+
+@-webkit-keyframes pulsating {
+  0% {
+    text-shadow: 0px 0px 0px;
+    opacity: 0;
+  }
+
+  50% {
+    text-shadow: 0px 0px 10px #33FF00, 0px 0px 20px #33FF00, 0px 0px 30px #33FF00, 0px 0px 40px #33FF00, 0px 0px 50px #33FF00, 0px 0px 60px #33FF00;
+    opacity: 1;
+  }
+
+  100% {
+    text-shadow: 0px 0px 0px;
+    opacity: 0;
+  }
+}
+
+@keyframes pulsating {
+  0% {
+    text-shadow: 0px 0px 0px;
+    opacity: 0;
+  }
+
+  50% {
+    text-shadow: 0px 0px 10px #33FF00, 0px 0px 20px #33FF00, 0px 0px 30px #33FF00, 0px 0px 40px #33FF00, 0px 0px 50px #33FF00, 0px 0px 60px #33FF00;
+    opacity: 1;
+  }
+
+  100% {
+    text-shadow: 0px 0px 0px;
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes flickering-1 {
+  0% {
+    opacity: 1;
+  }
+
+  52% {
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 0;
+  }
+
+  56% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flickering-1 {
+  0% {
+    opacity: 1;
+  }
+
+  52% {
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 0;
+  }
+
+  56% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes flickering-2 {
+  0% {
+    opacity: 1;
+  }
+
+  62% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 0;
+  }
+
+  66% {
+    opacity: 1;
+  }
+
+  69% {
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  73% {
+    opacity: 0;
+  }
+
+  74% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flickering-2 {
+  0% {
+    opacity: 1;
+  }
+
+  62% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 0;
+  }
+
+  66% {
+    opacity: 1;
+  }
+
+  69% {
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  73% {
+    opacity: 0;
+  }
+
+  74% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes flickering-3 {
+  0% {
+    opacity: 1;
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  84% {
+    opacity: 0;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  87% {
+    opacity: 0;
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  91% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flickering-3 {
+  0% {
+    opacity: 1;
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  84% {
+    opacity: 0;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  87% {
+    opacity: 0;
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  91% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .full-height {
   height: 100vh;
 }
@@ -64,6 +322,10 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -84,39 +346,10 @@ body {
 }
 
 .title {
+  color: #fff;
   font-size: 84px;
   font-weight: 300;
   list-style: none;
-  -webkit-animation: ColorChange 10s infinite;
-          animation: ColorChange 10s infinite;
-}
-
-@-webkit-keyframes ColorChange {
-  0% {
-    color: white;
-  }
-
-  50% {
-    color: black;
-  }
-
-  100% {
-    color: white;
-  }
-}
-
-@keyframes ColorChange {
-  0% {
-    color: white;
-  }
-
-  50% {
-    color: black;
-  }
-
-  100% {
-    color: white;
-  }
 }
 
 .title li {
@@ -166,9 +399,8 @@ body {
 }
 
 .links > a {
-  color: #636b6f;
-  padding: 0 25px;
-  font-size: 12px;
+  color: #fff;
+  font-size: 24px;
   font-weight: 600;
   letter-spacing: .1rem;
   text-decoration: none;

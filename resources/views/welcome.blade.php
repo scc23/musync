@@ -26,23 +26,22 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            <div class="top-right links">
+            <div class="content">
+                <ul class="title hidden neon-heading first">
+                    <li><span class="flickering-3">M</span></li>
+                    <li>U</li>
+                    <li><span class="flickering-1">S</span></li>
+                    <li><span class="flickering-3">Y</span></li>                    
+                    <li>N</li>
+                    <li><span class="flickering-2">C</span></li>
+                </ul>
+            </div>
+            <div class="links">
                 @auth
                     <a href="{{ url('/home') }}">Home</a>
                 @else
-                    <a href="/login/spotify"  class="btn btn-success btn-md">Login with Spotify</a>
+                    <a href="/login/spotify"  class="neon-heading second">Login with Spotify</a>
                 @endauth
-            </div>
-
-            <div class="content">
-                <ul class="title hidden m-b-md">
-                    <li>M</li>
-                    <li>u</li>
-                    <li>S</li>
-                    <li>y</li>
-                    <li>n</li>
-                    <li>c</li>
-                </ul>
             </div>
         </div>
     </body>

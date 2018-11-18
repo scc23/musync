@@ -66208,7 +66208,7 @@ var render = function() {
     _c("div", [
       _c("span", { staticClass: "track-album-art" }, [
         _c("img", {
-          attrs: { width: "50", height: "50", src: _vm.track.trackAlbumArt }
+          attrs: { width: "57", height: "57", src: _vm.track.trackAlbumArt }
         })
       ]),
       _vm._v(" "),
@@ -67565,6 +67565,7 @@ var render = function() {
       _c("span", { staticClass: "track-artist" }, [
         _vm._v(_vm._s(_vm.shortenString(_vm.playlistTrack.trackArtist)))
       ]),
+      _c("br"),
       _vm._v(" "),
       _c("span", { staticClass: "track-duration" }, [
         _vm._v(_vm._s(_vm.trackDuration))

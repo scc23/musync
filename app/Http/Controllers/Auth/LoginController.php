@@ -130,7 +130,7 @@ class LoginController extends Controller
         } else {
             // Use default image if no profile picture exists
             if ($spotifyUser->getAvatar() === NULL) {
-                $avatar = "avatar/default.jpg";
+                $avatar = "default.jpg";
             }
             else {
                 $avatar = $spotifyUser->getAvatar();

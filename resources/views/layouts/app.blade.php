@@ -52,10 +52,9 @@
 
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="position:relative; padding-left:50px;">
                                
-                               <!-- Display user avatar -->
-                                <img src="{{ Auth::user()->avatar }}" style="width:32px; height:32px; position:relative; right:5px;border-radius:50%;">
-
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                            <!-- Display user avatar -->
+                            <img src="{{ Auth::user()->avatar}}" style="width:32px; height:32px; position:relative; right:5px;border-radius:50%;">  
+                            {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

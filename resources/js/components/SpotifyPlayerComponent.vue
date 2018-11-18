@@ -99,7 +99,7 @@
             "hasBroadcaster": Boolean,
             "trackToPlay": Number,
             "playlistTracks": Array,
-            "userState": String
+            "userState": String,
         },
 
         data() {
@@ -166,17 +166,21 @@
                         } else {
                             var currentTime = new Date();
                             var rtt = (currentTime - playback["timestamp"]) * 2;
-                            spotifyApi.play({
-                                "device_id": this.spotifyDeviceId,
-                                "uris": [playback["trackUri"]],
-                                "position_ms": playback["trackPosition"] + rtt
-                            }).catch(function(error) {
-                                console.error(error);
-                                // If the response is 401 Unauthorized Error, call parent function to refresh the access token
-                                if (error.status === 401) {
-                                    this.$emit("refreshToken");
-                                }
-                            }.bind(this));
+                            if (playback["isPaused"]) {
+                                // Set playback timer and song metadata display.
+                            } else {
+                                spotifyApi.play({
+                                    "device_id": this.spotifyDeviceId,
+                                    "uris": [playback["trackUri"]],
+                                    "position_ms": playback["trackPosition"] + rtt
+                                }).catch(function(error) {
+                                    console.error(error);
+                                    // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                                    if (error.status === 401) {
+                                        this.$emit("refreshToken");
+                                    }
+                                }.bind(this));
+                            }
                         }
 
                     })
@@ -219,6 +223,13 @@
             },
             seekToPosition(position_ms) {
                 spotifyApi.seek(position_ms, {"device_id": this.spotifyDeviceId})
+                    .then(function(data) {
+                        axios.post(`/api/room/${this.roomId}/playback`, {
+                            trackUri: this.currentTrack["trackUri"],
+                            trackPosition: this.currentTrack["trackPosition"],
+                            isPaused: this.isPaused
+                        })
+                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                         // If the response is 401 Unauthorized Error, call parent function to refresh the access token

@@ -106,22 +106,10 @@ span.flickering-3 {
 }
 
 .flex-center {
-<<<<<<< HEAD
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-=======
-    -webkit-box-align:center;
-    -ms-flex-align:center;
-    align-items:center;
-    display:-webkit-box;
-    display:-ms-flexbox;
-    display:flex;
-    -webkit-box-pack:center;
-    -ms-flex-pack:center;
-    justify-content:center;
->>>>>>> Removed home.css and room.css files and replaced with central app.scss
 }
 
 .position-ref {
@@ -174,27 +162,3 @@ span.flickering-3 {
     text-decoration: none;
     text-transform: uppercase;
 }
-<<<<<<< HEAD
-=======
-
-.m-b-md {
-    margin-bottom: 30px;
-}
-
-
-.btn {
-    position: absolute;
-    float: center;
-
-    margin-top: 8%;
-    text-align: center;
-
-    font-size: 24px;
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.btn:hover {
-    color: #1DB954;
-}
->>>>>>> Removed home.css and room.css files and replaced with central app.scss

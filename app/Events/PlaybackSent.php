@@ -56,7 +56,8 @@ class PlaybackSent implements ShouldBroadcast
         return [
             'trackUri' => $this->track_uri,
             'trackPosition' => $this->track_position,
-            'isPaused' => $this->is_paused
+            'isPaused' => $this->is_paused,
+            'timestamp' => round(microtime(true) * 1000)
         ];
     }
 }

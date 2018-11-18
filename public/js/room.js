@@ -29021,7 +29021,7 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "a74b0d3ba19c7e3a0369",
+  key: "da3b69cf2735d6719fc2",
   cluster: "us2",
   encrypted: true
 });
@@ -65841,7 +65841,21 @@ var spotifyApi = new SpotifyWebApi();
                             }
                         }
                     }.bind(this));
-                } else {}
+                } else {
+                    var currentTime = new Date();
+                    var rtt = (currentTime - playback["timestamp"]) * 2;
+                    spotifyApi.play({
+                        "device_id": this.spotifyDeviceId,
+                        "uris": [playback["trackUri"]],
+                        "position_ms": playback["trackPosition"] + rtt
+                    }).catch(function (error) {
+                        console.error(error);
+                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                        if (error.status === 401) {
+                            this.$emit("refreshToken");
+                        }
+                    }.bind(this));
+                }
             }
         }
     }
@@ -66753,17 +66767,21 @@ var spotifyApi = new SpotifyWebApi();
                 } else {
                     var currentTime = new Date();
                     var rtt = (currentTime - playback["timestamp"]) * 2;
-                    spotifyApi.play({
-                        "device_id": _this.spotifyDeviceId,
-                        "uris": [playback["trackUri"]],
-                        "position_ms": playback["trackPosition"] + rtt
-                    }).catch(function (error) {
-                        console.error(error);
-                        // If the response is 401 Unauthorized Error, call parent function to refresh the access token
-                        if (error.status === 401) {
-                            this.$emit("refreshToken");
-                        }
-                    }.bind(_this));
+                    if (playback["isPaused"]) {
+                        // Set playback timer and song metadata display.
+                    } else {
+                        spotifyApi.play({
+                            "device_id": _this.spotifyDeviceId,
+                            "uris": [playback["trackUri"]],
+                            "position_ms": playback["trackPosition"] + rtt
+                        }).catch(function (error) {
+                            console.error(error);
+                            // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                            if (error.status === 401) {
+                                this.$emit("refreshToken");
+                            }
+                        }.bind(_this));
+                    }
                 }
             }).catch(function (err) {
                 console.log('Failed to sync with broadcaster: ' + err);
@@ -66801,7 +66819,13 @@ var spotifyApi = new SpotifyWebApi();
             }.bind(this));
         },
         seekToPosition: function seekToPosition(position_ms) {
-            spotifyApi.seek(position_ms, { "device_id": this.spotifyDeviceId }).catch(function (error) {
+            spotifyApi.seek(position_ms, { "device_id": this.spotifyDeviceId }).then(function (data) {
+                axios.post('/api/room/' + this.roomId + '/playback', {
+                    trackUri: this.currentTrack["trackUri"],
+                    trackPosition: this.currentTrack["trackPosition"],
+                    isPaused: this.isPaused
+                });
+            }.bind(this)).catch(function (error) {
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {

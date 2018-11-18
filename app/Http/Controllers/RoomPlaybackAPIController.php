@@ -67,20 +67,21 @@ class RoomPlaybackAPIController extends Controller
 
         $track_uri = isset($body['trackUri']) ? $body['trackUri'] : '';
         $track_position = isset($body['trackPosition']) ? $body['trackPosition'] : 0;
-        $is_paused = isset($body['isPaused']) ? $body['isPaused'] : null;
 
         $error = '';
         if (empty($track_uri)) {
             $error = "The Spotfiy track URI (trackUri) must be provided.";
         } else if (empty($track_position)) {
             $error = "The track position (trackPosition) must be provided,  in milliseconds.";
-        } else if ($is_paused == null) {
+        } else if (!isset($body['isPaused'])) {
             $error = "The pause state (isPaused) must be provided, as a boolean.";
         }
 
         if (!empty($error)) {
             return response()->json(["error" => $error], Response::HTTP_BAD_REQUEST);
         }
+
+        $is_paused = $body['isPaused'];
 
         $room_id = $request->route('id');
         $playback_sent = new PlaybackSent($room_id, $track_uri, $track_position, $is_paused);

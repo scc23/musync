@@ -319,7 +319,7 @@
             syncPlayerState(playback) {
                 if (this.userState == "listening") {
                     if (playback["isPaused"]) {
-                        spotifyApi. pause(function(err, data) {
+                        spotifyApi.pause(function(err, data) {
                             if (err) {
                                 console.error("Could not pause playback: " + err);
                                 // If the response is 401 Unauthorized Error, refresh the access token
@@ -329,7 +329,19 @@
                             }
                         }.bind(this));
                     } else {
-
+                        var currentTime = new Date();
+                        var rtt = (currentTime - playback["timestamp"]) * 2;
+                        spotifyApi.play({
+                            "device_id": this.spotifyDeviceId,
+                            "uris": [playback["trackUri"]],
+                            "position_ms": playback["trackPosition"] + rtt
+                        }).catch(function(error) {
+                            console.error(error);
+                            // If the response is 401 Unauthorized Error, call parent function to refresh the access token
+                            if (error.status === 401) {
+                                this.$emit("refreshToken");
+                            }
+                        }.bind(this));
                     }
                 }
             }

@@ -2,11 +2,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlayCircle, faPauseCircle, faStepForward, faMusic } from '@fortawesome/free-solid-svg-icons';
+import { faPlayCircle, faPauseCircle, faStepForward, faMusic, faVolumeUp} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Notifications from 'vue-notification';
 
-library.add(faPlayCircle, faPauseCircle, faStepForward, faMusic);
+library.add(faPlayCircle, faPauseCircle, faStepForward, faMusic, faVolumeUp);
 Vue.use(Notifications);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;

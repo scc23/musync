@@ -1,6 +1,6 @@
 <template>
   <div id="broadcast-notification">    
-    <notifications group="broadcast-notification"
+    <notifications group="general-notification"
                    position="top right"
                    :speed="500"/>
   </div>
@@ -9,18 +9,17 @@
 <script>
 export default {
     props: {
-            "broadcastNotificationText": String
+            "notificationText": String
     },
 
     watch: {
-        broadcastNotificationText: function () {
-            this.show('broadcast-notification', 'success');
+        notificationText: function () {
+            this.show('general-notification', 'success');
         }
     },
 
     data () {
         return {
-            notificationText: "", 
             animation: {
                 enter: {
                     opacity: [1, 0],
@@ -37,10 +36,10 @@ export default {
 
   methods: {
     show (group, type = '') {
-      const text = this.broadcastNotificationText;
+      const text = this.notificationText;
       this.$notify({
         group,
-        title: `Musync`,
+        title: `MuSync`,
         text,
         type,
       })

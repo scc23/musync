@@ -60160,7 +60160,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* unused harmony export faVolumeDown */
 /* unused harmony export faVolumeMute */
 /* unused harmony export faVolumeOff */
-/* unused harmony export faVolumeUp */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return faVolumeUp; });
 /* unused harmony export faVoteYea */
 /* unused harmony export faVrCardboard */
 /* unused harmony export faWalking */

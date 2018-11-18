@@ -27277,8 +27277,8 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "da3b69cf2735d6719fc2",
-  cluster: "us2",
+  key: "",
+  cluster: "mt1",
   encrypted: true
 });
 
@@ -63404,7 +63404,7 @@ var content = __webpack_require__(61);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("302a01e5", content, false, {});
+var update = __webpack_require__(3)("2e2e8850", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -63532,7 +63532,7 @@ var content = __webpack_require__(65);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("6cccce66", content, false, {});
+var update = __webpack_require__(3)("76ba940c", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags

@@ -29021,7 +29021,7 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "e94fc434b5c8f713fc4b",
+  key: "a74b0d3ba19c7e3a0369",
   cluster: "us2",
   encrypted: true
 });
@@ -66730,7 +66730,8 @@ var spotifyApi = new SpotifyWebApi();
             isPaused: true,
             progressInterval: null,
             isDragStart: false,
-            currentTrack: { name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0 }
+            currentTrack: { name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0 },
+            nextTrack: { trackUri: "" }
         };
     },
 
@@ -66829,10 +66830,16 @@ var spotifyApi = new SpotifyWebApi();
                 }
             }.bind(this));
         },
-        nextTrack: function nextTrack() {
+        next: function next() {
             console.log("step forward is pressed");
             spotifyApi.skipToNext({
-                "device_id": this.spotifyDeviceId }).catch(function (error) {
+                "device_id": this.spotifyDeviceId }).then(function (data) {
+                axios.post('/api/room/' + this.roomId + '/playback', {
+                    trackUri: this.nextTrack["trackUri"],
+                    trackPosition: 0,
+                    isPaused: this.isPaused
+                });
+            }.bind(this)).catch(function (error) {
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {
@@ -66933,6 +66940,11 @@ var spotifyApi = new SpotifyWebApi();
                 if (this.currentTrack["trackPosition"] > this.currentTrack["duration"]) {
                     this.$refs.slider.setValue(0);
                 }
+                if (this.spotifyPlayerState["track_window"]["next_tracks"].length != 0) {
+                    this.nextTrack["trackUri"] = this.spotifyPlayerState["track_window"]["next_tracks"][0]["uri"];
+                } else {
+                    this.nextTrack["trackUri"] = "";
+                }
             }
         },
         "trackToPlay": function trackToPlay(newState, oldState) {
@@ -66940,6 +66952,11 @@ var spotifyApi = new SpotifyWebApi();
             this.currentTrack["trackIndex"] = this.trackToPlay["index"];
             this.currentTrack["trackPosition"] = 0;
             this.play();
+            // axios.post(`/api/room/${this.roomId}/playback`, {
+            //             trackUri: this.currentTrack["trackUri"],
+            //             trackPosition: 0,
+            //             isPaused: this.isPaused
+            //         });
         },
         "isPaused": function isPaused(newValue, oldValue) {
             this.updateProgress();
@@ -67099,7 +67116,7 @@ var render = function() {
                                       staticClass:
                                         "player-icons step-forward-btn",
                                       attrs: { type: "button" },
-                                      on: { click: _vm.nextTrack }
+                                      on: { click: _vm.next }
                                     },
                                     [
                                       _c("font-awesome-icon", {

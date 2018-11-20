@@ -71,7 +71,7 @@ class RoomPlaybackAPIController extends Controller
         $error = '';
         if (empty($track_uri)) {
             $error = "The Spotfiy track URI (trackUri) must be provided.";
-        } else if (empty($track_position)) {
+        } else if (!isset($body["trackPosition"])) {
             $error = "The track position (trackPosition) must be provided,  in milliseconds.";
         } else if (!isset($body['isPaused'])) {
             $error = "The pause state (isPaused) must be provided, as a boolean.";

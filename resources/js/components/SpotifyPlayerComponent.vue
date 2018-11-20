@@ -39,7 +39,7 @@
                                                 <font-awesome-icon class="player-icons" icon="pause-circle"/>
                                             </div>
                                         </button>
-                                        <button class="player-icons step-forward-btn" type="button" v-if="userState == 'broadcasting'" v-on:click="nextTrack">
+                                        <button class="player-icons step-forward-btn" type="button" v-if="userState == 'broadcasting'" v-on:click="next">
                                             <font-awesome-icon icon="step-forward"/>
                                         </button>
                                     </div>
@@ -107,7 +107,8 @@
                 isPaused: true,
                 progressInterval: null,
                 isDragStart: false,
-                currentTrack: {name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0}
+                currentTrack: {name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0},
+                nextTrack: {trackUri: ""}
             }
         },
 
@@ -209,10 +210,17 @@
                     }
                 }.bind(this))
             },
-            nextTrack() {
+            next() {
                 console.log("step forward is pressed");
                 spotifyApi.skipToNext({
                     "device_id": this.spotifyDeviceId})
+                    .then(function(data) {
+                        axios.post(`/api/room/${this.roomId}/playback`, {
+                            trackUri: this.nextTrack["trackUri"],
+                            trackPosition: 0,
+                            isPaused: this.isPaused
+                        })
+                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                         // If the response is 401 Unauthorized Error, call parent function to refresh the access token
@@ -312,6 +320,11 @@
                     if (this.currentTrack["trackPosition"] > this.currentTrack["duration"]) {
                         this.$refs.slider.setValue(0);
                     }
+                    if (this.spotifyPlayerState["track_window"]["next_tracks"].length != 0) {
+                        this.nextTrack["trackUri"] = this.spotifyPlayerState["track_window"]["next_tracks"][0]["uri"];
+                    } else {
+                        this.nextTrack["trackUri"] = "";
+                    }
                 }
             },
             "trackToPlay": function(newState, oldState) {
@@ -319,6 +332,11 @@
                 this.currentTrack["trackIndex"] = this.trackToPlay["index"];
                 this.currentTrack["trackPosition"] = 0;
                 this.play();
+                axios.post(`/api/room/${this.roomId}/playback`, {
+                            trackUri: this.trackToPlay["uri"],
+                            trackPosition: 0,
+                            isPaused: this.isPaused
+                        });
             },
             "isPaused": function(newValue, oldValue) {
                 this.updateProgress();

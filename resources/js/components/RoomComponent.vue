@@ -40,7 +40,6 @@
                                 </spotify-player-component>
                                 <playlist-component v-bind:spotify-id="spotifyId"
                                                     v-bind:spotify-player-state="spotifyPlayerState"
-                                                    v-bind:track-to-play="trackToPlay"
                                                     v-bind:playlist-tracks="playlistTracks"
                                                     v-bind:user-state="userState"
                                                     @getTrack="getTrackToPlay"
@@ -100,7 +99,7 @@
                 "notificationText": "",
                 "broadcasterName": "",
                 "broadcasterId": "",
-                "trackToPlay": undefined,
+                "trackToPlay": {index: undefined, uri: ""},
                 "playlistTracks": [],
                 "userState": "idle",
                 "searchResults": []
@@ -267,9 +266,10 @@
                 spotifyApi.pause();
                 axios.delete('/api/room/' + this.roomId + '/broadcast');
             },
-            getTrackToPlay(newData) {
-                this.trackToPlay = newData;
-                console.log("Track to play: " + this.trackToPlay);
+            getTrackToPlay(trackObject) {
+                this.trackToPlay = trackObject;
+                console.log("track to play index: " + this.trackToPlay["index"]);
+                console.log("track to play uri: " + this.trackToPlay["uri"]);
             },
             clearPlaylist() {
                 // Get the track uris from playlistTracks

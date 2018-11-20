@@ -332,11 +332,11 @@
                 this.currentTrack["trackIndex"] = this.trackToPlay["index"];
                 this.currentTrack["trackPosition"] = 0;
                 this.play();
-                // axios.post(`/api/room/${this.roomId}/playback`, {
-                //             trackUri: this.currentTrack["trackUri"],
-                //             trackPosition: 0,
-                //             isPaused: this.isPaused
-                //         });
+                axios.post(`/api/room/${this.roomId}/playback`, {
+                            trackUri: this.trackToPlay["uri"],
+                            trackPosition: 0,
+                            isPaused: this.isPaused
+                        });
             },
             "isPaused": function(newValue, oldValue) {
                 this.updateProgress();

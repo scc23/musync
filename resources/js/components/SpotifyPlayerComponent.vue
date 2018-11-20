@@ -97,7 +97,7 @@
             "playlistId": String,
             "roomId": String,
             "hasBroadcaster": Boolean,
-            "trackToPlay": Number,
+            "trackToPlay": Object,
             "playlistTracks": Array,
             "userState": String,
         },
@@ -316,8 +316,7 @@
             },
             "trackToPlay": function(newState, oldState) {
                 this.trackToPlay = newState;
-                console.log("trackToPlay updated to " + this.trackToPlay + " in SpotifyPlayerComponent.");
-                this.currentTrack["trackIndex"] = this.trackToPlay;
+                this.currentTrack["trackIndex"] = this.trackToPlay["index"];
                 this.currentTrack["trackPosition"] = 0;
                 this.play();
             },

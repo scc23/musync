@@ -6,8 +6,8 @@
             </div>
             <ul class='list-group border'>
                 <li class="list-group-item list-group-item-action" v-for="(playlistTrack, playlistTrackIndex) in playlistTracks"
-                                                                   v-bind:class="{'current-track':currentTrack['name'] == playlistTrack.trackName}"
-                                                                   @click="updateTrackToPlay(playlistTrackIndex)">
+                                                                   v-bind:class="{'current-track':currentTrack['trackUri'] == playlistTrack.trackUri}"
+                                                                   @click="updateTrackToPlay(playlistTrackIndex, playlistTrack.trackUri)">
                     <playlist-listing-component v-bind:playlist-tracks="playlistTracks"
                                                 v-bind:playlist-track="playlistTrack">
                     </playlist-listing-component>
@@ -26,14 +26,13 @@
         props: {
             "spotifyId": String,
             "spotifyPlayerState": Object,
-            "trackToPlay": Number,
             "playlistTracks": Array,
             "userState": String
         },
         data() {
             return {
                 "playlistId": "",
-                "currentTrack": {name: "", artists: "", duration: 0, albumArt: ""}
+                "currentTrack": {name: "", artists: "", duration: 0, albumArt: "", trackUri: ""}
             }
         },
         watch: {
@@ -45,6 +44,7 @@
                     this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
                     this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
                     this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+                    this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
                     console.log("Currently playing track: " + this.currentTrack["name"]);
                 }
             }
@@ -58,11 +58,15 @@
                 // Call parent function to remove track from playlist
                 this.$emit("removeTrack", index, uri);
             },
-            updateTrackToPlay(value) {
+            updateTrackToPlay(index, uri) {
                 // Only the broadcaster can click on a track from the playlist to play
                 if (this.userState == "broadcasting") {
                     // Pass the playlist index of the track to be played
-                    this.$emit("getTrack", value);
+                    var trackObject = {
+                        index: index,
+                        uri: uri
+                    };
+                    this.$emit("getTrack", trackObject);
                 }
                 else {
                     console.log("Cannot play track, only the broadcaster can play a track.");
@@ -108,6 +112,7 @@
         padding: 5px 10px;
         border-left: 0;
         border-right: 0;
+        cursor: pointer;
     }
 
     .remove-icon {
@@ -118,7 +123,6 @@
         display: none;
         background: none;
         border: none;
-        cursor: pointer;
     }
 
     .list-group-item:hover .remove-icon{

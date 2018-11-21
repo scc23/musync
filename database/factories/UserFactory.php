@@ -18,6 +18,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [        
         'spotify_id' => str_random(10),
         'name' => $faker->userName,
+        'avatar' => '',
         'refresh_token' =>  str_random(10),
         'remember_token' => str_random(10),
         'api_token' => str_random(10)

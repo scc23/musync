@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Socialite;
 use SpotifyWebAPI;
 
+
 class LoginController extends Controller
 {
     /*
@@ -85,6 +86,7 @@ class LoginController extends Controller
         $authUser = $this->userFindOrCreate($spotifyUser);
         auth()->login($authUser, true);
 
+
         // Create an empty MuSync playlist for the user if it doesn't exist
         $playlistExists = false;
         $this->api->setAccessToken(Auth::user()->api_token);
@@ -126,12 +128,22 @@ class LoginController extends Controller
             $user->api_token = $spotifyUser->token;
             $user->save();
         } else {
+            // Use default image if no profile picture exists
+            if ($spotifyUser->getAvatar() === NULL) {
+                $avatar = "default.jpg";
+            }
+            else {
+                $avatar = $spotifyUser->getAvatar();
+            }
+
             $user = User::create([
                 'spotify_id' => $spotifyUser->getId(),
                 'name' => $spotifyUser->getName(),
+                'avatar' => $avatar,
                 'api_token' => $spotifyUser->token,
                 'refresh_token' => $spotifyUser->refreshToken,
             ]);
+
         }
         return $user;
     }

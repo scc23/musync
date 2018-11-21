@@ -3,7 +3,7 @@
 <template>
     <div class="chat-form">
         <div class="input-group">
-            <input id="btn-input" type="text" class="form-control form-control-sm" placeholder="Type a message..." v-model="newMessage" @keyup.enter="sendMessage">
+            <input id="btn-input" type="text" class="form-control form-control-sm input-border" placeholder="Type a message..." v-model="newMessage" @keyup.enter="sendMessage">
             <span class="input-group-append">
                 <button class="btn btn-secondary btn-sm" id="btn-chat" @click="sendMessage">Send</button>
             </span>
@@ -52,4 +52,7 @@
 </script>
 
 <style lang="scss" scoped>
+.input-border {
+    border-color: #5e5e5e;
+}
 </style>

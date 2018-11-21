@@ -6,7 +6,7 @@
                 <button class="btn btn-default btn-primary" id="btn-search" type="submit">Search</button>
             </span>
         </form>
-        <ul class='list-group border'>
+        <ul class='list-group content-border'>
             <li class="list-group-item list-group-item-action" v-for="track in searchResults"
                                                                @click="getTrackToAdd(track)">
                 <search-tracks-listing-component v-bind:track="track">
@@ -82,6 +82,10 @@
 
     #btn-search {
         border-bottom-right-radius: 0;
+    }
+
+    .content-border {
+        border: 1px solid #5e5e5e;
     }
 
     .list-group {

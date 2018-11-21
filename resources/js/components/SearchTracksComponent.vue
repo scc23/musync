@@ -23,7 +23,7 @@
 
     export default {
         components: {
-            'search-tracks-listing-component': require('./searchTracksListingComponent.vue')
+            'search-tracks-listing-component': require('./SearchTracksListingComponent.vue')
         },
         props: {
             "searchResults": Array

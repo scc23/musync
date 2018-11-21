@@ -1,6 +1,16 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="loading hide">
+            <div class="obj"></div>
+            <div class="obj"></div>
+            <div class="obj"></div>
+            <div class="obj"></div>
+            <div class="obj"></div>
+            <div class="obj"></div>
+            <div class="obj"></div>
+            <div class="obj"></div>
+        </div>
+        <div class="row justify-content-center hide">
             <notification-component v-bind:notification-text="notificationText">
             </notification-component>
             <div class="col-12">
@@ -114,6 +124,30 @@
             this.initializeSpotifyPlayer(this.currentAccessToken);
             this.getRoomBroadcasterStatus();
             window.addEventListener("beforeunload", this.abruptlyCloseSession);
+        },
+        computed: {
+            readyToLoad: function() {
+                if (this.spotifyDeviceId != "" && this.playlistId != "" && this.hasBroadcaster != null) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        },
+        watch: {
+            readyToLoad: function(val) {
+                $(document).ready(function() {
+                    if (val == true) {
+                        $(".loading").delay(1500).fadeOut("fast");
+                        $(".hide").delay(1500).fadeIn("fast");
+                    }
+                    else {
+                        $(".loading").delay(1500).fadeIn("fast");
+                        $(".hide").delay(1500).fadeOut("fast");
+                    }
+                });
+            }
         },
         methods: {
             refreshAccessToken() {
@@ -372,4 +406,59 @@
 </script>
 
 <style lang="scss" scoped>
+.hide {
+    display: none;
+}
+
+
+.loading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+.obj{
+    width: 6px;
+    height: 0px;
+    background-color: #1DB954;
+    margin: 0 3px;
+    border-radius: 10px;
+    animation: loading 0.8s infinite;
+}
+.obj:nth-child(2){
+    animation-delay: 0.1s;
+}
+.obj:nth-child(3){
+    animation-delay: 0.2s;
+}
+.obj:nth-child(4){
+    animation-delay: 0.3s;
+}
+.obj:nth-child(5){
+    animation-delay: 0.4s;
+}
+.obj:nth-child(6){
+    animation-delay: 0.5s;
+}
+.obj:nth-child(7){
+    animation-delay: 0.6s;
+}
+.obj:nth-child(8){
+    animation-delay: 0.7s;
+}
+
+@keyframes loading {
+    0% {
+        height: 0;
+    }
+    50% {
+        height: 50px;
+    }
+    100% {
+        height: 0;
+    }
+}
 </style>

@@ -65501,7 +65501,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.hide[data-v-61759d07] {\n  display: none;\n}\n.loading[data-v-61759d07] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  height: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.obj[data-v-61759d07] {\n  width: 6px;\n  height: 0px;\n  background-color: #1DB954;\n  margin: 0 3px;\n  border-radius: 10px;\n  -webkit-animation: loading-data-v-61759d07 0.8s infinite;\n          animation: loading-data-v-61759d07 0.8s infinite;\n}\n.obj[data-v-61759d07]:nth-child(2) {\n  -webkit-animation-delay: 0.1s;\n          animation-delay: 0.1s;\n}\n.obj[data-v-61759d07]:nth-child(3) {\n  -webkit-animation-delay: 0.2s;\n          animation-delay: 0.2s;\n}\n.obj[data-v-61759d07]:nth-child(4) {\n  -webkit-animation-delay: 0.3s;\n          animation-delay: 0.3s;\n}\n.obj[data-v-61759d07]:nth-child(5) {\n  -webkit-animation-delay: 0.4s;\n          animation-delay: 0.4s;\n}\n.obj[data-v-61759d07]:nth-child(6) {\n  -webkit-animation-delay: 0.5s;\n          animation-delay: 0.5s;\n}\n.obj[data-v-61759d07]:nth-child(7) {\n  -webkit-animation-delay: 0.6s;\n          animation-delay: 0.6s;\n}\n.obj[data-v-61759d07]:nth-child(8) {\n  -webkit-animation-delay: 0.7s;\n          animation-delay: 0.7s;\n}\n@-webkit-keyframes loading-data-v-61759d07 {\n0% {\n    height: 0;\n}\n50% {\n    height: 50px;\n}\n100% {\n    height: 0;\n}\n}\n@keyframes loading-data-v-61759d07 {\n0% {\n    height: 0;\n}\n50% {\n    height: 50px;\n}\n100% {\n    height: 0;\n}\n}\n", ""]);
 
 // exports
 
@@ -65514,6 +65514,16 @@ exports.push([module.i, "", ""]);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65632,6 +65642,28 @@ var spotifyApi = new SpotifyWebApi();
         window.addEventListener("beforeunload", this.abruptlyCloseSession);
     },
 
+    computed: {
+        readyToLoad: function readyToLoad() {
+            if (this.spotifyDeviceId != "" && this.playlistId != "" && this.hasBroadcaster != null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
+    watch: {
+        readyToLoad: function readyToLoad(val) {
+            $(document).ready(function () {
+                if (val == true) {
+                    $(".loading").delay(1500).fadeOut("fast");
+                    $(".hide").delay(1500).fadeIn("fast");
+                } else {
+                    $(".loading").delay(1500).fadeIn("fast");
+                    $(".hide").delay(1500).fadeOut("fast");
+                }
+            });
+        }
+    },
     methods: {
         refreshAccessToken: function refreshAccessToken() {
             var _this = this;
@@ -68650,9 +68682,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c(
       "div",
-      { staticClass: "row justify-content-center" },
+      { staticClass: "row justify-content-center hide" },
       [
         _c("notification-component", {
           attrs: { "notification-text": _vm.notificationText }
@@ -68764,7 +68798,30 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loading hide" }, [
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

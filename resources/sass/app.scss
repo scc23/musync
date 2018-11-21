@@ -14,6 +14,23 @@
 }
 
 
+html {
+  scrollbar-face-color: #646464;
+  scrollbar-base-color: #646464;
+  scrollbar-3dlight-color: #646464;
+  scrollbar-highlight-color: #646464;
+  scrollbar-track-color: #000;
+  scrollbar-arrow-color: #000;
+  scrollbar-shadow-color: #646464;
+  scrollbar-dark-shadow-color: #646464;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px;}
+::-webkit-scrollbar-track {  background-color: #646464;}
+::-webkit-scrollbar-track-piece { background-color: #000;}
+::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+::-webkit-scrollbar-corner { background-color: #646464;}
+::-webkit-resizer { background-color: #666;}
 
 
 
@@ -64,14 +81,17 @@ body {
 .dropdown-menu .dropdown-item:hover {background-color: #154c28;}
 
 
-.card {background-color: black; border-color: white;}
+.card {background-color: black; border-color: #ffffff;}
 .card-body {background-color: #191414;}
 
-
+.col-4.list-group {border-color:#ff0000;}
 .col-12 .form-control {background-color: #191414; color: #ffffff;}
 
-.list-group .list-group-item {background-color: #333333; color: #ffffff;}
+.list-group .list-group-item {background-color: #222222; color: #ffffff;}
+.list-group .list-group-item:hover {background-color: #333333; color: #ffffff;}
+.list-group .list-group-item:active {background-color: #222222; color: #ffffff;}
 
+.clear-block.border-left.border-right {border-color:#ffffff;}
 
 .genre-type {
     color: #e4f1fe;
@@ -100,7 +120,7 @@ body {
 
 .card-footer {background-color: #191414; border-color:#ffffff;}
 
-.input-group .form-control {background-color: #110f0f;}
+.input-group .form-control {background-color: #110f0f; border-color:#ffffff;}
 
 .btn.btn-default.btn-primary {background-color: #1DB954; border:none;}
 .btn.btn-default.btn-primary:hover {background-color: #154c28; border:none;}
@@ -114,7 +134,7 @@ body {
 .btn:hover {background-color: #154c28;}
 .btn:active {background-color: #154c28;}
 
-.input-group-append{color:#ffffff;}
+.input-group-append{color:#ffffff; background-color:#5e5e5e;}
 .btn.btn-secondary.btn-sm {background-color: #1DB954; color:#ffffff;}
 .btn.btn-secondary.btn-sm:hover {background-color: #154c28; color:#ffffff;}
 .btn.btn-secondary.btn-sm:active {background-color: #154c28; color:#ffffff;}

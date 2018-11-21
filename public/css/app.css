@@ -16,7 +16,7 @@
   --green: #38c172;
   --teal: #4dc0b5;
   --cyan: #6cb2eb;
-  --white: #fff;
+  --white: #ffffff;
   --gray: #6c757d;
   --gray-dark: #343a40;
   --primary: #3490dc;
@@ -554,11 +554,7 @@ a > code {
 kbd {
   padding: 0.2rem 0.4rem;
   font-size: 87.5%;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #212529;
   border-radius: 0.2rem;
 }
@@ -2229,11 +2225,7 @@ pre code {
   font-size: 0.9rem;
   line-height: 1.6;
   color: #495057;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
@@ -2257,11 +2249,7 @@ pre code {
 
 .form-control:focus {
   color: #495057;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   border-color: #a1cbef;
   outline: 0;
   -webkit-box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
@@ -2291,11 +2279,7 @@ pre code {
 
 select.form-control:focus::-ms-value {
   color: #495057;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .form-control-file,
@@ -2451,11 +2435,7 @@ textarea.form-control {
   margin-top: .1rem;
   font-size: 0.7875rem;
   line-height: 1.6;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: rgba(56, 193, 114, 0.9);
   border-radius: 0.25rem;
 }
@@ -2579,11 +2559,7 @@ textarea.form-control {
   margin-top: .1rem;
   font-size: 0.7875rem;
   line-height: 1.6;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: rgba(227, 52, 47, 0.9);
   border-radius: 0.25rem;
 }
@@ -2842,21 +2818,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
   border-color: #3490dc;
 }
 
 .btn-primary:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #227dc7;
   border-color: #2176bd;
 }
@@ -2869,11 +2837,7 @@ fieldset:disabled a.btn {
 
 .btn-primary.disabled,
 .btn-primary:disabled {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
   border-color: #3490dc;
 }
@@ -2881,11 +2845,7 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #2176bd;
   border-color: #1f6fb2;
 }
@@ -2898,21 +2858,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-secondary {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #6c757d;
   border-color: #6c757d;
 }
 
 .btn-secondary:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #5a6268;
   border-color: #545b62;
 }
@@ -2925,11 +2877,7 @@ fieldset:disabled a.btn {
 
 .btn-secondary.disabled,
 .btn-secondary:disabled {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #6c757d;
   border-color: #6c757d;
 }
@@ -2937,11 +2885,7 @@ fieldset:disabled a.btn {
 .btn-secondary:not(:disabled):not(.disabled):active,
 .btn-secondary:not(:disabled):not(.disabled).active,
 .show > .btn-secondary.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #545b62;
   border-color: #4e555b;
 }
@@ -2954,21 +2898,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-success {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #38c172;
   border-color: #38c172;
 }
 
 .btn-success:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #2fa360;
   border-color: #2d995b;
 }
@@ -2981,11 +2917,7 @@ fieldset:disabled a.btn {
 
 .btn-success.disabled,
 .btn-success:disabled {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #38c172;
   border-color: #38c172;
 }
@@ -2993,11 +2925,7 @@ fieldset:disabled a.btn {
 .btn-success:not(:disabled):not(.disabled):active,
 .btn-success:not(:disabled):not(.disabled).active,
 .show > .btn-success.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #2d995b;
   border-color: #2a9055;
 }
@@ -3016,11 +2944,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-info:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #4aa0e6;
   border-color: #3f9ae5;
 }
@@ -3041,11 +2965,7 @@ fieldset:disabled a.btn {
 .btn-info:not(:disabled):not(.disabled):active,
 .btn-info:not(:disabled):not(.disabled).active,
 .show > .btn-info.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3f9ae5;
   border-color: #3495e3;
 }
@@ -3098,21 +3018,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-danger {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #e3342f;
   border-color: #e3342f;
 }
 
 .btn-danger:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #d0211c;
   border-color: #c51f1a;
 }
@@ -3125,11 +3037,7 @@ fieldset:disabled a.btn {
 
 .btn-danger.disabled,
 .btn-danger:disabled {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #e3342f;
   border-color: #e3342f;
 }
@@ -3137,11 +3045,7 @@ fieldset:disabled a.btn {
 .btn-danger:not(:disabled):not(.disabled):active,
 .btn-danger:not(:disabled):not(.disabled).active,
 .show > .btn-danger.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #c51f1a;
   border-color: #b91d19;
 }
@@ -3194,21 +3098,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-dark {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #343a40;
   border-color: #343a40;
 }
 
 .btn-dark:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #23272b;
   border-color: #1d2124;
 }
@@ -3221,11 +3117,7 @@ fieldset:disabled a.btn {
 
 .btn-dark.disabled,
 .btn-dark:disabled {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #343a40;
   border-color: #343a40;
 }
@@ -3233,11 +3125,7 @@ fieldset:disabled a.btn {
 .btn-dark:not(:disabled):not(.disabled):active,
 .btn-dark:not(:disabled):not(.disabled).active,
 .show > .btn-dark.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #1d2124;
   border-color: #171a1d;
 }
@@ -3257,11 +3145,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
   border-color: #3490dc;
 }
@@ -3281,11 +3165,7 @@ fieldset:disabled a.btn {
 .btn-outline-primary:not(:disabled):not(.disabled):active,
 .btn-outline-primary:not(:disabled):not(.disabled).active,
 .show > .btn-outline-primary.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
   border-color: #3490dc;
 }
@@ -3305,11 +3185,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-secondary:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #6c757d;
   border-color: #6c757d;
 }
@@ -3329,11 +3205,7 @@ fieldset:disabled a.btn {
 .btn-outline-secondary:not(:disabled):not(.disabled):active,
 .btn-outline-secondary:not(:disabled):not(.disabled).active,
 .show > .btn-outline-secondary.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #6c757d;
   border-color: #6c757d;
 }
@@ -3353,11 +3225,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-success:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #38c172;
   border-color: #38c172;
 }
@@ -3377,11 +3245,7 @@ fieldset:disabled a.btn {
 .btn-outline-success:not(:disabled):not(.disabled):active,
 .btn-outline-success:not(:disabled):not(.disabled).active,
 .show > .btn-outline-success.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #38c172;
   border-color: #38c172;
 }
@@ -3481,11 +3345,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-danger:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #e3342f;
   border-color: #e3342f;
 }
@@ -3505,11 +3365,7 @@ fieldset:disabled a.btn {
 .btn-outline-danger:not(:disabled):not(.disabled):active,
 .btn-outline-danger:not(:disabled):not(.disabled).active,
 .show > .btn-outline-danger.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #e3342f;
   border-color: #e3342f;
 }
@@ -3569,11 +3425,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-dark:hover {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #343a40;
   border-color: #343a40;
 }
@@ -3593,11 +3445,7 @@ fieldset:disabled a.btn {
 .btn-outline-dark:not(:disabled):not(.disabled):active,
 .btn-outline-dark:not(:disabled):not(.disabled).active,
 .show > .btn-outline-dark.dropdown-toggle {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #343a40;
   border-color: #343a40;
 }
@@ -3740,11 +3588,7 @@ input[type="button"].btn-block {
   color: #212529;
   text-align: left;
   list-style: none;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
@@ -3886,11 +3730,7 @@ input[type="button"].btn-block {
 
 .dropdown-item.active,
 .dropdown-item:active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-decoration: none;
   background-color: #3490dc;
 }
@@ -4272,11 +4112,7 @@ input[type="button"].btn-block {
 }
 
 .custom-control-input:checked ~ .custom-control-label::before {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
 }
 
@@ -4286,11 +4122,7 @@ input[type="button"].btn-block {
 }
 
 .custom-control-input:active ~ .custom-control-label::before {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #cce3f6;
 }
 
@@ -4345,11 +4177,7 @@ input[type="button"].btn-block {
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
-<<<<<<< HEAD
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
-=======
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23ffffff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
@@ -4357,11 +4185,7 @@ input[type="button"].btn-block {
 }
 
 .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::after {
-<<<<<<< HEAD
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4'%3E%3Cpath stroke='%23fff' d='M0 2h4'/%3E%3C/svg%3E");
-=======
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4'%3E%3Cpath stroke='%23ffffff' d='M0 2h4'/%3E%3C/svg%3E");
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before {
@@ -4381,11 +4205,7 @@ input[type="button"].btn-block {
 }
 
 .custom-radio .custom-control-input:checked ~ .custom-control-label::after {
-<<<<<<< HEAD
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E");
-=======
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23ffffff'/%3E%3C/svg%3E");
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .custom-radio .custom-control-input:disabled:checked ~ .custom-control-label::before {
@@ -4400,11 +4220,7 @@ input[type="button"].btn-block {
   line-height: 1.6;
   color: #495057;
   vertical-align: middle;
-<<<<<<< HEAD
-  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
-=======
   background: #ffffff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
->>>>>>> changed 'Search' button background color in app.scss
   background-size: 8px 10px;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
@@ -4422,11 +4238,7 @@ input[type="button"].btn-block {
 
 .custom-select:focus::-ms-value {
   color: #495057;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .custom-select[multiple],
@@ -4504,11 +4316,7 @@ input[type="button"].btn-block {
   padding: 0.375rem 0.75rem;
   line-height: 1.6;
   color: #495057;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
 }
@@ -4766,11 +4574,7 @@ input[type="button"].btn-block {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
 }
 
@@ -5230,20 +5034,12 @@ input[type="button"].btn-block {
 }
 
 .navbar-dark .navbar-brand {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .navbar-dark .navbar-brand:hover,
 .navbar-dark .navbar-brand:focus {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -5263,11 +5059,7 @@ input[type="button"].btn-block {
 .navbar-dark .navbar-nav .active > .nav-link,
 .navbar-dark .navbar-nav .nav-link.show,
 .navbar-dark .navbar-nav .nav-link.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .navbar-dark .navbar-toggler {
@@ -5284,20 +5076,12 @@ input[type="button"].btn-block {
 }
 
 .navbar-dark .navbar-text a {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .navbar-dark .navbar-text a:hover,
 .navbar-dark .navbar-text a:focus {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .card {
@@ -5311,11 +5095,7 @@ input[type="button"].btn-block {
           flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
@@ -5652,11 +5432,7 @@ input[type="button"].btn-block {
   margin-left: -1px;
   line-height: 1.25;
   color: #3490dc;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   border: 1px solid #dee2e6;
 }
 
@@ -5692,11 +5468,7 @@ input[type="button"].btn-block {
 
 .page-item.active .page-link {
   z-index: 1;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
   border-color: #3490dc;
 }
@@ -5705,11 +5477,7 @@ input[type="button"].btn-block {
   color: #6c757d;
   pointer-events: none;
   cursor: auto;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   border-color: #dee2e6;
 }
 
@@ -5773,61 +5541,37 @@ input[type="button"].btn-block {
 }
 
 .badge-primary {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
 }
 
 .badge-primary[href]:hover,
 .badge-primary[href]:focus {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-decoration: none;
   background-color: #2176bd;
 }
 
 .badge-secondary {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #6c757d;
 }
 
 .badge-secondary[href]:hover,
 .badge-secondary[href]:focus {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-decoration: none;
   background-color: #545b62;
 }
 
 .badge-success {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #38c172;
 }
 
 .badge-success[href]:hover,
 .badge-success[href]:focus {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-decoration: none;
   background-color: #2d995b;
 }
@@ -5857,21 +5601,13 @@ input[type="button"].btn-block {
 }
 
 .badge-danger {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #e3342f;
 }
 
 .badge-danger[href]:hover,
 .badge-danger[href]:focus {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-decoration: none;
   background-color: #c51f1a;
 }
@@ -5889,21 +5625,13 @@ input[type="button"].btn-block {
 }
 
 .badge-dark {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #343a40;
 }
 
 .badge-dark[href]:hover,
 .badge-dark[href]:focus {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-decoration: none;
   background-color: #1d2124;
 }
@@ -6109,11 +5837,7 @@ input[type="button"].btn-block {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-align: center;
   white-space: nowrap;
   background-color: #3490dc;
@@ -6188,11 +5912,7 @@ input[type="button"].btn-block {
   display: block;
   padding: 0.75rem 1.25rem;
   margin-bottom: -1px;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
@@ -6216,20 +5936,12 @@ input[type="button"].btn-block {
 .list-group-item.disabled,
 .list-group-item:disabled {
   color: #6c757d;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .list-group-item.active {
   z-index: 2;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #3490dc;
   border-color: #3490dc;
 }
@@ -6260,11 +5972,7 @@ input[type="button"].btn-block {
 }
 
 .list-group-item-primary.list-group-item-action.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #1b4b72;
   border-color: #1b4b72;
 }
@@ -6281,11 +5989,7 @@ input[type="button"].btn-block {
 }
 
 .list-group-item-secondary.list-group-item-action.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #383d41;
   border-color: #383d41;
 }
@@ -6302,11 +6006,7 @@ input[type="button"].btn-block {
 }
 
 .list-group-item-success.list-group-item-action.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #1d643b;
   border-color: #1d643b;
 }
@@ -6323,11 +6023,7 @@ input[type="button"].btn-block {
 }
 
 .list-group-item-info.list-group-item-action.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #385d7a;
   border-color: #385d7a;
 }
@@ -6344,11 +6040,7 @@ input[type="button"].btn-block {
 }
 
 .list-group-item-warning.list-group-item-action.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #857b26;
   border-color: #857b26;
 }
@@ -6365,11 +6057,7 @@ input[type="button"].btn-block {
 }
 
 .list-group-item-danger.list-group-item-action.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #761b18;
   border-color: #761b18;
 }
@@ -6386,11 +6074,7 @@ input[type="button"].btn-block {
 }
 
 .list-group-item-light.list-group-item-action.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #818182;
   border-color: #818182;
 }
@@ -6407,11 +6091,7 @@ input[type="button"].btn-block {
 }
 
 .list-group-item-dark.list-group-item-action.active {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-color: #1b1e21;
   border-color: #1b1e21;
 }
@@ -6422,11 +6102,7 @@ input[type="button"].btn-block {
   font-weight: 700;
   line-height: 1;
   color: #000;
-<<<<<<< HEAD
-  text-shadow: 0 1px 0 #fff;
-=======
   text-shadow: 0 1px 0 #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   opacity: .5;
 }
 
@@ -6524,11 +6200,7 @@ button.close {
           flex-direction: column;
   width: 100%;
   pointer-events: auto;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
@@ -6759,11 +6431,7 @@ button.close {
 .tooltip-inner {
   max-width: 200px;
   padding: 0.25rem 0.5rem;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-align: center;
   background-color: #000;
   border-radius: 0.25rem;
@@ -6792,11 +6460,7 @@ button.close {
   line-break: auto;
   font-size: 0.7875rem;
   word-wrap: break-word;
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
@@ -6845,11 +6509,7 @@ button.close {
 .bs-popover-top .arrow::after,
 .bs-popover-auto[x-placement^="top"] .arrow::after {
   bottom: 1px;
-<<<<<<< HEAD
-  border-top-color: #fff;
-=======
   border-top-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .bs-popover-right,
@@ -6881,11 +6541,7 @@ button.close {
 .bs-popover-right .arrow::after,
 .bs-popover-auto[x-placement^="right"] .arrow::after {
   left: 1px;
-<<<<<<< HEAD
-  border-right-color: #fff;
-=======
   border-right-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .bs-popover-bottom,
@@ -6914,11 +6570,7 @@ button.close {
 .bs-popover-bottom .arrow::after,
 .bs-popover-auto[x-placement^="bottom"] .arrow::after {
   top: 1px;
-<<<<<<< HEAD
-  border-bottom-color: #fff;
-=======
   border-bottom-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .bs-popover-bottom .popover-header::before,
@@ -6962,11 +6614,7 @@ button.close {
 .bs-popover-left .arrow::after,
 .bs-popover-auto[x-placement^="left"] .arrow::after {
   right: 1px;
-<<<<<<< HEAD
-  border-left-color: #fff;
-=======
   border-left-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .popover-header {
@@ -7133,11 +6781,7 @@ button.close {
       -ms-flex-pack: center;
           justify-content: center;
   width: 15%;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-align: center;
   opacity: 0.5;
 }
@@ -7146,11 +6790,7 @@ button.close {
 .carousel-control-prev:focus,
 .carousel-control-next:hover,
 .carousel-control-next:focus {
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-decoration: none;
   outline: 0;
   opacity: .9;
@@ -7174,19 +6814,11 @@ button.close {
 }
 
 .carousel-control-prev-icon {
-<<<<<<< HEAD
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-}
-
-.carousel-control-next-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-=======
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }
 
 .carousel-control-next-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .carousel-indicators {
@@ -7242,11 +6874,7 @@ button.close {
 }
 
 .carousel-indicators .active {
-<<<<<<< HEAD
-  background-color: #fff;
-=======
   background-color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .carousel-caption {
@@ -7257,11 +6885,7 @@ button.close {
   z-index: 10;
   padding-top: 20px;
   padding-bottom: 20px;
-<<<<<<< HEAD
-  color: #fff;
-=======
   color: #ffffff;
->>>>>>> changed 'Search' button background color in app.scss
   text-align: center;
 }
 
@@ -7378,11 +7002,7 @@ button.bg-dark:focus {
 }
 
 .bg-white {
-<<<<<<< HEAD
-  background-color: #fff !important;
-=======
   background-color: #ffffff !important;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .bg-transparent {
@@ -7462,11 +7082,7 @@ button.bg-dark:focus {
 }
 
 .border-white {
-<<<<<<< HEAD
-  border-color: #fff !important;
-=======
   border-color: #ffffff !important;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .rounded {
@@ -10644,11 +10260,7 @@ button.bg-dark:focus {
 }
 
 .text-white {
-<<<<<<< HEAD
-  color: #fff !important;
-=======
   color: #ffffff !important;
->>>>>>> changed 'Search' button background color in app.scss
 }
 
 .text-primary {
@@ -10829,11 +10441,7 @@ a.text-dark:focus {
 
   .table td,
   .table th {
-<<<<<<< HEAD
-    background-color: #fff !important;
-=======
     background-color: #ffffff !important;
->>>>>>> changed 'Search' button background color in app.scss
   }
 
   .table-bordered th,
@@ -10862,9 +10470,6 @@ a.text-dark:focus {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-<<<<<<< HEAD
-}
-=======
 }
 
 body {
@@ -11114,4 +10719,3 @@ body {
   color: #ffffff;
 }
 
->>>>>>> changed 'Search' button background color in app.scss

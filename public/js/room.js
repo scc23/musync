@@ -65581,16 +65581,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 var SpotifyWebApi = __webpack_require__(16);
@@ -67577,7 +67567,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var min = Math.floor(this.playlistTrack.trackDuration / 60000);
             var sec = (this.playlistTrack.trackDuration % 60000 / 1000).toFixed(0);
             this.trackDuration = min + ":" + (sec < 10 ? '0' : '') + sec;
-<<<<<<< HEAD
         },
         shortenString: function shortenString(s) {
             // Take substring if string is too long to display in one line
@@ -67586,8 +67575,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 return s;
             }
-=======
->>>>>>> changed 'Search' button background color in app.scss
         }
     }
 });
@@ -67613,23 +67600,14 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("span", { staticClass: "track-name" }, [
-<<<<<<< HEAD
         _vm._v(_vm._s(_vm.shortenString(_vm.playlistTrack.trackName)))
-=======
-        _vm._v(_vm._s(_vm.playlistTrack.trackName))
->>>>>>> changed 'Search' button background color in app.scss
       ]),
       _c("br"),
       _vm._v(" "),
       _c("span", { staticClass: "track-artist" }, [
-<<<<<<< HEAD
         _vm._v(_vm._s(_vm.shortenString(_vm.playlistTrack.trackArtist)))
       ]),
       _c("br"),
-=======
-        _vm._v(_vm._s(_vm.playlistTrack.trackArtist))
-      ]),
->>>>>>> changed 'Search' button background color in app.scss
       _vm._v(" "),
       _c("span", { staticClass: "track-duration" }, [
         _vm._v(_vm._s(_vm.trackDuration))

@@ -65581,7 +65581,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 var SpotifyWebApi = __webpack_require__(16);
@@ -65616,7 +65615,7 @@ var spotifyApi = new SpotifyWebApi();
             "notificationText": "",
             "broadcasterName": "",
             "broadcasterId": "",
-            "trackToPlay": undefined,
+            "trackToPlay": { index: undefined, uri: "" },
             "playlistTracks": [],
             "userState": "idle",
             "searchResults": []
@@ -65786,9 +65785,10 @@ var spotifyApi = new SpotifyWebApi();
             spotifyApi.pause();
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/room/' + this.roomId + '/broadcast');
         },
-        getTrackToPlay: function getTrackToPlay(newData) {
-            this.trackToPlay = newData;
-            console.log("Track to play: " + this.trackToPlay);
+        getTrackToPlay: function getTrackToPlay(trackObject) {
+            this.trackToPlay = trackObject;
+            console.log("track to play index: " + this.trackToPlay["index"]);
+            console.log("track to play uri: " + this.trackToPlay["uri"]);
         },
         clearPlaylist: function clearPlaylist() {
             // Get the track uris from playlistTracks
@@ -66728,7 +66728,7 @@ var spotifyApi = new SpotifyWebApi();
         "playlistId": String,
         "roomId": String,
         "hasBroadcaster": Boolean,
-        "trackToPlay": Number,
+        "trackToPlay": Object,
         "playlistTracks": Array,
         "userState": String
     },
@@ -66738,7 +66738,8 @@ var spotifyApi = new SpotifyWebApi();
             isPaused: true,
             progressInterval: null,
             isDragStart: false,
-            currentTrack: { name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0 }
+            currentTrack: { name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0 },
+            nextTrack: { trackUri: "" }
         };
     },
 
@@ -66837,10 +66838,16 @@ var spotifyApi = new SpotifyWebApi();
                 }
             }.bind(this));
         },
-        nextTrack: function nextTrack() {
+        next: function next() {
             console.log("step forward is pressed");
             spotifyApi.skipToNext({
-                "device_id": this.spotifyDeviceId }).catch(function (error) {
+                "device_id": this.spotifyDeviceId }).then(function (data) {
+                axios.post('/api/room/' + this.roomId + '/playback', {
+                    trackUri: this.nextTrack["trackUri"],
+                    trackPosition: 0,
+                    isPaused: this.isPaused
+                });
+            }.bind(this)).catch(function (error) {
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {
@@ -66941,14 +66948,23 @@ var spotifyApi = new SpotifyWebApi();
                 if (this.currentTrack["trackPosition"] > this.currentTrack["duration"]) {
                     this.$refs.slider.setValue(0);
                 }
+                if (this.spotifyPlayerState["track_window"]["next_tracks"].length != 0) {
+                    this.nextTrack["trackUri"] = this.spotifyPlayerState["track_window"]["next_tracks"][0]["uri"];
+                } else {
+                    this.nextTrack["trackUri"] = "";
+                }
             }
         },
         "trackToPlay": function trackToPlay(newState, oldState) {
             this.trackToPlay = newState;
-            console.log("trackToPlay updated to " + this.trackToPlay + " in SpotifyPlayerComponent.");
-            this.currentTrack["trackIndex"] = this.trackToPlay;
+            this.currentTrack["trackIndex"] = this.trackToPlay["index"];
             this.currentTrack["trackPosition"] = 0;
             this.play();
+            axios.post('/api/room/' + this.roomId + '/playback', {
+                trackUri: this.trackToPlay["uri"],
+                trackPosition: 0,
+                isPaused: this.isPaused
+            });
         },
         "isPaused": function isPaused(newValue, oldValue) {
             this.updateProgress();
@@ -67108,7 +67124,7 @@ var render = function() {
                                       staticClass:
                                         "player-icons step-forward-btn",
                                       attrs: { type: "button" },
-                                      on: { click: _vm.nextTrack }
+                                      on: { click: _vm.next }
                                     },
                                     [
                                       _c("font-awesome-icon", {
@@ -67313,7 +67329,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n  cursor: pointer;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -67352,14 +67368,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: {
         "spotifyId": String,
         "spotifyPlayerState": Object,
-        "trackToPlay": Number,
         "playlistTracks": Array,
         "userState": String
     },
     data: function data() {
         return {
             "playlistId": "",
-            "currentTrack": { name: "", artists: "", duration: 0, albumArt: "" }
+            "currentTrack": { name: "", artists: "", duration: 0, albumArt: "", trackUri: "" }
         };
     },
 
@@ -67372,6 +67387,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
                 this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
                 this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+                this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
                 console.log("Currently playing track: " + this.currentTrack["name"]);
             }
         }
@@ -67385,11 +67401,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // Call parent function to remove track from playlist
             this.$emit("removeTrack", index, uri);
         },
-        updateTrackToPlay: function updateTrackToPlay(value) {
+        updateTrackToPlay: function updateTrackToPlay(index, uri) {
             // Only the broadcaster can click on a track from the playlist to play
             if (this.userState == "broadcasting") {
                 // Pass the playlist index of the track to be played
-                this.$emit("getTrack", value);
+                var trackObject = {
+                    index: index,
+                    uri: uri
+                };
+                this.$emit("getTrack", trackObject);
             } else {
                 console.log("Cannot play track, only the broadcaster can play a track.");
             }
@@ -67525,7 +67545,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var min = Math.floor(this.playlistTrack.trackDuration / 60000);
             var sec = (this.playlistTrack.trackDuration % 60000 / 1000).toFixed(0);
             this.trackDuration = min + ":" + (sec < 10 ? '0' : '') + sec;
-<<<<<<< HEAD
         },
         shortenString: function shortenString(s) {
             // Take substring if string is too long to display in one line
@@ -67534,8 +67553,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 return s;
             }
-=======
->>>>>>> changed 'Search' button background color in app.scss
         }
     }
 });
@@ -67561,23 +67578,14 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("span", { staticClass: "track-name" }, [
-<<<<<<< HEAD
         _vm._v(_vm._s(_vm.shortenString(_vm.playlistTrack.trackName)))
-=======
-        _vm._v(_vm._s(_vm.playlistTrack.trackName))
->>>>>>> changed 'Search' button background color in app.scss
       ]),
       _c("br"),
       _vm._v(" "),
       _c("span", { staticClass: "track-artist" }, [
-<<<<<<< HEAD
         _vm._v(_vm._s(_vm.shortenString(_vm.playlistTrack.trackArtist)))
       ]),
       _c("br"),
-=======
-        _vm._v(_vm._s(_vm.playlistTrack.trackArtist))
-      ]),
->>>>>>> changed 'Search' button background color in app.scss
       _vm._v(" "),
       _c("span", { staticClass: "track-duration" }, [
         _vm._v(_vm._s(_vm.trackDuration))
@@ -67630,11 +67638,14 @@ var render = function() {
               staticClass: "list-group-item list-group-item-action",
               class: {
                 "current-track":
-                  _vm.currentTrack["name"] == playlistTrack.trackName
+                  _vm.currentTrack["trackUri"] == playlistTrack.trackUri
               },
               on: {
                 click: function($event) {
-                  _vm.updateTrackToPlay(playlistTrackIndex)
+                  _vm.updateTrackToPlay(
+                    playlistTrackIndex,
+                    playlistTrack.trackUri
+                  )
                 }
               }
             },
@@ -68711,7 +68722,6 @@ var render = function() {
                       attrs: {
                         "spotify-id": _vm.spotifyId,
                         "spotify-player-state": _vm.spotifyPlayerState,
-                        "track-to-play": _vm.trackToPlay,
                         "playlist-tracks": _vm.playlistTracks,
                         "user-state": _vm.userState
                       },

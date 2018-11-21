@@ -1,5 +1,7 @@
 html {
   font-family: "Nunito", sans-serif;
+  background-color: #191414;
+  color: #ffffff;
 }
 
 body {
@@ -405,9 +407,5 @@ span.flickering-3 {
   letter-spacing: .1rem;
   text-decoration: none;
   text-transform: uppercase;
-<<<<<<< HEAD
-}
-=======
 }
 
->>>>>>> changed 'Search' button background color in app.scss

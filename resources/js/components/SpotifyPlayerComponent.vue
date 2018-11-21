@@ -395,11 +395,13 @@
     border: none;
     outline: none;
     cursor: pointer;
+    color: #ffffff;
 }
 .step-forward-btn {
     border: none;
     outline: none;
     cursor: pointer;
+    color: #ffffff;
 }
 .track-container {
     margin-left: 10px;

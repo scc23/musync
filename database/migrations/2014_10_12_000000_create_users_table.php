@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('spotify_id');
             $table->string('name');
+            $table->string('avatar');
             $table->string('api_token');
             $table->string('refresh_token');
             $table->timestamps();

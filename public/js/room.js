@@ -29021,8 +29021,8 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "e94fc434b5c8f713fc4b",
-  cluster: "us2",
+  key: "",
+  cluster: "mt1",
   encrypted: true
 });
 
@@ -65477,7 +65477,7 @@ var content = __webpack_require__(78);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("f3143480", content, false, {});
+var update = __webpack_require__(3)("7aa4dd9a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -65977,7 +65977,7 @@ var content = __webpack_require__(82);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("459b75fd", content, false, {});
+var update = __webpack_require__(3)("a8940320", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -66001,7 +66001,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n#text-search[data-v-54ebca9c] {\n  border-bottom-width: 0;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n#btn-search[data-v-54ebca9c] {\n  border-bottom-right-radius: 0;\n}\n.list-group[data-v-54ebca9c] {\n  height: 337px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-54ebca9c] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.add-icon[data-v-54ebca9c] {\n  font-size: 25px;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  display: none;\n}\n.list-group-item:hover .add-icon[data-v-54ebca9c] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-54ebca9c]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-54ebca9c]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n#text-search[data-v-54ebca9c] {\n  border-bottom-width: 0;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n#btn-search[data-v-54ebca9c] {\n  border-bottom-right-radius: 0;\n}\n.content-border[data-v-54ebca9c] {\n  border: 1px solid #5e5e5e;\n}\n.list-group[data-v-54ebca9c] {\n  height: 337px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-54ebca9c] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.add-icon[data-v-54ebca9c] {\n  font-size: 25px;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  display: none;\n}\n.list-group-item:hover .add-icon[data-v-54ebca9c] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-54ebca9c]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-54ebca9c]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -66147,7 +66147,7 @@ var content = __webpack_require__(86);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("4d98c690", content, false, {});
+var update = __webpack_require__(3)("003c66bd", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -66324,7 +66324,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "ul",
-      { staticClass: "list-group border" },
+      { staticClass: "list-group content-border" },
       _vm._l(_vm.searchResults, function(track) {
         return _c(
           "li",
@@ -66435,7 +66435,7 @@ var content = __webpack_require__(92);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("f9231c3a", content, false, {});
+var update = __webpack_require__(3)("3af21360", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -66624,7 +66624,7 @@ var content = __webpack_require__(97);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("56d5ffa4", content, false, {});
+var update = __webpack_require__(3)("97e6f4de", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -66648,7 +66648,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n#landing-btn-container[data-v-71a96c2d] {\n  margin-top: 67.5px;\n}\n#player-container[data-v-71a96c2d] {\n  min-height: 115px;\n}\n#song-metadata-container[data-v-71a96c2d] {\n  min-height: 90px;\n}\n.card[data-v-71a96c2d] {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  height: 205px;\n}\n.player-icons[data-v-71a96c2d] {\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.player-icons[data-v-71a96c2d]:hover {\n  opacity: 0.5;\n}\n.track-progress-bar[data-v-71a96c2d] {\n  width: 71%;\n  display: inline-block;\n}\n.track-progress[data-v-71a96c2d] {\n  display: inline-block;\n}\n.track-duration[data-v-71a96c2d] {\n  display: inline-block;\n}\n.play-pause-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.step-forward-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.track-container[data-v-71a96c2d] {\n  margin-left: 10px;\n}\n.track-name[data-v-71a96c2d] {\n  font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n#landing-btn-container[data-v-71a96c2d] {\n  margin-top: 67.5px;\n}\n#player-container[data-v-71a96c2d] {\n  min-height: 115px;\n}\n#song-metadata-container[data-v-71a96c2d] {\n  min-height: 90px;\n}\n.card[data-v-71a96c2d] {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  height: 205px;\n}\n.player-icons[data-v-71a96c2d] {\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.player-icons[data-v-71a96c2d]:hover {\n  opacity: 0.5;\n}\n.track-progress-bar[data-v-71a96c2d] {\n  width: 71%;\n  display: inline-block;\n}\n.track-progress[data-v-71a96c2d] {\n  display: inline-block;\n}\n.track-duration[data-v-71a96c2d] {\n  display: inline-block;\n}\n.play-pause-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n  color: #ffffff;\n}\n.step-forward-btn[data-v-71a96c2d] {\n  border: none;\n  outline: none;\n  cursor: pointer;\n  color: #ffffff;\n}\n.track-container[data-v-71a96c2d] {\n  margin-left: 10px;\n}\n.track-name[data-v-71a96c2d] {\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -67337,7 +67337,7 @@ var content = __webpack_require__(103);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("2ad837f0", content, false, {});
+var update = __webpack_require__(3)("38d21c3a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -67361,7 +67361,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #757575;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.content-border[data-v-65c65220] {\n  border: 1px solid #5e5e5e;\n}\n.content-border-left[data-v-65c65220] {\n  border-left: 1px solid #5e5e5e;\n}\n.content-border-right[data-v-65c65220] {\n  border-right: 1px solid #5e5e5e;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -67511,7 +67511,7 @@ var content = __webpack_require__(107);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("0a38faa0", content, false, {});
+var update = __webpack_require__(3)("36df7d46", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -67645,24 +67645,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-12" }, [
-      _c("div", { staticClass: "clear-block border-left border-right" }, [
-        _c(
-          "button",
-          {
-            staticClass: "clear-button",
-            on: {
-              click: function($event) {
-                _vm.updateClearPlaylist()
+      _c(
+        "div",
+        { staticClass: "clear-block content-border-left content-border-right" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "clear-button",
+              on: {
+                click: function($event) {
+                  _vm.updateClearPlaylist()
+                }
               }
-            }
-          },
-          [_vm._v("Clear all")]
-        )
-      ]),
+            },
+            [_vm._v("Clear all")]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c(
         "ul",
-        { staticClass: "list-group border" },
+        { staticClass: "list-group content-border" },
         _vm._l(_vm.playlistTracks, function(playlistTrack, playlistTrackIndex) {
           return _c(
             "li",
@@ -67785,7 +67789,7 @@ var content = __webpack_require__(113);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("266254a0", content, false, {});
+var update = __webpack_require__(3)("b4e4e0ba", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -67979,7 +67983,7 @@ var content = __webpack_require__(118);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("7d82528a", content, false, {});
+var update = __webpack_require__(3)("8c8c0406", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68116,7 +68120,7 @@ var content = __webpack_require__(122);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("0c3bb2d4", content, false, {});
+var update = __webpack_require__(3)("72563b47", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68290,7 +68294,7 @@ var content = __webpack_require__(127);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("1d5a8190", content, false, {});
+var update = __webpack_require__(3)("abdd0daa", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68314,7 +68318,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.input-border[data-v-7d3fecc6] {\n  border-color: #5e5e5e;\n}\n", ""]);
 
 // exports
 
@@ -68398,7 +68402,7 @@ var render = function() {
             expression: "newMessage"
           }
         ],
-        staticClass: "form-control form-control-sm",
+        staticClass: "form-control form-control-sm input-border",
         attrs: {
           id: "btn-input",
           type: "text",
@@ -68550,7 +68554,7 @@ var content = __webpack_require__(133);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("06ff5186", content, false, {});
+var update = __webpack_require__(3)("6d19d9f9", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags

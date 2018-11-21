@@ -1,10 +1,10 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-12">
-            <div class='clear-block border-left border-right'>
+            <div class='clear-block content-border-left content-border-right'>
                 <button class='clear-button' @click="updateClearPlaylist()">Clear all</button>
             </div>
-            <ul class='list-group border'>
+            <ul class='list-group content-border'>
                 <li class="list-group-item list-group-item-action" v-for="(playlistTrack, playlistTrackIndex) in playlistTracks"
                                                                    v-bind:class="{'current-track':currentTrack['trackUri'] == playlistTrack.trackUri}"
                                                                    @click="updateTrackToPlay(playlistTrackIndex, playlistTrack.trackUri)">
@@ -78,7 +78,7 @@
 
 <style lang="scss" scoped>
     .current-track {
-        background-color: #c9c9c9;
+        background-color: #757575;
     }
 
     .clear-block {
@@ -100,6 +100,19 @@
     .clear-button:hover {
         opacity: 0.5;
     }
+
+    .content-border {
+        border: 1px solid #5e5e5e;
+    }
+
+    .content-border-left {
+        border-left: 1px solid #5e5e5e;
+    }
+
+    .content-border-right {
+        border-right: 1px solid #5e5e5e;
+    }
+
 
     .list-group {
         height: 487px;
@@ -140,4 +153,5 @@
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
     }
+
 </style>

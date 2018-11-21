@@ -27277,8 +27277,8 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "e94fc434b5c8f713fc4b",
-  cluster: "us2",
+  key: "",
+  cluster: "mt1",
   encrypted: true
 });
 
@@ -63404,7 +63404,7 @@ var content = __webpack_require__(61);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("302a01e5", content, false, {});
+var update = __webpack_require__(3)("2e2e8850", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -63428,7 +63428,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.list-group[data-v-df1977ee] {\n  height: 229px;\n  overflow: scroll;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-df1977ee] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.list-group-item[data-v-df1977ee]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-df1977ee]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n.content-border[data-v-df1977ee] {\n  border: 1px solid #5e5e5e;\n}\n.list-group[data-v-df1977ee] {\n  height: 229px;\n  overflow: scroll;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-df1977ee] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.list-group-item[data-v-df1977ee]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-df1977ee]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -63532,7 +63532,7 @@ var content = __webpack_require__(65);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("6cccce66", content, false, {});
+var update = __webpack_require__(3)("76ba940c", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -63637,7 +63637,7 @@ var render = function() {
     _c("div", { staticClass: "col-12 col-sm-6" }, [
       _c(
         "ul",
-        { staticClass: "list-group border" },
+        { staticClass: "list-group content-border" },
         _vm._l(_vm.rooms, function(room) {
           return _c(
             "li",

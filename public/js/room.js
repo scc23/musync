@@ -29021,8 +29021,8 @@ window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "",
-  cluster: "mt1",
+  key: "e94fc434b5c8f713fc4b",
+  cluster: "us2",
   encrypted: true
 });
 
@@ -65477,7 +65477,7 @@ var content = __webpack_require__(78);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("7aa4dd9a", content, false, {});
+var update = __webpack_require__(3)("f3143480", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -65501,7 +65501,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.hide[data-v-61759d07] {\n  display: none;\n}\n.loading[data-v-61759d07] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  height: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.obj[data-v-61759d07] {\n  width: 6px;\n  height: 0px;\n  background-color: #1DB954;\n  margin: 0 3px;\n  border-radius: 10px;\n  -webkit-animation: loading-data-v-61759d07 0.8s infinite;\n          animation: loading-data-v-61759d07 0.8s infinite;\n}\n.obj[data-v-61759d07]:nth-child(2) {\n  -webkit-animation-delay: 0.1s;\n          animation-delay: 0.1s;\n}\n.obj[data-v-61759d07]:nth-child(3) {\n  -webkit-animation-delay: 0.2s;\n          animation-delay: 0.2s;\n}\n.obj[data-v-61759d07]:nth-child(4) {\n  -webkit-animation-delay: 0.3s;\n          animation-delay: 0.3s;\n}\n.obj[data-v-61759d07]:nth-child(5) {\n  -webkit-animation-delay: 0.4s;\n          animation-delay: 0.4s;\n}\n.obj[data-v-61759d07]:nth-child(6) {\n  -webkit-animation-delay: 0.5s;\n          animation-delay: 0.5s;\n}\n.obj[data-v-61759d07]:nth-child(7) {\n  -webkit-animation-delay: 0.6s;\n          animation-delay: 0.6s;\n}\n.obj[data-v-61759d07]:nth-child(8) {\n  -webkit-animation-delay: 0.7s;\n          animation-delay: 0.7s;\n}\n@-webkit-keyframes loading-data-v-61759d07 {\n0% {\n    height: 0;\n}\n50% {\n    height: 50px;\n}\n100% {\n    height: 0;\n}\n}\n@keyframes loading-data-v-61759d07 {\n0% {\n    height: 0;\n}\n50% {\n    height: 50px;\n}\n100% {\n    height: 0;\n}\n}\n", ""]);
 
 // exports
 
@@ -65514,6 +65514,15 @@ exports.push([module.i, "", ""]);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65616,7 +65625,7 @@ var spotifyApi = new SpotifyWebApi();
             "notificationText": "",
             "broadcasterName": "",
             "broadcasterId": "",
-            "trackToPlay": undefined,
+            "trackToPlay": { index: undefined, uri: "" },
             "playlistTracks": [],
             "userState": "idle",
             "searchResults": []
@@ -65633,6 +65642,28 @@ var spotifyApi = new SpotifyWebApi();
         window.addEventListener("beforeunload", this.abruptlyCloseSession);
     },
 
+    computed: {
+        readyToLoad: function readyToLoad() {
+            if (this.spotifyDeviceId != "" && this.playlistId != "" && this.hasBroadcaster != null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
+    watch: {
+        readyToLoad: function readyToLoad(val) {
+            $(document).ready(function () {
+                if (val == true) {
+                    $(".loading").delay(1500).fadeOut("fast");
+                    $(".hide").delay(1500).fadeIn("fast");
+                } else {
+                    $(".loading").delay(1500).fadeIn("fast");
+                    $(".hide").delay(1500).fadeOut("fast");
+                }
+            });
+        }
+    },
     methods: {
         refreshAccessToken: function refreshAccessToken() {
             var _this = this;
@@ -65786,9 +65817,10 @@ var spotifyApi = new SpotifyWebApi();
             spotifyApi.pause();
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/room/' + this.roomId + '/broadcast');
         },
-        getTrackToPlay: function getTrackToPlay(newData) {
-            this.trackToPlay = newData;
-            console.log("Track to play: " + this.trackToPlay);
+        getTrackToPlay: function getTrackToPlay(trackObject) {
+            this.trackToPlay = trackObject;
+            console.log("track to play index: " + this.trackToPlay["index"]);
+            console.log("track to play uri: " + this.trackToPlay["uri"]);
         },
         clearPlaylist: function clearPlaylist() {
             // Get the track uris from playlistTracks
@@ -65945,7 +65977,7 @@ var content = __webpack_require__(82);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("a8940320", content, false, {});
+var update = __webpack_require__(3)("459b75fd", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -66115,7 +66147,7 @@ var content = __webpack_require__(86);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("003c66bd", content, false, {});
+var update = __webpack_require__(3)("4d98c690", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -66403,7 +66435,7 @@ var content = __webpack_require__(92);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3af21360", content, false, {});
+var update = __webpack_require__(3)("f9231c3a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -66592,7 +66624,7 @@ var content = __webpack_require__(97);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("97e6f4de", content, false, {});
+var update = __webpack_require__(3)("56d5ffa4", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -66728,7 +66760,7 @@ var spotifyApi = new SpotifyWebApi();
         "playlistId": String,
         "roomId": String,
         "hasBroadcaster": Boolean,
-        "trackToPlay": Number,
+        "trackToPlay": Object,
         "playlistTracks": Array,
         "userState": String
     },
@@ -66738,7 +66770,8 @@ var spotifyApi = new SpotifyWebApi();
             isPaused: true,
             progressInterval: null,
             isDragStart: false,
-            currentTrack: { name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0 }
+            currentTrack: { name: "", artists: "", duration: 0, albumArt: "", trackUri: "", trackPosition: 0, trackIndex: 0 },
+            nextTrack: { trackUri: "" }
         };
     },
 
@@ -66837,10 +66870,16 @@ var spotifyApi = new SpotifyWebApi();
                 }
             }.bind(this));
         },
-        nextTrack: function nextTrack() {
+        next: function next() {
             console.log("step forward is pressed");
             spotifyApi.skipToNext({
-                "device_id": this.spotifyDeviceId }).catch(function (error) {
+                "device_id": this.spotifyDeviceId }).then(function (data) {
+                axios.post('/api/room/' + this.roomId + '/playback', {
+                    trackUri: this.nextTrack["trackUri"],
+                    trackPosition: 0,
+                    isPaused: this.isPaused
+                });
+            }.bind(this)).catch(function (error) {
                 console.error(error);
                 // If the response is 401 Unauthorized Error, call parent function to refresh the access token
                 if (error.status === 401) {
@@ -66941,14 +66980,23 @@ var spotifyApi = new SpotifyWebApi();
                 if (this.currentTrack["trackPosition"] > this.currentTrack["duration"]) {
                     this.$refs.slider.setValue(0);
                 }
+                if (this.spotifyPlayerState["track_window"]["next_tracks"].length != 0) {
+                    this.nextTrack["trackUri"] = this.spotifyPlayerState["track_window"]["next_tracks"][0]["uri"];
+                } else {
+                    this.nextTrack["trackUri"] = "";
+                }
             }
         },
         "trackToPlay": function trackToPlay(newState, oldState) {
             this.trackToPlay = newState;
-            console.log("trackToPlay updated to " + this.trackToPlay + " in SpotifyPlayerComponent.");
-            this.currentTrack["trackIndex"] = this.trackToPlay;
+            this.currentTrack["trackIndex"] = this.trackToPlay["index"];
             this.currentTrack["trackPosition"] = 0;
             this.play();
+            axios.post('/api/room/' + this.roomId + '/playback', {
+                trackUri: this.trackToPlay["uri"],
+                trackPosition: 0,
+                isPaused: this.isPaused
+            });
         },
         "isPaused": function isPaused(newValue, oldValue) {
             this.updateProgress();
@@ -67108,7 +67156,7 @@ var render = function() {
                                       staticClass:
                                         "player-icons step-forward-btn",
                                       attrs: { type: "button" },
-                                      on: { click: _vm.nextTrack }
+                                      on: { click: _vm.next }
                                     },
                                     [
                                       _c("font-awesome-icon", {
@@ -67289,7 +67337,7 @@ var content = __webpack_require__(103);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("38d21c3a", content, false, {});
+var update = __webpack_require__(3)("2ad837f0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -67313,7 +67361,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n  cursor: pointer;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -67352,14 +67400,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: {
         "spotifyId": String,
         "spotifyPlayerState": Object,
-        "trackToPlay": Number,
         "playlistTracks": Array,
         "userState": String
     },
     data: function data() {
         return {
             "playlistId": "",
-            "currentTrack": { name: "", artists: "", duration: 0, albumArt: "" }
+            "currentTrack": { name: "", artists: "", duration: 0, albumArt: "", trackUri: "" }
         };
     },
 
@@ -67372,6 +67419,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.currentTrack["artists"] = this.spotifyPlayerState["track_window"]["current_track"]["artists"][0]["name"];
                 this.currentTrack["duration"] = this.spotifyPlayerState["track_window"]["current_track"]["duration_ms"];
                 this.currentTrack["albumArt"] = this.spotifyPlayerState["track_window"]["current_track"]["album"]["images"][0]["url"];
+                this.currentTrack["trackUri"] = this.spotifyPlayerState["track_window"]["current_track"]["uri"];
                 console.log("Currently playing track: " + this.currentTrack["name"]);
             }
         }
@@ -67385,11 +67433,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // Call parent function to remove track from playlist
             this.$emit("removeTrack", index, uri);
         },
-        updateTrackToPlay: function updateTrackToPlay(value) {
+        updateTrackToPlay: function updateTrackToPlay(index, uri) {
             // Only the broadcaster can click on a track from the playlist to play
             if (this.userState == "broadcasting") {
                 // Pass the playlist index of the track to be played
-                this.$emit("getTrack", value);
+                var trackObject = {
+                    index: index,
+                    uri: uri
+                };
+                this.$emit("getTrack", trackObject);
             } else {
                 console.log("Cannot play track, only the broadcaster can play a track.");
             }
@@ -67459,7 +67511,7 @@ var content = __webpack_require__(107);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("36df7d46", content, false, {});
+var update = __webpack_require__(3)("0a38faa0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -67618,11 +67670,14 @@ var render = function() {
               staticClass: "list-group-item list-group-item-action",
               class: {
                 "current-track":
-                  _vm.currentTrack["name"] == playlistTrack.trackName
+                  _vm.currentTrack["trackUri"] == playlistTrack.trackUri
               },
               on: {
                 click: function($event) {
-                  _vm.updateTrackToPlay(playlistTrackIndex)
+                  _vm.updateTrackToPlay(
+                    playlistTrackIndex,
+                    playlistTrack.trackUri
+                  )
                 }
               }
             },
@@ -67730,7 +67785,7 @@ var content = __webpack_require__(113);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("b4e4e0ba", content, false, {});
+var update = __webpack_require__(3)("266254a0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -67924,7 +67979,7 @@ var content = __webpack_require__(118);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("8c8c0406", content, false, {});
+var update = __webpack_require__(3)("7d82528a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68061,7 +68116,7 @@ var content = __webpack_require__(122);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("72563b47", content, false, {});
+var update = __webpack_require__(3)("0c3bb2d4", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68235,7 +68290,7 @@ var content = __webpack_require__(127);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("abdd0daa", content, false, {});
+var update = __webpack_require__(3)("1d5a8190", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68495,7 +68550,7 @@ var content = __webpack_require__(133);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("6d19d9f9", content, false, {});
+var update = __webpack_require__(3)("06ff5186", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68627,9 +68682,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c(
       "div",
-      { staticClass: "row justify-content-center" },
+      { staticClass: "row justify-content-center hide" },
       [
         _c("notification-component", {
           attrs: { "notification-text": _vm.notificationText }
@@ -68699,7 +68756,6 @@ var render = function() {
                       attrs: {
                         "spotify-id": _vm.spotifyId,
                         "spotify-player-state": _vm.spotifyPlayerState,
-                        "track-to-play": _vm.trackToPlay,
                         "playlist-tracks": _vm.playlistTracks,
                         "user-state": _vm.userState
                       },
@@ -68742,7 +68798,30 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loading hide" }, [
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "obj" })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

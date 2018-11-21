@@ -78,6 +78,7 @@
         border-bottom-width: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        border-color: #5e5e5e;
     }
 
     #btn-search {

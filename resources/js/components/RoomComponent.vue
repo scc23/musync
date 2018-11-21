@@ -102,7 +102,8 @@
                 "trackToPlay": {index: undefined, uri: ""},
                 "playlistTracks": [],
                 "userState": "idle",
-                "searchResults": []
+                "searchResults": [],
+                "player": {}
             };
         },
         created() {
@@ -123,6 +124,10 @@
                     spotifyApi.setAccessToken(res.data.api_token);
                     // Set the new access token in this component and it's child components
                     this.setAccessToken(res.data.api_token);
+                    // Reconnect Spotify player
+                    this.player.disconnect();
+                    // this.player.connect();
+                    initializeSpotifyPlayer(res.data.api_token);
                     console.log("Access token refreshed.");
                 })
                 .catch((err) => {
@@ -207,28 +212,28 @@
             },
             initializeSpotifyPlayer(token) {
                 window.onSpotifyWebPlaybackSDKReady = () => {
-                    const player = new Spotify.Player({
+                    this.player = new Spotify.Player({
                         name: 'MuSync Web Player',
                         getOAuthToken: cb => { cb(token); }
                     });
 
-                    player.addListener('player_state_changed', state => {
+                    this.player.addListener('player_state_changed', state => {
                         this.spotifyPlayerState = state;
                     });
 
                     // Ready
-                    player.addListener('ready', ({ device_id }) => {
+                    this.player.addListener('ready', ({ device_id }) => {
                         console.log('Ready with Device ID', device_id);
                         this.spotifyDeviceId = device_id;
                     });
 
                     // Not Ready
-                    player.addListener('not_ready', ({ device_id }) => {
+                    this.player.addListener('not_ready', ({ device_id }) => {
                         console.log('Device ID has gone offline', device_id);
                     });
 
                     // Connect to the player!
-                    player.connect();
+                    this.player.connect();
                 };
             },
             setAccessToken(token) {

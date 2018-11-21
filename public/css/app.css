@@ -10537,44 +10537,6 @@ body {
   color: #bfbfbf;
 }
 
-.btn-light {
-  color: #ffffff;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.btn-light:hover {
-  color: #bfbfbf;
-  text-decoration: none;
-}
-
-.btn-light:focus {
-  color: #bfbfbf;
-}
-
-.btn-dark {
-  color: #ffffff;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.btn-dark:hover {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.btn-dark:focus {
-  color: #bfbfbf;
-}
-
 .navbar .navbar-nav .nav-link {
   background-color: #191414;
   color: #ffffff;
@@ -10609,7 +10571,7 @@ body {
 
 .card {
   background-color: black;
-  border-color: #ffffff;
+  border-color: #5e5e5e;
 }
 
 .card-body {
@@ -10617,7 +10579,7 @@ body {
 }
 
 .col-4.list-group {
-  border-color: #ff0000;
+  border-color: #5e5e5e;
 }
 
 .col-12 .form-control {
@@ -10640,8 +10602,13 @@ body {
   color: #ffffff;
 }
 
+.list-group .list-group-item:focus {
+  background-color: #333333;
+  color: #ffffff;
+}
+
 .clear-block.border-left.border-right {
-  border-color: #ffffff;
+  border-color: #5e5e5e;
 }
 
 .genre-type {
@@ -10704,12 +10671,17 @@ body {
 
 .card-footer {
   background-color: #191414;
-  border-color: #ffffff;
+  border-color: #5e5e5e;
 }
 
 .input-group .form-control {
   background-color: #110f0f;
-  border-color: #ffffff;
+  border-color: #5e5e5e;
+}
+
+.form-control {
+  background-color: #110f0f;
+  border-color: #5e5e5e;
 }
 
 .btn.btn-default.btn-primary {

@@ -56,16 +56,6 @@ body {
 .navbar .navbar-brand:hover {background-color: #191414;color: #bfbfbf;}
 .navbar .navbar-brand:focus {background-color: #191414;color: #bfbfbf;}
 
-
-.btn-light {color: #ffffff; align-items:center; display: flex;}
-.btn-light:hover {color: #bfbfbf; text-decoration:none;}
-.btn-light:focus {color: #bfbfbf;}
-
-.btn-dark {color: #ffffff; align-items:center; display: flex;}
-.btn-dark:hover {color: #ffffff; text-decoration:none;}
-.btn-dark:focus {color: #bfbfbf;}
-
-
 .navbar .navbar-nav .nav-link {background-color: #191414; color: #ffffff;}
 .navbar .navbar-nav .nav-link:hover {background-color: #191414; color: #bfbfbf;}
 .navbar .navbar-nav .nav-link:focus {color: #bfbfbf;}
@@ -81,17 +71,18 @@ body {
 .dropdown-menu .dropdown-item:hover {background-color: #154c28;}
 
 
-.card {background-color: black; border-color: #ffffff;}
+.card {background-color: black; border-color: #5e5e5e;}
 .card-body {background-color: #191414;}
 
-.col-4.list-group {border-color:#ff0000;}
+.col-4.list-group {border-color:#5e5e5e;}
 .col-12 .form-control {background-color: #191414; color: #ffffff;}
 
 .list-group .list-group-item {background-color: #222222; color: #ffffff;}
 .list-group .list-group-item:hover {background-color: #333333; color: #ffffff;}
 .list-group .list-group-item:active {background-color: #222222; color: #ffffff;}
+.list-group .list-group-item:focus {background-color: #333333; color: #ffffff;}
 
-.clear-block.border-left.border-right {border-color:#ffffff;}
+.clear-block.border-left.border-right {border-color:#5e5e5e;}
 
 .genre-type {
     color: #e4f1fe;
@@ -118,9 +109,11 @@ body {
 
 .clear-button {color: #ffffff;}
 
-.card-footer {background-color: #191414; border-color:#ffffff;}
+.card-footer {background-color: #191414; border-color:#5e5e5e;}
 
-.input-group .form-control {background-color: #110f0f; border-color:#ffffff;}
+.input-group .form-control {background-color: #110f0f; border-color:#5e5e5e;}
+.form-control {background-color: #110f0f; border-color:#5e5e5e;}
+
 
 .btn.btn-default.btn-primary {background-color: #1DB954; border:none;}
 .btn.btn-default.btn-primary:hover {background-color: #154c28; border:none;}

@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-content-center mb-3">
         <div class="col-12 col-sm-6">
-            <ul class='list-group border'>
+            <ul class='list-group content-border'>
                 <li class="list-group-item list-group-item-action" v-for="room in rooms"
                                                                    @click="joinRoom(room.id, room.hasAccess)">
                     <room-listing-component v-bind:room-id="room.id"
@@ -31,6 +31,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .content-border {
+        border: 1px solid #5e5e5e;
+    }
+    
     .list-group {
         height: 229px;
         overflow: scroll;

@@ -66001,7 +66001,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n#text-search[data-v-54ebca9c] {\n  border-bottom-width: 0;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n#btn-search[data-v-54ebca9c] {\n  border-bottom-right-radius: 0;\n}\n.list-group[data-v-54ebca9c] {\n  height: 337px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-54ebca9c] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.add-icon[data-v-54ebca9c] {\n  font-size: 25px;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  display: none;\n}\n.list-group-item:hover .add-icon[data-v-54ebca9c] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-54ebca9c]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-54ebca9c]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n#text-search[data-v-54ebca9c] {\n  border-bottom-width: 0;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n#btn-search[data-v-54ebca9c] {\n  border-bottom-right-radius: 0;\n}\n.content-border[data-v-54ebca9c] {\n  border: 1px solid #5e5e5e;\n}\n.list-group[data-v-54ebca9c] {\n  height: 337px;\n  overflow-y: scroll;\n}\n.list-group-item[data-v-54ebca9c] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.add-icon[data-v-54ebca9c] {\n  font-size: 25px;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  display: none;\n}\n.list-group-item:hover .add-icon[data-v-54ebca9c] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-54ebca9c]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-54ebca9c]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -66324,7 +66324,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "ul",
-      { staticClass: "list-group border" },
+      { staticClass: "list-group content-border" },
       _vm._l(_vm.searchResults, function(track) {
         return _c(
           "li",
@@ -67361,7 +67361,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #c9c9c9;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
+exports.push([module.i, "\n.current-track[data-v-65c65220] {\n  background-color: #757575;\n}\n.clear-block[data-v-65c65220] {\n  padding-left: 5px;\n  border-bottom-width: 0;\n}\n.clear-button[data-v-65c65220] {\n  background: none;\n  border: none;\n  cursor: pointer;\n  opacity: 1;\n  transition: opacity .2s ease-out;\n  -moz-transition: opacity .2s ease-out;\n  -webkit-transition: opacity .2s ease-out;\n  -o-transition: opacity .2s ease-out;\n}\n.clear-button[data-v-65c65220]:hover {\n  opacity: 0.5;\n}\n.content-border[data-v-65c65220] {\n  border: 1px solid #5e5e5e;\n}\n.content-border-left[data-v-65c65220] {\n  border-left: 1px solid #5e5e5e;\n}\n.content-border-right[data-v-65c65220] {\n  border-right: 1px solid #5e5e5e;\n}\n.list-group[data-v-65c65220] {\n  height: 487px;\n  overflow-y: scroll;\n  border-bottom-left-radius: .25rem;\n  border-bottom-right-radius: .25rem;\n}\n.list-group-item[data-v-65c65220] {\n  padding: 5px 10px;\n  border-left: 0;\n  border-right: 0;\n  cursor: pointer;\n}\n.remove-icon[data-v-65c65220] {\n  font-size: 18px;\n  position: absolute;\n  top: 23px;\n  right: 15px;\n  display: none;\n  background: none;\n  border: none;\n}\n.list-group-item:hover .remove-icon[data-v-65c65220] {\n  cursor: pointer;\n  display: inline-block;\n}\n.list-group-item[data-v-65c65220]:first-child {\n  border-top: 0;\n  border-top-left-radius: 0;\n  border-top-right-radius: 0;\n}\n.list-group-item[data-v-65c65220]:last-child {\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n", ""]);
 
 // exports
 
@@ -67645,24 +67645,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-12" }, [
-      _c("div", { staticClass: "clear-block border-left border-right" }, [
-        _c(
-          "button",
-          {
-            staticClass: "clear-button",
-            on: {
-              click: function($event) {
-                _vm.updateClearPlaylist()
+      _c(
+        "div",
+        { staticClass: "clear-block content-border-left content-border-right" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "clear-button",
+              on: {
+                click: function($event) {
+                  _vm.updateClearPlaylist()
+                }
               }
-            }
-          },
-          [_vm._v("Clear all")]
-        )
-      ]),
+            },
+            [_vm._v("Clear all")]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c(
         "ul",
-        { staticClass: "list-group border" },
+        { staticClass: "list-group content-border" },
         _vm._l(_vm.playlistTracks, function(playlistTrack, playlistTrackIndex) {
           return _c(
             "li",
@@ -68314,7 +68318,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.input-border[data-v-7d3fecc6] {\n  border-color: #5e5e5e;\n}\n", ""]);
 
 // exports
 
@@ -68398,7 +68402,7 @@ var render = function() {
             expression: "newMessage"
           }
         ],
-        staticClass: "form-control form-control-sm",
+        staticClass: "form-control form-control-sm input-border",
         attrs: {
           id: "btn-input",
           type: "text",

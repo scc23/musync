@@ -34,7 +34,7 @@
     .content-border {
         border: 1px solid #5e5e5e;
     }
-    
+
     .list-group {
         height: 229px;
         overflow: scroll;
@@ -45,6 +45,10 @@
         padding: 5px 10px;
         border-left: 0;
         border-right: 0;
+    }
+
+    .list-group-item:hover {
+        cursor: pointer;
     }
 
     .list-group-item:first-child {
